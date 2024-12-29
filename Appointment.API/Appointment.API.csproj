@@ -19,4 +19,10 @@
       <ProjectReference Include="..\Appointment.Data\Appointment.Data.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="ClassLibrary1\obj\ClassLibrary1.csproj.nuget.dgspec.json" />
+      <_ContentIncludedByDefault Remove="ClassLibrary1\obj\project.assets.json" />
+      <_ContentIncludedByDefault Remove="ClassLibrary1\obj\project.packagespec.json" />
+    </ItemGroup>
+
 </Project>
