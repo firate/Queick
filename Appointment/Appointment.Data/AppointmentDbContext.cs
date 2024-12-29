@@ -1,4 +1,5 @@
-﻿using Domains;
+﻿
+using Domains;
 using Microsoft.EntityFrameworkCore;
 
 namespace AppointmentData;
