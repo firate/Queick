@@ -1,15 +1,14 @@
-﻿using Entities;
+using Domains;
 using Microsoft.EntityFrameworkCore;
 
-namespace Data;
+namespace CompanyData;
 
-public class AppointmentDbContext:DbContext
+public class CompanyDbContext: DbContext
 {
-    public AppointmentDbContext(DbContextOptions options) : base(options)
+    public CompanyDbContext(DbContextOptions options) : base(options)
     {
-        
     }
-
+    
     public DbSet<Appointment> Appointments { get; set; }
     public DbSet<Company> Companies { get; set; }
     public DbSet<Customer> Customers { get; set; }

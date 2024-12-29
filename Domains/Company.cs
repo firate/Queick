@@ -1,4 +1,4 @@
-namespace Entities;
+namespace Domains;
 public class Company: BaseEntity
 {
     public string Name { get; set; }
