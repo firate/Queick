@@ -7,7 +7,10 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
-        builder.Services.AddAuthorization();
+        builder.Services.AddControllers();
+        
+        // TODO: temporarily commented out
+        //builder.Services.AddAuthorization();
 
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         builder.Services.AddOpenApi();
@@ -22,7 +25,8 @@ public class Program
 
         app.UseHttpsRedirection();
 
-        app.UseAuthorization();
+        // TODO: temporarily commented out 
+        //app.UseAuthorization();
 
         app.Run();
     }
