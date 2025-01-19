@@ -24,7 +24,7 @@ public class CompanyService : ICompanyService
 
         var company = await _companyDbContext.Companies.FindAsync(id);
 
-        if ( company == null)
+        if (company == null)
         {
             throw new ArgumentNullException(nameof(id), "Company not found");
         }
@@ -41,11 +41,14 @@ public class CompanyService : ICompanyService
             query = query.Where(x=> x.Description.Contains(description));
         
         query =query.Skip((page - 1) * pageSize).Take(pageSize);
-        
+ 
+		// TODO: use sortBy and sortDirection to sort the query
+		/*       
         if(sortDirection == "asc")
             query = query.OrderBy(x=>x.Id);
         else
             query = query.OrderByDescending(x=>x.Id);
+		*/
         
         var companies = await query.ToListAsync();
 
