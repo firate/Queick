@@ -52,7 +52,7 @@ public class CompanyService : ICompanyService
         
         var companies = await query.ToListAsync();
 
-        if (companies == null || companies?.Count == 0)
+        if (companies?.Count == 0)
         {
             return new PaginationResult<Company>(new List<Company>(), 0, page, pageSize);
         }
@@ -82,7 +82,15 @@ public class CompanyService : ICompanyService
         };
 
         await _companyDbContext.Companies.AddAsync(company);
-        await _companyDbContext.SaveChangesAsync();
+        var created =  await _companyDbContext.SaveChangesAsync();
+        
+        // TODO: check if the company is created successfully
+
+        if (created > 0)
+        {
+            // publish rabbitmq message
+        }
+        
         return company;
     }
    
