@@ -1,4 +1,4 @@
-namespace Domains;
+namespace Appointment.Entity;
 
 public class BaseEntity
 {

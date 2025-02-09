@@ -1,8 +1,8 @@
-namespace Domains;
+namespace Company.Entity;
 
 public class CompanyCustomer
 {
-    public Company Company { get; set; }
+    public CompanyEntity Company { get; set; }
     public long CompanyId { get; set; }
     
     public Customer Customer { get; set; }

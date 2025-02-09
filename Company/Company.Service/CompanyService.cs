@@ -1,7 +1,8 @@
-using CompanyData;
-using Domains;
+using Company.Data;
+using Company.Entity;
 using Microsoft.EntityFrameworkCore;
 using Service.Helpers;
+using System.Linq;
 
 namespace Service;
 
@@ -14,7 +15,7 @@ public class CompanyService : ICompanyService
         _companyDbContext = companyDbContext;
     }
 
-    public async Task<Company> GetCompanyByIdAsync(long id)
+    public async Task<CompanyEntity> GetCompanyByIdAsync(long id)
     {
         //null check
         if (id <= 0)
@@ -31,7 +32,7 @@ public class CompanyService : ICompanyService
         return company;
     }
     
-    public async Task<PaginationResult<Company>> GetCompaniesAsync(string name, string description, int page, int pageSize, string sortBy, string sortDirection ="asc")
+    public async Task<PaginationResult<CompanyEntity>> GetCompaniesAsync(string name, string description, int page, int pageSize, string sortBy, string sortDirection ="asc")
     {
         var query = _companyDbContext.Companies.AsQueryable().AsNoTracking();
         if(!string.IsNullOrEmpty(name))
@@ -54,16 +55,70 @@ public class CompanyService : ICompanyService
 
         if (companies?.Count == 0)
         {
-            return new PaginationResult<Company>(new List<Company>(), 0, page, pageSize);
+            return new PaginationResult<CompanyEntity>(new List<CompanyEntity>(), 0, page, pageSize);
         }
         
         var totalCount = await _companyDbContext.Companies.CountAsync();
         
-        return new PaginationResult<Company>(companies, totalCount, page, pageSize);
+        return new PaginationResult<CompanyEntity>(companies, totalCount, page, pageSize);
         
     }
+
+    public async Task<CompanyEntity> UpdateCompanyAsync(long id, string name, string description)
+    {
+        var company = await _companyDbContext.Companies.FindAsync(id);
+        
+        if (company == null)
+        {
+            throw new ArgumentNullException(nameof(id), "Company not found");
+        }
+        
+        if (!string.IsNullOrEmpty(name))
+        {
+            company.Name = name;
+        }
+        
+        if (!string.IsNullOrEmpty(description))
+        {
+            company.Description = description;
+        }
+        
+        var changed = await _companyDbContext.SaveChangesAsync();
+
+        if (changed <= 0)
+        {
+            //TODO: log the error
+            // create new Exception type
+            throw new ArgumentNullException(nameof(id), "Company not updated");
+        }
+        
+        return company;
+    }
     
-    public async Task<Company> CreateCompanyAsync(string name, string description)
+    public async Task<bool> DeleteCompanyAsync(long id)
+    {
+        var company = await _companyDbContext.Companies.FindAsync(id);
+        
+        if (company == null)
+        {
+            throw new ArgumentNullException(nameof(id), "Company not found");
+        }
+        
+        company.IsDeleted = true;
+        
+        var changed = await _companyDbContext.SaveChangesAsync();
+
+        if (changed <= 0)
+        {
+            //TODO: log
+            return false;
+            //throw new ArgumentNullException(nameof(id), "Company not deleted");
+        }
+        
+        return true;
+    }
+
+    public async Task<CompanyEntity> CreateCompanyAsync(string name, string description)
     {
         if (string.IsNullOrEmpty(name))
         {
@@ -75,7 +130,7 @@ public class CompanyService : ICompanyService
             ArgumentNullException.ThrowIfNullOrWhiteSpace(description, nameof(description));
         }
 
-        var company = new Company
+        var company = new CompanyEntity
         {
             Name = name,
             Description = description

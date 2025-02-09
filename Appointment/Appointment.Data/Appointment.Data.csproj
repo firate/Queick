@@ -11,7 +11,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Common\Domains\Domains.csproj" />
+      <ProjectReference Include="../Appointment.Entity/Appointment.Entity.csproj" />
     </ItemGroup>
+
+    
 
 </Project>

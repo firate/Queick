@@ -1,3 +1,6 @@
+using Microsoft.Extensions.DependencyInjection;
+using Service;
+
 namespace CompanyAPI;
 
 public class Program
@@ -15,6 +18,8 @@ public class Program
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         builder.Services.AddOpenApi();
 
+        builder.Services.AddScoped<ICompanyService, CompanyService>();
+        
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
@@ -28,6 +33,8 @@ public class Program
         // TODO: temporarily commented out 
         //app.UseAuthorization();
 
+        
+        
         app.Run();
     }
 }

@@ -1,8 +1,8 @@
 
-using Domains;
+using Company.Entity;
 using Microsoft.EntityFrameworkCore;
 
-namespace CompanyData;
+namespace Company.Data;
 
 public class CompanyDbContext: DbContext
 {
@@ -10,8 +10,7 @@ public class CompanyDbContext: DbContext
     {
     }
     
-    public DbSet<Appointment> Appointments { get; set; }
-    public DbSet<Company> Companies { get; set; }
+    public DbSet<CompanyEntity> Companies { get; set; }
     public DbSet<Customer> Customers { get; set; }
     public DbSet<Branch> Branches { get; set; }
     public DbSet<Address> Addresses { get; set; }
