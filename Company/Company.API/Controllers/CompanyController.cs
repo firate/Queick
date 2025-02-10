@@ -22,6 +22,14 @@ namespace Company.API.Controllers
 
             return Ok(result);
         }
+       
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateCompany(long id, [FromBody] UpdateCompanyRequestModel request)
+        {
+            var result = await _companyService.UpdateCompanyAsync(id, request.Name, request.Description);
+
+            return Ok(result);
+        }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCompanyById(long id)

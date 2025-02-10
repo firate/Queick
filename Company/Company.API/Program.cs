@@ -1,3 +1,5 @@
+using Company.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Service;
 
@@ -18,7 +20,16 @@ public class Program
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         builder.Services.AddOpenApi();
 
+        var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+        
+        builder.Services.AddDbContext<CompanyDbContext>(options =>
+            options.UseNpgsql(connectionString, 
+                npgsqlOptions => npgsqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null)
+            ));
+        
         builder.Services.AddScoped<ICompanyService, CompanyService>();
+        builder.Services.AddScoped<IBranchService, BranchService>();
+        
         
         var app = builder.Build();
 
@@ -33,7 +44,7 @@ public class Program
         // TODO: temporarily commented out 
         //app.UseAuthorization();
 
-        
+        app.MapControllers();
         
         app.Run();
     }

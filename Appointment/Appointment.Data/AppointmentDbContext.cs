@@ -15,11 +15,15 @@ public class AppointmentDbContext:DbContext
         
     }
 
-    public DbSet<Company> Companies { get; set; }
-    public DbSet<Branch> Branches { get; set; }
-    public DbSet<Employee> Employees { get; set; }
     public DbSet<AppointmentEntity> Appointments { get; set; }
-    public DbSet<Customer> Customers { get; set; }
-    public DbSet<Address> Addresses { get; set; }
-    public DbSet<Location> Locations { get; set; }
+    
+    
+    //READONLY context eklenecek.
+    // public DbSet<Company> Companies { get; set; }
+    // public DbSet<Branch> Branches { get; set; }
+    // public DbSet<Employee> Employees { get; set; }
+    // public DbSet<Customer> Customers { get; set; }
+    // public DbSet<Address> Addresses { get; set; }
+    // public DbSet<Location> Locations { get; set; }
+
 }
