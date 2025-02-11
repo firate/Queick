@@ -1,7 +1,5 @@
 namespace Company.API.Controllers;
 
-public record UpdateCompanyRequestModel
+public record UpdateCompanyRequestModel(string Name, string Description)
 {
-    public string Name { get; set; }
-    public string Description { get; set; }
 }
