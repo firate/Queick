@@ -23,4 +23,12 @@ public class BranchController : ControllerBase
         return Ok(result);
     }
     
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateBranch(long id, [FromBody] UpdateBranchRequestModel request)
+    {
+        var result = await _branchService.UpdateBranchAsync(id, request.Name, request.Description);
+        
+        return Ok(result);
+    }
+    
 }
