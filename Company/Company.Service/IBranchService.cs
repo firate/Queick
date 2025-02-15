@@ -6,8 +6,7 @@ public interface IBranchService
 {
     Task<Branch> CreateBranchAsync(string name, string description);
     
-    Task<Branch> GetBranchAsync(long id);
-    
+    Task<Branch> GetBranchAsync(long id);    
     Task<Branch> UpdateBranchAsync(long id, string name, string description);
     
     Task<bool> DeleteBranchAsync(long id);

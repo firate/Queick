@@ -15,12 +15,30 @@ public class BranchController : ControllerBase
         _branchService = branchService;
     }
     
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetBranchById(long id)
+    {
+        var result = await _branchService.GetBranchAsync(id);
+        
+        if(result == null)
+        {
+            return NotFound();
+        }
+        
+        return Ok(result);
+    }
+    
     [HttpPost]
     public async Task<IActionResult> CreateBranch([FromBody] CreateBranchRequestModel request)
     {
-        var result = await _branchService.CreateBranchAsync(request.Name, request.Description);
+        var branch = await _branchService.CreateBranchAsync(request.Name, request.Description);
+
+        if (branch == null)
+        {
+            return NotFound();
+        }
         
-        return Ok(result);
+        return Created($"api/branch/{branch.Id}" ,branch);
     }
     
     [HttpPut("{id}")]
@@ -28,7 +46,12 @@ public class BranchController : ControllerBase
     {
         var result = await _branchService.UpdateBranchAsync(id, request.Name, request.Description);
         
-        return Ok(result);
+        if(result == null)
+        {
+            return NotFound();
+        }
+        
+        return NoContent();
     }
     
 }
