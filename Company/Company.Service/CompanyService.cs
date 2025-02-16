@@ -3,16 +3,19 @@ using Company.Entity;
 using Microsoft.EntityFrameworkCore;
 using Service.Helpers;
 using System.Linq;
+using EventsLibrary;
+using MassTransit;
 
 namespace Service;
 
 public class CompanyService : ICompanyService
 {
     private readonly CompanyDbContext _companyDbContext;
-
-    public CompanyService(CompanyDbContext companyDbContext)
+    private readonly IPublishEndpoint _publishEndpoint;
+    public CompanyService(CompanyDbContext companyDbContext, IPublishEndpoint publishEndpoint)
     {
         _companyDbContext = companyDbContext;
+        _publishEndpoint = publishEndpoint;
     }
 
     public async Task<CompanyEntity> GetCompanyByIdAsync(long id)
@@ -115,6 +118,13 @@ public class CompanyService : ICompanyService
             //throw new ArgumentNullException(nameof(id), "Company not deleted");
         }
         
+        _publishEndpoint.Publish<CompanyDeletedEvent>(
+            new CompanyDeletedEvent
+            {
+                Id = company.Id
+            }
+        );
+        
         return true;
     }
 
@@ -143,7 +153,14 @@ public class CompanyService : ICompanyService
 
         if (created > 0)
         {
-            // publish rabbitmq message
+            var createdEvent = new CompanyCreatedEvent()
+            {
+                Id =company.Id,
+                Name = company.Name,
+                Description = company.Description
+            };
+            
+            await _publishEndpoint.Publish<CompanyCreatedEvent>(createdEvent);
         }
         
         return company;

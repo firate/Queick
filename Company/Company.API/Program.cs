@@ -1,4 +1,5 @@
 using Company.Data;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Service;
@@ -29,7 +30,26 @@ public class Program
         
         builder.Services.AddScoped<ICompanyService, CompanyService>();
         builder.Services.AddScoped<IBranchService, BranchService>();
+
+        var rabbitMqHost = builder.Configuration["RabbitMq:Host"];
+        var rabbitMqUsername = builder.Configuration["RabbitMq:Username"];
+        var rabbitMqPassword = builder.Configuration["RabbitMq:Password"];
         
+        builder.Services.AddMassTransit(x =>
+        {
+           
+            x.UsingRabbitMq((context, cfg) =>
+            {
+                
+                cfg.Host(rabbitMqHost, "/", h =>
+                {
+                    h.Username(rabbitMqUsername);
+                    h.Password(rabbitMqPassword);
+                });
+                cfg.ConfigureEndpoints(context);
+                
+            });
+        });
         
         var app = builder.Build();
 

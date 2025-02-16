@@ -7,7 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\EventsLibrary\EventsLibrary.csproj" />
       <ProjectReference Include="..\Company.Data\Company.Data.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MassTransit.RabbitMQ" Version="8.3.6" />
     </ItemGroup>
 
 </Project>
