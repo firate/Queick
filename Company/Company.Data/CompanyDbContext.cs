@@ -9,7 +9,7 @@ public class CompanyDbContext: DbContext
     public CompanyDbContext(DbContextOptions options) : base(options)
     {
     }
-    
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -18,7 +18,6 @@ public class CompanyDbContext: DbContext
         modelBuilder.AddOutboxMessageEntity();
         modelBuilder.AddOutboxStateEntity();
     }
-
 
     public DbSet<CompanyEntity> Companies { get; set; }
     public DbSet<Branch> Branches { get; set; }

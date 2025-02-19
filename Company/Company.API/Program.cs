@@ -25,7 +25,7 @@ public class Program
         
         builder.Services.AddDbContext<CompanyDbContext>(options =>
             options.UseNpgsql(connectionString, 
-                npgsqlOptions => npgsqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null)
+                npgsqlOptions => npgsqlOptions.CommandTimeout(60)
             ));
         
         builder.Services.AddScoped<ICompanyService, CompanyService>();
@@ -37,7 +37,15 @@ public class Program
         
         builder.Services.AddMassTransit(x =>
         {
-           
+         
+            x.AddEntityFrameworkOutbox<CompanyDbContext>(o =>
+            {
+                o.QueryDelay = TimeSpan.FromSeconds(10);
+
+                o.UsePostgres();
+                o.UseBusOutbox();
+            });
+            
             x.UsingRabbitMq((context, cfg) =>
             {
                 
