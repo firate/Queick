@@ -7,23 +7,32 @@ public class AppointmentDbContext:DbContext
     public AppointmentDbContext(DbContextOptions options) : base(options)
     {
     }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        base.OnModelCreating(modelBuilder);
-        
-        
-    }
-
+    
     public DbSet<AppointmentEntity> Appointments { get; set; }
     
-    
-    //READONLY context eklenecek.
-    // public DbSet<Company> Companies { get; set; }
-    // public DbSet<Branch> Branches { get; set; }
-    // public DbSet<Employee> Employees { get; set; }
-    // public DbSet<Customer> Customers { get; set; }
-    // public DbSet<Address> Addresses { get; set; }
-    // public DbSet<Location> Locations { get; set; }
+}
 
+public class AppointmentReadOnlyContext : DbContext
+{
+    public AppointmentReadOnlyContext(DbContextOptions<AppointmentReadOnlyContext> options)
+        : base(options)
+    {
+    }
+    
+    public DbSet<Company> Companies { get; set; }
+    public DbSet<Branch> Branches { get; set; }
+    public DbSet<Employee> Employees { get; set; }
+    public DbSet<Customer> Customers { get; set; }
+    public DbSet<Address> Addresses { get; set; }
+    public DbSet<Location> Locations { get; set; }
+
+    public override int SaveChanges()
+    {
+        throw new InvalidOperationException("ReadOnly context!!");
+    }
+
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        throw new InvalidOperationException("ReadOnly context!!");
+    }
 }

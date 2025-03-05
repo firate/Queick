@@ -28,10 +28,6 @@ public class CompanyService : ICompanyService
 
         var company = await _companyDbContext.Companies.FindAsync(id);
 
-        if (company == null)
-        {
-            throw new ArgumentNullException(nameof(id), "Company not found");
-        }
         return company;
     }
     

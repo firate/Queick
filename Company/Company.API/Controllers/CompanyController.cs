@@ -35,6 +35,11 @@ public class CompanyController : ControllerBase
     {
         var result = await _companyService.GetCompanyByIdAsync(id);
 
+        if (result == null)
+        {
+            return NotFound();
+        }
+
         return Ok(result);
     }
 
