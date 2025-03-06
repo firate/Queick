@@ -1,31 +1,74 @@
 using Appointment.Entity;
 using AppointmentData;
+using Microsoft.EntityFrameworkCore;
 
 namespace Service;
 
-public class AppointmentService: IAppointmentService
+public class AppointmentService : IAppointmentService
 {
     private readonly AppointmentReadOnlyContext _readOnlyContext;
-    private readonly AppointmentDbContext _context;
-    
-    public AppointmentService(AppointmentReadOnlyContext readOnlyContext, AppointmentDbContext context)
+    private readonly AppointmentDbContext _dbContext;
+
+    public AppointmentService(AppointmentReadOnlyContext readOnlyContext, AppointmentDbContext dbContext)
     {
         _readOnlyContext = readOnlyContext;
-        _context = context;
+        _dbContext = dbContext;
     }
 
 
-    public Task<AppointmentEntity> CreateAppointment(AppointmentEntity appointment)
+    public async Task<AppointmentEntity?> GetById(long id)
+    {
+        var appointment = await _dbContext.Appointments.AsNoTracking().FirstOrDefaultAsync(a => a.Id == id);
+
+        return appointment;
+    }
+
+    public async Task<AppointmentEntity> CreateAppointment(AppointmentEntity appointment)
     {
         throw new NotImplementedException();
     }
 
-    public Task<AppointmentEntity> UpdateAppointment(AppointmentEntity appointment)
+    // public long CustomerId { get; set; }
+    // public string Name { get; set; }
+    // public string Description { get; set; }
+    // public DateTimeOffset StartDate { get; set; }
+    // public DateTimeOffset EndDate { get; set; }
+    // public Location Location { get; set; }
+    // public int LocationId { get; set; }
+
+    public async Task<AppointmentEntity> CreateAppointment(long customerId, 
+                                                            string description, 
+                                                            DateTimeOffset startTime, 
+                                                            DateTimeOffset endTime, 
+                                                            int locationId)
+    {
+        var customer = _readOnlyContext.Customers.AsNoTracking().FirstOrDefaultAsync(x => x.Id ==
+            customerId);
+
+        if (customer == null)
+        {
+            throw new Exception("Customer not found");
+        }
+        
+        var location = _readOnlyContext.Locations.AsNoTracking().FirstOrDefaultAsync(x => x.Id == locationId);
+
+        if (location == null)
+        {
+            throw new Exception("Location not found");
+        }
+        
+        
+            
+        
+        throw new NotImplementedException();
+    }
+
+    public async Task<AppointmentEntity> UpdateAppointment(AppointmentEntity appointment)
     {
         throw new NotImplementedException();
     }
 
-    public Task<AppointmentEntity> DeleteAppointment(AppointmentEntity appointment)
+    public async Task<bool> DeleteAppointment(AppointmentEntity appointment)
     {
         throw new NotImplementedException();
     }
