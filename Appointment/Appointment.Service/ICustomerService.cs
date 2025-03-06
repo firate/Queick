@@ -4,7 +4,7 @@ namespace Service;
 
 public interface ICustomerService
 {
-    Customer GetCustomerById(long id);
+    Task<Customer?> GetCustomerById(long id);
     Task CreateCustomer(Customer customer);
     
     Task UpdateCustomer(Customer customer);

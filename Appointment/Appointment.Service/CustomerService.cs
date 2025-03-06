@@ -1,14 +1,25 @@
 using Appointment.Entity;
+using AppointmentData;
+using Microsoft.EntityFrameworkCore;
 
 namespace Service;
 
 public class CustomerService : ICustomerService
 {
+    private readonly AppointmentDbContext _context;
+    private readonly AppointmentReadOnlyContext _readOnlyContext;
 
-
-    public Customer GetCustomerById(long id)
+    public CustomerService(AppointmentDbContext context, AppointmentReadOnlyContext readOnlyContext)
     {
-        throw new NotImplementedException();
+        _context = context;
+        _readOnlyContext = readOnlyContext;
+    }
+
+    public async Task<Customer?> GetCustomerById(long id)
+    {
+        var customer = await _readOnlyContext.Customers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+
+        return customer;
     }
 
     public Task CreateCustomer(Customer customer)

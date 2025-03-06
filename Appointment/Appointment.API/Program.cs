@@ -1,6 +1,7 @@
 using AppointmentData;
 
 using Microsoft.EntityFrameworkCore;
+using Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +19,10 @@ builder.Services.AddDbContext<AppointmentReadOnlyContext>(options =>
                 npgsqlOptions => npgsqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10),null)
         ).UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
     );
-  
+
+builder.Services.AddTransient<ICustomerService, CustomerService>();
+builder.Services.AddTransient<IAppointmentService, AppointmentService>();
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
@@ -29,6 +33,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.MapControllers();
 
 app.Run();
 
