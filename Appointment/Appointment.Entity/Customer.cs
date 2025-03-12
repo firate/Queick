@@ -2,10 +2,12 @@ namespace Appointment.Entity;
 
 public class Customer : BaseEntity
 {
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-    public string NationalId { get; set; }
-    public string Phone { get; set; }
-    public string PhoneCountryCode { get; set; }
-    public string Password { get; set; }
+    public required string FirstName { get; set; }
+    public required string LastName { get; set; }
+    public required string NationalId { get; set; }
+    public required string Phone { get; set; }
+    public required string PhoneCountryCode { get; set; }
+    public required string Password { get; set; }
+
+    public List<CommunicationInfo> CommInfos { get; set; } = [];
 }

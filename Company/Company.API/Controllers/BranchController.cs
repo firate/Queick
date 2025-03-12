@@ -31,7 +31,7 @@ public class BranchController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateBranch([FromBody] CreateBranchRequestModel request)
     {
-        var branch = await _branchService.CreateBranchAsync(request.Name, request.Description);
+        var branch = await _branchService.CreateBranchAsync(request.Name, request.CompanyId, request.Description);
 
         if (branch == null)
         {

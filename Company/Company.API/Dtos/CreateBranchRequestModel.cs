@@ -1,5 +1,3 @@
 namespace Company.API.Controllers;
 
-public record CreateBranchRequestModel(string Name, string Description)
-{
-}
+public record CreateBranchRequestModel(string Name, long CompanyId, string Description);

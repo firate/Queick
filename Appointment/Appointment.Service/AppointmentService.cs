@@ -36,30 +36,30 @@ public class AppointmentService : IAppointmentService
     // public Location Location { get; set; }
     // public int LocationId { get; set; }
 
-    public async Task<AppointmentEntity> CreateAppointment(long customerId, 
-                                                            string description, 
-                                                            DateTimeOffset startTime, 
-                                                            DateTimeOffset endTime, 
-                                                            int locationId)
+    public async Task<AppointmentEntity> CreateAppointment(long customerId,
+        string description,
+        DateTimeOffset startTime,
+        DateTimeOffset endTime,
+        int locationId)
     {
-        var customer = _readOnlyContext.Customers.AsNoTracking().FirstOrDefaultAsync(x => x.Id ==
-            customerId);
+        var customer = _readOnlyContext.Customers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == customerId);
 
         if (customer == null)
         {
             throw new Exception("Customer not found");
         }
-        
+
         var location = _readOnlyContext.Locations.AsNoTracking().FirstOrDefaultAsync(x => x.Id == locationId);
 
         if (location == null)
         {
             throw new Exception("Location not found");
         }
-        
-        
-            
-        
+
+        // var existingAppointmentCheck = _dbContext.Appointments.AsNoTracking().FirstOrDefaultAsync(
+        //     x=>x.CustomerId == customerId && x.LocationId == locationId);
+        //
+
         throw new NotImplementedException();
     }
 

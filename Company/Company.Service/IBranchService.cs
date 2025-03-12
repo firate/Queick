@@ -4,7 +4,7 @@ namespace Service;
 
 public interface IBranchService
 {
-    Task<Branch> CreateBranchAsync(string name, string description);
+    Task<Branch> CreateBranchAsync(string name, long companyId, string description);
     
     Task<Branch> GetBranchAsync(long id);    
     Task<Branch> UpdateBranchAsync(long id, string name, string description);

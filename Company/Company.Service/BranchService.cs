@@ -13,11 +13,20 @@ public class BranchService : IBranchService
         _companyDbContext = companyDbContext;
     }
 
-    public async Task<Branch> CreateBranchAsync(string name, string description)
+    public async Task<Branch> CreateBranchAsync(string name, long companyId, string description)
     {
+        var company = await _companyDbContext.Companies.AsNoTracking().FirstOrDefaultAsync(x=>x.Id == companyId);
+
+        if (company == null)
+        {
+            throw new ArgumentNullException(nameof(company));
+        }
+            
         Branch branch = new Branch()
         {
             Name = name,
+            CompanyId = company.Id,
+            Company = company,
             Description = description
         };
         _companyDbContext.Branches.Add(branch);
