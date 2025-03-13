@@ -13,6 +13,8 @@ public class AppointmentController: ControllerBase
         
     }    
 
+    
+    //customer
     [HttpPost]
     public async Task<IActionResult> CreateAppointment([FromBody] AppointmentCreateDto model)
     {
@@ -21,6 +23,7 @@ public class AppointmentController: ControllerBase
         return Ok("");
     }
 
+    // customer
     [HttpPost]
     public async Task<IActionResult> GetAvailableAppointmentList([FromBody] AppointmentCreateDto model)
     {

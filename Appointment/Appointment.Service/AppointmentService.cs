@@ -15,6 +15,11 @@ public class AppointmentService : IAppointmentService
         _dbContext = dbContext;
     }
 
+    public async Task GetTemplate(int locationId, DateTimeOffset startTime, DateTimeOffset endTime, string templateName)
+    {
+        
+    }
+
 
     public async Task<AppointmentEntity?> GetById(long id)
     {
