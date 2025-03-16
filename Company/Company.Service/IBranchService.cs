@@ -1,6 +1,6 @@
 using Company.Entity;
 
-namespace Service;
+namespace AppointmentService;
 
 public interface IBranchService
 {

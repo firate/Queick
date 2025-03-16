@@ -9,7 +9,7 @@ public class AppointmentEntity : BaseEntity
     public string? Description { get; set; }
     public DateTimeOffset StartDate { get; set; }
     public DateTimeOffset EndDate { get; set; }
-    public AppointmentTemplate? Template { get; set; }
+    public Schedule? Template { get; set; }
     public long? TemplateId { get; set; }
     /// <summary>
     /// Kullanıcının randevu aldığı şirket çalışanı

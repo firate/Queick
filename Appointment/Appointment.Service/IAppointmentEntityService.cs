@@ -1,8 +1,8 @@
 using Appointment.Entity;
 
-namespace Service;
+namespace AppointmentService;
 
-public interface IAppointmentService
+public interface IAppointmentEntityService
 {
     Task<AppointmentEntity?> GetById(long id);
     Task<AppointmentEntity> CreateAppointment(AppointmentEntity appointment);

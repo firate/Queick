@@ -1,6 +1,6 @@
 using Appointment.Entity;
 
-namespace Service;
+namespace AppointmentService;
 
 public interface ICustomerService
 {

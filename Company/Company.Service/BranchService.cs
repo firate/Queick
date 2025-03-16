@@ -2,7 +2,7 @@ using Company.Data;
 using Company.Entity;
 using Microsoft.EntityFrameworkCore;
 
-namespace Service;
+namespace AppointmentService;
 
 public class BranchService : IBranchService
 {

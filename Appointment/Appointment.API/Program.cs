@@ -1,7 +1,7 @@
 using AppointmentData;
 
 using Microsoft.EntityFrameworkCore;
-using Service;
+using AppointmentService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +21,7 @@ builder.Services.AddDbContext<AppointmentReadOnlyContext>(options =>
     );
 
 builder.Services.AddTransient<ICustomerService, CustomerService>();
-builder.Services.AddTransient<IAppointmentService, AppointmentService>();
+builder.Services.AddTransient<IAppointmentEntityService, AppointmentEntityService>();
 builder.Services.AddControllers();
 
 var app = builder.Build();

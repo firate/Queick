@@ -1,4 +1,4 @@
-namespace Service.Helpers;
+namespace AppointmentService.Helpers;
 
 public class PaginationResult<T>
 {

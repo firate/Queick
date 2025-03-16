@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Service;
+using AppointmentService;
 
 namespace Company.API.Controllers;
 

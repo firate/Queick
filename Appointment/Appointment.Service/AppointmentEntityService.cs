@@ -2,14 +2,14 @@ using Appointment.Entity;
 using AppointmentData;
 using Microsoft.EntityFrameworkCore;
 
-namespace Service;
+namespace AppointmentService;
 
-public class AppointmentService : IAppointmentService
+public class AppointmentEntityService : IAppointmentEntityService
 {
     private readonly AppointmentReadOnlyContext _readOnlyContext;
     private readonly AppointmentDbContext _dbContext;
 
-    public AppointmentService(AppointmentReadOnlyContext readOnlyContext, AppointmentDbContext dbContext)
+    public AppointmentEntityService(AppointmentReadOnlyContext readOnlyContext, AppointmentDbContext dbContext)
     {
         _readOnlyContext = readOnlyContext;
         _dbContext = dbContext;

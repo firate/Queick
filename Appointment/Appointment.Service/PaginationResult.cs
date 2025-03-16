@@ -1,4 +1,4 @@
-namespace Service;
+namespace AppointmentService;
 
 public class PaginationResult<T>
 {

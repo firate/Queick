@@ -1,12 +1,12 @@
 using Company.Data;
 using Company.Entity;
 using Microsoft.EntityFrameworkCore;
-using Service.Helpers;
 using System.Linq;
+using AppointmentService.Helpers;
 using EventsLibrary;
 using MassTransit;
 
-namespace Service;
+namespace AppointmentService;
 
 public class CompanyService : ICompanyService
 {

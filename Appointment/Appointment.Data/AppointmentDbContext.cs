@@ -9,5 +9,6 @@ public class AppointmentDbContext:DbContext
     }
 
     public DbSet<AppointmentEntity> Appointments { get; set; }
+    public DbSet<Schedule> Schedules { get; set; }
 
 }

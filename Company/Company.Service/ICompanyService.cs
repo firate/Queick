@@ -1,8 +1,8 @@
 
+using AppointmentService.Helpers;
 using Company.Entity;
-using Service.Helpers;
 
-namespace Service;
+namespace AppointmentService;
 
 public interface ICompanyService
 {
