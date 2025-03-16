@@ -1,0 +1,25 @@
+﻿<Solution>
+  <Folder Name="/Appointment/">
+    <Project Path="Appointment\Appointment.Data\Appointment.Data.csproj" Type="Classic C#" />
+    <Project Path="Appointment\Appointment.Entity\Appointment.Entity.csproj" Type="Classic C#" />
+    <Project Path="Appointment\Appointment.Service\Appointment.Service.csproj" Type="Classic C#" />
+  </Folder>
+  <Folder Name="/Appointment/Clients/">
+    <Project Path="Appointment\Appointment.API\Appointment.API.csproj" Type="Classic C#" />
+  </Folder>
+  <Folder Name="/Company/">
+    <Project Path="Company\Company.Data\Company.Data.csproj" Type="Classic C#" />
+    <Project Path="Company\Company.Entity\Company.Entity.csproj" Type="Classic C#" />
+    <Project Path="Company\Company.Service\Company.Service.csproj" Type="Classic C#" />
+  </Folder>
+  <Folder Name="/Company/Clients/">
+    <Project Path="Company\Company.API\Company.API.csproj" Type="Classic C#" />
+    <Project Path="Company\Company.SearchAPI\Company.SearchAPI.csproj" Type="Classic C#" />
+  </Folder>
+  <Folder Name="/Company/Workers/">
+    <Project Path="NotificationService\NotificationService.csproj" Type="Classic C#" />
+  </Folder>
+  <Folder Name="/Shared/">
+    <Project Path="EventsLibrary\EventsLibrary.csproj" Type="Classic C#" />
+  </Folder>
+</Solution>
