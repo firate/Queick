@@ -27,8 +27,7 @@ public class AppointmentEntityService : IAppointmentEntityService
         long locationId,
         string description,
         DateTimeOffset startDate,
-        DateTimeOffset endDate
-        )
+        DateTimeOffset endDate)
     {
         var cusId = await _readOnlyContext.Customers.AsNoTracking()
             .Where(x => x.Id == customerId)

@@ -16,14 +16,24 @@ public class AppointmentController: ControllerBase
     {
         _scheduleService = scheduleService;
         _appointmentEntityService = appointmentEntityService;
-    }    
+    }
 
+    [HttpGet]
+    public async Task<IActionResult> GetAppointmentById(long id)
+    {
+        var appointment = await _appointmentEntityService.GetById(id);
+
+        if (appointment == null)
+        {
+            return NotFound();
+        }
+        
+        return Ok(appointment);
+    }
     
-    //customer
     [HttpPost]
     public async Task<IActionResult> CreateAppointment([FromBody] AppointmentCreateDto model)
     {
-        // create appointment
         var appointment = await _appointmentEntityService.CreateAppointment(
             customerId: model.CustomerId, 
             employeeId: model.EmployeeId, 
@@ -32,7 +42,12 @@ public class AppointmentController: ControllerBase
             model.StartDate, 
             model.EndDate);
 
-        return Ok("");
+        if (appointment == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(appointment);
     }
 
     // customer
