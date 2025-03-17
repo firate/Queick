@@ -14,7 +14,7 @@ public class AppointmentEntityService : IAppointmentEntityService
         _readOnlyContext = readOnlyContext;
         _dbContext = dbContext;
     }
-    
+
     public async Task<AppointmentEntity?> GetById(long id)
     {
         var appointment = await _dbContext.Appointments.AsNoTracking().FirstOrDefaultAsync(a => a.Id == id);
@@ -22,46 +22,49 @@ public class AppointmentEntityService : IAppointmentEntityService
         return appointment;
     }
 
-    public async Task<AppointmentEntity> CreateAppointment(AppointmentEntity appointment)
-    {
-        throw new NotImplementedException();
-    }
-
     public async Task<AppointmentEntity> CreateAppointment(long customerId,
         long employeeId,
+        long locationId,
         string description,
-        DateTimeOffset startTime,
-        DateTimeOffset endTime,
-        int locationId)
+        DateTimeOffset startDate,
+        DateTimeOffset endDate
+        )
     {
-        var customer =await _readOnlyContext.Customers.AsNoTracking()
+        var cusId = await _readOnlyContext.Customers.AsNoTracking()
             .Where(x => x.Id == customerId)
-            .Select(x=>x.Id)
+            .Select(x => x.Id)
             .FirstOrDefaultAsync();
 
-        if (customer <= 0)
+        if (cusId <= 0)
         {
             throw new Exception("Customer not found");
         }
 
-        var location = await _readOnlyContext.Locations.AsNoTracking().FirstOrDefaultAsync(x => x.Id == locationId);
+        var locId = await _readOnlyContext.Locations.AsNoTracking()
+            .Where(x => x.Id == locationId)
+            .Select(x => x.Id)
+            .FirstOrDefaultAsync();
 
-        if (location == null)
+        if (locId <= 0)
         {
             throw new Exception("Location not found");
         }
+
+        var empId = await _readOnlyContext.Employees.AsNoTracking()
+            .Where(x => x.Id == employeeId)
+            .Select(x => x.Id)
+            .FirstOrDefaultAsync();
         
-        var employee = await _readOnlyContext.Employees.AsNoTracking().FirstOrDefaultAsync(x => x.Id == employeeId);
-        if (employee == null)
+        if (empId <= 0)
         {
             throw new Exception("Employee not found");
         }
-        
+
         var existingAppointmentCheck = _dbContext.Appointments.AsNoTracking()
-            .FirstOrDefaultAsync(x=>x.CustomerId == customerId && 
-                                    x.LocationId == locationId &&
-                                    x.StartDate == startTime && 
-                                    x.EndDate == endTime);
+            .FirstOrDefaultAsync(x => x.CustomerId == cusId &&
+                                      x.LocationId == locationId &&
+                                      x.StartDate == startDate &&
+                                      x.EndDate == endDate);
 
         if (existingAppointmentCheck != null)
         {
@@ -70,14 +73,14 @@ public class AppointmentEntityService : IAppointmentEntityService
 
         var appointment = new AppointmentEntity()
         {
-            CustomerId = customerId,
+            CustomerId = cusId,
             LocationId = locationId,
             EmployeeId = employeeId,
             Description = description,
-            StartDate = startTime,
-            EndDate = endTime
+            StartDate = startDate,
+            EndDate = endDate
         };
-        
+
         await _dbContext.Appointments.AddAsync(appointment);
         var isCreated = await _dbContext.SaveChangesAsync();
         if (isCreated > 0)
@@ -85,16 +88,16 @@ public class AppointmentEntityService : IAppointmentEntityService
             return appointment;
         }
 
-        return null;
+        return await Task.FromResult(new AppointmentEntity());
     }
 
     public async Task<AppointmentEntity> UpdateAppointment(AppointmentEntity appointment)
     {
-        throw new NotImplementedException();
+        return await Task.FromResult(new AppointmentEntity());
     }
 
     public async Task<bool> DeleteAppointment(AppointmentEntity appointment)
     {
-        throw new NotImplementedException();
+        return await Task.FromResult(false);
     }
 }

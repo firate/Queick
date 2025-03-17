@@ -10,10 +10,12 @@ namespace Appointment.API.Controllers;
 public class AppointmentController: ControllerBase
 {
     private readonly IScheduleService _scheduleService;
+    private readonly IAppointmentEntityService _appointmentEntityService;
     
-    public AppointmentController(IScheduleService scheduleService)
+    public AppointmentController(IScheduleService scheduleService, IAppointmentEntityService appointmentEntityService)
     {
         _scheduleService = scheduleService;
+        _appointmentEntityService = appointmentEntityService;
     }    
 
     
@@ -22,6 +24,13 @@ public class AppointmentController: ControllerBase
     public async Task<IActionResult> CreateAppointment([FromBody] AppointmentCreateDto model)
     {
         // create appointment
+        var appointment = await _appointmentEntityService.CreateAppointment(
+            customerId: model.CustomerId, 
+            employeeId: model.EmployeeId, 
+            locationId: model.LocationId,
+            model.Description, 
+            model.StartDate, 
+            model.EndDate);
 
         return Ok("");
     }

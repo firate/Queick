@@ -23,6 +23,8 @@ builder.Services.AddDbContext<AppointmentReadOnlyContext>(options =>
 builder.Services.AddTransient<ICustomerService, CustomerService>();
 builder.Services.AddTransient<IAppointmentEntityService, AppointmentEntityService>();
 builder.Services.AddTransient<IScheduleService, ScheduleService>();
+
+
 builder.Services.AddControllers();
 
 var app = builder.Build();
