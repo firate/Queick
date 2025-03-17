@@ -1,13 +1,17 @@
 namespace Appointment.Entity;
 
-public class AppointmentTemplate : BaseEntity
+public class Schedule : BaseEntity
 {
     public DayOfWeek DayOfWeek { get; set; }
     public TimeOnly StartDate { get; set; }
     public TimeOnly EndDate { get; set; }
     public long LocationId { get; set; }
-    public required Location Location { get; set; }
+    public Location? Location { get; set; }
+
+    public Employee? Employee { get; set; }
+    public long EmployeeId { get; set; }
+    
     //StartDate ve EndDate'in UTC'den ne kadar farklı olduğu bilgisini tutar.
-    public required TimeSpan UtcOffSet { get; set; }
+    public required int UtcOffSetMinutes { get; set; }
     
 }

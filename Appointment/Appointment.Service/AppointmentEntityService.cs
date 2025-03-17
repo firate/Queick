@@ -14,13 +14,7 @@ public class AppointmentEntityService : IAppointmentEntityService
         _readOnlyContext = readOnlyContext;
         _dbContext = dbContext;
     }
-
-    public async Task GetTemplate(int locationId, DateTimeOffset startTime, DateTimeOffset endTime, string templateName)
-    {
-        
-    }
-
-
+    
     public async Task<AppointmentEntity?> GetById(long id)
     {
         var appointment = await _dbContext.Appointments.AsNoTracking().FirstOrDefaultAsync(a => a.Id == id);
@@ -33,39 +27,65 @@ public class AppointmentEntityService : IAppointmentEntityService
         throw new NotImplementedException();
     }
 
-    // public long CustomerId { get; set; }
-    // public string Name { get; set; }
-    // public string Description { get; set; }
-    // public DateTimeOffset StartDate { get; set; }
-    // public DateTimeOffset EndDate { get; set; }
-    // public Location Location { get; set; }
-    // public int LocationId { get; set; }
-
     public async Task<AppointmentEntity> CreateAppointment(long customerId,
+        long employeeId,
         string description,
         DateTimeOffset startTime,
         DateTimeOffset endTime,
         int locationId)
     {
-        var customer = _readOnlyContext.Customers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == customerId);
+        var customer =await _readOnlyContext.Customers.AsNoTracking()
+            .Where(x => x.Id == customerId)
+            .Select(x=>x.Id)
+            .FirstOrDefaultAsync();
 
-        if (customer == null)
+        if (customer <= 0)
         {
             throw new Exception("Customer not found");
         }
 
-        var location = _readOnlyContext.Locations.AsNoTracking().FirstOrDefaultAsync(x => x.Id == locationId);
+        var location = await _readOnlyContext.Locations.AsNoTracking().FirstOrDefaultAsync(x => x.Id == locationId);
 
         if (location == null)
         {
             throw new Exception("Location not found");
         }
+        
+        var employee = await _readOnlyContext.Employees.AsNoTracking().FirstOrDefaultAsync(x => x.Id == employeeId);
+        if (employee == null)
+        {
+            throw new Exception("Employee not found");
+        }
+        
+        var existingAppointmentCheck = _dbContext.Appointments.AsNoTracking()
+            .FirstOrDefaultAsync(x=>x.CustomerId == customerId && 
+                                    x.LocationId == locationId &&
+                                    x.StartDate == startTime && 
+                                    x.EndDate == endTime);
 
-        // var existingAppointmentCheck = _dbContext.Appointments.AsNoTracking().FirstOrDefaultAsync(
-        //     x=>x.CustomerId == customerId && x.LocationId == locationId);
-        //
+        if (existingAppointmentCheck != null)
+        {
+            throw new Exception("Appointment already exists");
+        }
 
-        throw new NotImplementedException();
+        var appointment = new AppointmentEntity()
+        {
+            CustomerId = customerId,
+            LocationId = locationId,
+            EmployeeId = employeeId,
+            Description = description,
+            StartDate = startTime,
+            EndDate = endTime
+        };
+        
+        await _dbContext.Appointments.AddAsync(appointment);
+        var isCreated = await _dbContext.SaveChangesAsync();
+        if (isCreated > 0)
+        {
+            return appointment;
+        }
+
+        return null;
     }
 
     public async Task<AppointmentEntity> UpdateAppointment(AppointmentEntity appointment)
