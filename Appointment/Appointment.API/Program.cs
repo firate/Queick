@@ -1,7 +1,7 @@
-using AppointmentData;
+using Appointment.Data;
 
 using Microsoft.EntityFrameworkCore;
-using AppointmentService;
+using Appointment.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 

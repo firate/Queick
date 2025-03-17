@@ -2,5 +2,5 @@ namespace Appointment.Entity;
 
 public class Address : BaseEntity
 {
-    public string Name { get; set; }
+    public string? Name { get; set; }
 }

@@ -9,7 +9,7 @@ public class Employee : BaseEntity
     public string Position { get; set; }
     public bool IsActive { get; set; }
     public bool IsDeleted { get; set; }
-    public Branch Branch { get; set; }
+    public Branch? Branch { get; set; }
     public long BranchId { get; set; }
     public DateTimeOffset Created { get; set; }
     public DateTimeOffset Updated { get; set; }

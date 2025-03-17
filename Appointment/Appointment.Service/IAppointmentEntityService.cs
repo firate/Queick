@@ -1,12 +1,12 @@
 using Appointment.Entity;
 
-namespace AppointmentService;
+namespace Appointment.Service;
 
 public interface IAppointmentEntityService
 {
-    Task<AppointmentEntity?> GetById(long id);
+    Task<Entity.Appointment?> GetById(long id);
 
-    Task<AppointmentEntity> CreateAppointment(
+    Task<Entity.Appointment> CreateAppointment(
         long customerId,
         long employeeId,
         long locationId,
@@ -14,8 +14,14 @@ public interface IAppointmentEntityService
         DateTimeOffset startDate,
         DateTimeOffset endDate
     );
-    Task<AppointmentEntity> UpdateAppointment(AppointmentEntity appointment);
-    Task<bool> DeleteAppointment(AppointmentEntity appointment);
+    Task<Entity.Appointment> UpdateAppointment(
+        long appointmentId,
+        long locationId,
+        long employeeId,
+        string description,
+        DateTimeOffset startDate,
+        DateTimeOffset endDate);
+    Task<bool> DeleteAppointment(long appointmentId);
     
     
     

@@ -1,6 +1,6 @@
 namespace Appointment.Entity;
 
-public class AppointmentEntity : BaseEntity
+public class Appointment : BaseEntity
 {
     public long CustomerId { get; set; }
     public Customer? Customer { get; set; }
@@ -17,4 +17,6 @@ public class AppointmentEntity : BaseEntity
     /// </summary>
     public long EmployeeId { get; set; }
     public Employee? Employee { get; set; }
+
+    public bool IsDeleted { get; set; }
 }

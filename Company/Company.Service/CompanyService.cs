@@ -2,11 +2,11 @@ using Company.Data;
 using Company.Entity;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using AppointmentService.Helpers;
-using EventsLibrary;
+using Appointment.Service.Helpers;
+//  using EventsLibrary;
 using MassTransit;
 
-namespace AppointmentService;
+namespace Appointment.Service;
 
 public class CompanyService : ICompanyService
 {
@@ -114,12 +114,12 @@ public class CompanyService : ICompanyService
             //throw new ArgumentNullException(nameof(id), "Company not deleted");
         }
         
-        _publishEndpoint.Publish<CompanyDeletedEvent>(
-            new CompanyDeletedEvent
-            {
-                Id = company.Id
-            }
-        );
+        // _publishEndpoint.Publish<CompanyDeletedEvent>(
+        //     new CompanyDeletedEvent
+        //     {
+        //         Id = company.Id
+        //     }
+        // );
         
         return true;
     }
@@ -147,17 +147,17 @@ public class CompanyService : ICompanyService
         
         // TODO: check if the company is created successfully
 
-        if (created > 0)
-        {
-            var createdEvent = new CompanyCreatedEvent()
-            {
-                Id =company.Id,
-                Name = company.Name,
-                Description = company.Description
-            };
-            
-            await _publishEndpoint.Publish<CompanyCreatedEvent>(createdEvent);
-        }
+        // if (created > 0)
+        // {
+        //     var createdEvent = new CompanyCreatedEvent()
+        //     {
+        //         Id =company.Id,
+        //         Name = company.Name,
+        //         Description = company.Description
+        //     };
+        //     
+        //     await _publishEndpoint.Publish<CompanyCreatedEvent>(createdEvent);
+        // }
         
         return company;
     }

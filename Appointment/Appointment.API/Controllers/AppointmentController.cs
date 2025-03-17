@@ -1,6 +1,6 @@
 using Appointment.API.DTOs;
-using AppointmentData;
-using AppointmentService;
+using Appointment.Data;
+using Appointment.Service;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Appointment.API.Controllers;

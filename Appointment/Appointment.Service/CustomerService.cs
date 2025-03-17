@@ -1,8 +1,8 @@
 using Appointment.Entity;
-using AppointmentData;
+using Appointment.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace AppointmentService;
+namespace Appointment.Service;
 
 public class CustomerService : ICustomerService
 {

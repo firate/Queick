@@ -1,8 +1,8 @@
 using Appointment.Entity;
-using AppointmentData;
+using Appointment.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace AppointmentService;
+namespace Appointment.Service;
 
 public class AppointmentEntityService : IAppointmentEntityService
 {
@@ -15,14 +15,14 @@ public class AppointmentEntityService : IAppointmentEntityService
         _dbContext = dbContext;
     }
 
-    public async Task<AppointmentEntity?> GetById(long id)
+    public async Task<Entity.Appointment?> GetById(long id)
     {
         var appointment = await _dbContext.Appointments.AsNoTracking().FirstOrDefaultAsync(a => a.Id == id);
 
         return appointment;
     }
 
-    public async Task<AppointmentEntity> CreateAppointment(long customerId,
+    public async Task<Entity.Appointment> CreateAppointment(long customerId,
         long employeeId,
         long locationId,
         string description,
@@ -63,14 +63,15 @@ public class AppointmentEntityService : IAppointmentEntityService
             .FirstOrDefaultAsync(x => x.CustomerId == cusId &&
                                       x.LocationId == locationId &&
                                       x.StartDate == startDate &&
-                                      x.EndDate == endDate);
+                                      x.EndDate == endDate &&
+                                      !x.IsDeleted);
 
         if (existingAppointmentCheck != null)
         {
             throw new Exception("Appointment already exists");
         }
 
-        var appointment = new AppointmentEntity()
+        var appointment = new Entity.Appointment()
         {
             CustomerId = cusId,
             LocationId = locationId,
@@ -87,16 +88,45 @@ public class AppointmentEntityService : IAppointmentEntityService
             return appointment;
         }
 
-        return await Task.FromResult(new AppointmentEntity());
+        return await Task.FromResult(new Entity.Appointment());
     }
 
-    public async Task<AppointmentEntity> UpdateAppointment(AppointmentEntity appointment)
+    public async Task<Entity.Appointment> UpdateAppointment(long appointmentId, long locationId, long employeeId, string description, DateTimeOffset startDate,
+        DateTimeOffset endDate)
     {
-        return await Task.FromResult(new AppointmentEntity());
+        var  appointment = await _dbContext.Appointments.FirstOrDefaultAsync(a => a.Id == appointmentId);
+        if (appointment == null)
+        {
+            throw new Exception("Appointment not found");
+        }
+        
+        appointment.LocationId = locationId;
+        appointment.EmployeeId = employeeId;
+        appointment.Description = description;
+        appointment.StartDate = startDate;
+        appointment.EndDate = endDate;
+        
+        var isUpdated = await _dbContext.SaveChangesAsync();
+
+        if (isUpdated > 0)
+        {
+            return appointment;
+        }
+        
+        return await Task.FromResult(new Entity.Appointment());
     }
 
-    public async Task<bool> DeleteAppointment(AppointmentEntity appointment)
+    public async Task<bool> DeleteAppointment(long appointmentId)
     {
-        return await Task.FromResult(false);
+        var  appointment = await _dbContext.Appointments.FirstOrDefaultAsync(a => a.Id == appointmentId);
+        if (appointment == null)
+        {
+            throw new Exception("Appointment not found");
+        }
+        
+        appointment.IsDeleted = true;
+        var isUpdated = await _dbContext.SaveChangesAsync();
+        
+        return isUpdated > 0;
     }
 }

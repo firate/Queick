@@ -1,7 +1,7 @@
-using AppointmentData;
+using Appointment.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace AppointmentService;
+namespace Appointment.Service;
 
 public interface IScheduleService
 {

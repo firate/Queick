@@ -1,7 +1,7 @@
 ﻿using Appointment.Entity;
 using Microsoft.EntityFrameworkCore;
 
-namespace AppointmentData;
+namespace Appointment.Data;
 
 public class AppointmentReadOnlyContext : DbContext
 {
