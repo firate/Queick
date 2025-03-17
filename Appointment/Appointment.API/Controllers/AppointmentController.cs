@@ -1,5 +1,6 @@
 using Appointment.API.DTOs;
 using AppointmentData;
+using AppointmentService;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Appointment.API.Controllers;
@@ -8,9 +9,11 @@ namespace Appointment.API.Controllers;
 [ApiController]
 public class AppointmentController: ControllerBase
 {
-    public AppointmentController()
+    private readonly IScheduleService _scheduleService;
+    
+    public AppointmentController(IScheduleService scheduleService)
     {
-        
+        _scheduleService = scheduleService;
     }    
 
     
@@ -25,13 +28,15 @@ public class AppointmentController: ControllerBase
 
     // customer
     [HttpPost]
-    public async Task<IActionResult> GetAvailableAppointmentList([FromBody] AppointmentCreateDto model)
+    public async Task<IActionResult> GetScheduleList([FromBody] ScheduleListDto model)
     {
-        // ilgili tarih aralığı için template'i getir, 
-        // template'e uygun model oluştur, daha önce belirlenmiş randevuları, alındı olarak göster,
-        // model'de henüz randevu oluşturulmamış, saatler için "available" göster
-        
-        return Ok("");
+        var schedules = await _scheduleService.GetScheduleList(model.LocationId, model.EmployeeId, model.StartDate,model.EndDate);
+        if (schedules?.Schedules == null  || schedules.Schedules.Count == 0)
+        {
+            return NotFound();
+        }
+            
+        return Ok(schedules);
     }
 
   
