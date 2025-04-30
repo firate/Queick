@@ -11,3 +11,12 @@ public class Customer : BaseEntity
 
     public List<CommunicationInfo> CommInfos { get; set; } = [];
 }
+
+public enum LoginUsernameType
+{
+    None,
+    Phone,
+    Email,
+    NationalId,
+    Username
+}

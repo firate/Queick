@@ -14,10 +14,17 @@ public class CustomerService : ICustomerService
         _context = context;
         _readOnlyContext = readOnlyContext;
     }
-
+    
     public async Task<Customer?> GetCustomerById(long id)
     {
-        var customer = await _readOnlyContext.Customers.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+        var customer = await _readOnlyContext.Customers.FirstOrDefaultAsync(x => x.Id == id);
+
+        return customer;
+    }
+    
+    public async Task<Customer?> GetCustomerById2(long id)
+    {
+        var customer = await _readOnlyContext.Customers.FirstOrDefaultAsync(x => x.Id == id);
 
         return customer;
     }

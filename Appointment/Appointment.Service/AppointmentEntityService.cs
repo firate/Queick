@@ -1,4 +1,3 @@
-using Appointment.Entity;
 using Appointment.Data;
 using Microsoft.EntityFrameworkCore;
 
