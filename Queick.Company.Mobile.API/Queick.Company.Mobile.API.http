@@ -1,0 +1,6 @@
+@Queick.Company.Mobile.API_HostAddress = http://localhost:5287
+
+GET {{Queick.Company.Mobile.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

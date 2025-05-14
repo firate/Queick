@@ -1,0 +1,6 @@
+@Queick.Company.Web.BFF_HostAddress = http://localhost:5139
+
+GET {{Queick.Company.Web.BFF_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -25,8 +25,15 @@ public class AppointmentController: ControllerBase
 
         if (appointment == null)
         {
-            return NotFound();
+            var res = Result<Entity.Appointment>.Failure("Not found!");
+            
+            return NotFound(res);
         }
+
+        var result = Result<Entity.Appointment>.Success(appointment);
+        
+       
+        
         
         return Ok(appointment);
     }
