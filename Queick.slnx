@@ -12,7 +12,7 @@
   <Folder Name="/Clean/Company/">
     <Project Path="Queick.Company.Application\Queick.Company.Application.csproj" Type="Classic C#" />
     <Project Path="Queick.Company.Domain\Queick.Company.Domain.csproj" Type="Classic C#" />
-    <Project Path="Queick.Company.Infrastucture\Queick.Company.Infrastucture.csproj" Type="Classic C#" />
+    <Project Path="Queick.Company.Infrastructure\Queick.Company.Infrastructure.csproj" Type="Classic C#" />
     <Project Path="Queick.Company.Persistence\Queick.Company.Persistence.csproj" Type="Classic C#" />
   </Folder>
   <Folder Name="/Clean/Company/Clients/">
@@ -21,18 +21,6 @@
   </Folder>
   <Folder Name="/Clean/Shared/">
     <Project Path="Queick.Shared.Events\Queick.Shared.Events.csproj" Type="Classic C#" />
-  </Folder>
-  <Folder Name="/Company/">
-    <Project Path="Company\Company.Data\Company.Data.csproj" Type="Classic C#" />
-    <Project Path="Company\Company.Entity\Company.Entity.csproj" Type="Classic C#" />
-    <Project Path="Company\Company.Service\Company.Service.csproj" Type="Classic C#" />
-  </Folder>
-  <Folder Name="/Company/Clients/">
-    <Project Path="Company\Company.API\Company.API.csproj" Type="Classic C#" />
-    <Project Path="Company\Company.SearchAPI\Company.SearchAPI.csproj" Type="Classic C#" />
-  </Folder>
-  <Folder Name="/Company/Workers/">
-    <Project Path="NotificationService\NotificationService.csproj" Type="Classic C#" />
   </Folder>
   <Folder Name="/Shared/">
     <Project Path="EventsLibrary\EventsLibrary.csproj" Type="Classic C#" />

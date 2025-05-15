@@ -1,6 +1,6 @@
 namespace Queick.Company.Domain;
 
-public class BaseEntity
+public interface IEntity
 {
     public long Id { get; set; }
 }

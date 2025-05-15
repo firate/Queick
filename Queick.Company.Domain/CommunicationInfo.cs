@@ -1,6 +1,6 @@
 namespace Queick.Company.Domain;
 
-public class CommunicationInfo : BaseEntity
+public class CommunicationInfo : IEntity
 {
     public string Name { get; set; }
     public string Description { get; set; }
@@ -13,7 +13,8 @@ public class CommunicationInfo : BaseEntity
         get => (int) CommunicationType; 
         set => CommunicationType = (CommunicationType) value;
     }
-    
+
+    public long Id { get; set; }
 }
 
 public enum CommunicationType
