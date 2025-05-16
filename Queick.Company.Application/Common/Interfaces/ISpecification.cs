@@ -1,7 +1,10 @@
 using System.Linq.Expressions;
 
-namespace Queick.Company.Application.Repositories;
+namespace Queick.Company.Application.Common.Interfaces;
 
+/// <summary>
+/// Specification deseni için temel arayüz
+/// </summary>
 public interface ISpecification<T>
 {
     Expression<Func<T, bool>> Criteria { get; }

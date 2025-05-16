@@ -11,4 +11,11 @@
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.4" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Queick.Company.Application\Queick.Company.Application.csproj" />
+      <ProjectReference Include="..\Queick.Company.Domain\Queick.Company.Domain.csproj" />
+      <ProjectReference Include="..\Queick.Company.Infrastructure\Queick.Company.Infrastructure.csproj" />
+      <ProjectReference Include="..\Queick.Company.Persistence\Queick.Company.Persistence.csproj" />
+    </ItemGroup>
+
 </Project>

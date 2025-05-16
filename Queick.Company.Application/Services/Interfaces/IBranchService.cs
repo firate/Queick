@@ -1,5 +1,3 @@
-
-
 namespace Queick.Company.Application.Services.Interfaces;
 
 public interface IBranchRepository

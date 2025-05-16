@@ -1,3 +1,5 @@
+using Queick.Company.Infrastructure.Data;
+
 namespace Queick.Company.Web.BFF;
 
 public class Program
@@ -6,6 +8,7 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        builder.Services.AddInfrastructure();
         // Add services to the container.
         builder.Services.AddAuthorization();
 
