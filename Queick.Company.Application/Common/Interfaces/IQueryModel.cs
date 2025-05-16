@@ -2,10 +2,7 @@ using System.Linq.Expressions;
 
 namespace Queick.Company.Application.Common.Interfaces;
 
-/// <summary>
-/// Specification deseni için temel arayüz
-/// </summary>
-public interface ISpecification<T>
+public interface IQueryModel<T>
 {
     Expression<Func<T, bool>> Criteria { get; }
     List<Expression<Func<T, object>>> Includes { get; }

@@ -19,20 +19,20 @@ public interface IApplicationDbContext
     /// <summary>
     /// Specification'a göre entity'leri listeleyen sorgu metodu.
     /// </summary>
-    Task<List<TEntity>> ListAsync<TEntity>(ISpecification<TEntity>? spec = null, int page = 1, int pageSize = 25,
+    Task<List<TEntity>> ListAsync<TEntity>(IQueryModel<TEntity>? criterias = null, int page = 1, int pageSize = 25,
         CancellationToken cancellationToken = default) where TEntity : class, IEntity;
 
     /// <summary>
     /// Specification'a göre ilk entity'i getiren sorgu metodu.
     /// </summary>
-    Task<TEntity> FirstOrDefaultAsync<TEntity>(ISpecification<TEntity> spec,
+    Task<TEntity> FirstOrDefaultAsync<TEntity>(IQueryModel<TEntity> criterias,
         CancellationToken cancellationToken = default)
         where TEntity : class, IEntity;
 
     /// <summary>
     /// Specification'a göre entity sayısını getiren sorgu metodu.
     /// </summary>
-    Task<int> CountAsync<TEntity>(ISpecification<TEntity> spec, CancellationToken cancellationToken = default)
+    Task<int> CountAsync<TEntity>(IQueryModel<TEntity> criterias, CancellationToken cancellationToken = default)
         where TEntity : class, IEntity;
 
     #endregion

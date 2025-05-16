@@ -51,32 +51,32 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     // Task<List<TEntity>> ListAsync<TEntity>(ISpecification<TEntity>? spec = null, int page = 1, int pageSize = 25,
     // CancellationToken cancellationToken = default) where TEntity : class, IEntity
 
-    public async Task<List<TEntity>> ListAsync<TEntity>(ISpecification<TEntity>? spec = null, int page = 1,
+    public async Task<List<TEntity>> ListAsync<TEntity>(IQueryModel<TEntity>? criterias = null, int page = 1,
         int pageSize = 25,
         CancellationToken cancellationToken = default)
         where TEntity : class, IEntity
     {
-        if (spec is null)
+        if (criterias is null)
         {
             return await ListAsync<TEntity>(page, pageSize, cancellationToken);
         }
         
-        return await ApplySpecification(spec).ToListAsync(cancellationToken);
+        return await ApplyCriterias(criterias).ToListAsync(cancellationToken);
     }
 
-    public async Task<TEntity>? FirstOrDefaultAsync<TEntity>(ISpecification<TEntity> spec,
+    public async Task<TEntity>? FirstOrDefaultAsync<TEntity>(IQueryModel<TEntity> criterias,
         CancellationToken cancellationToken = default)
         where TEntity : class, IEntity
     {
-        var query = ApplySpecification(spec);
+        var query = ApplyCriterias(criterias);
         return await query?.FirstOrDefaultAsync(cancellationToken);
     }
 
-    public async Task<int> CountAsync<TEntity>(ISpecification<TEntity> spec,
+    public async Task<int> CountAsync<TEntity>(IQueryModel<TEntity> criterias,
         CancellationToken cancellationToken = default)
         where TEntity : class, IEntity
     {
-        return await ApplySpecification(spec).CountAsync(cancellationToken);
+        return await ApplyCriterias(criterias).CountAsync(cancellationToken);
     }
 
     public async Task<TEntity> AddAsync<TEntity>(TEntity entity, CancellationToken cancellationToken = default)
@@ -191,10 +191,16 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
 
     #region Helper Methods
 
-    private IQueryable<TEntity> ApplySpecification<TEntity>(ISpecification<TEntity> spec)
+    // private IQueryable<TEntity> ApplySpecification<TEntity>(ISpecification<TEntity> spec)
+    //     where TEntity : class, IEntity
+    // {
+    //     return SpecificationEvaluator<TEntity>.GetQuery(Set<TEntity>().AsQueryable(), spec);
+    // }
+    
+    private IQueryable<TEntity> ApplyCriterias<TEntity>(IQueryModel<TEntity> spec)
         where TEntity : class, IEntity
     {
-        return SpecificationEvaluator<TEntity>.GetQuery(Set<TEntity>().AsQueryable(), spec);
+        return QueryCreator<TEntity>.GetQuery(Set<TEntity>().AsQueryable(), spec);
     }
 
     private void ApplyAuditProperties()

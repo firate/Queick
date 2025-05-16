@@ -21,15 +21,14 @@ public class CompanyService : ICompanyService
 
     public async Task<CompanyDto> GetCompanyByIdAsync(long id, CancellationToken cancellationToken = default)
     {
-        var spec = new CompanyByIdSpecification(id);
-        var company = await _dbContext.FirstOrDefaultAsync(spec, cancellationToken);
+        var queryModel = new QueryModel<CompanyDomain>(x=>x.Id == id && !x.IsDeleted);
+        var company = await _dbContext.FirstOrDefaultAsync(queryModel, cancellationToken);
 
         if (company is null)
         {
             return null;
         }
             
-
         return new CompanyDto
         {
             Id = company.Id,
@@ -41,7 +40,9 @@ public class CompanyService : ICompanyService
     public async Task<List<CompanyDto>> GetCompaniesAsync(int page, int pageSize,
         CancellationToken cancellationToken = default)
     {
-        var companies = await _dbContext.ListAsync<CompanyDomain>(null, page, pageSize, cancellationToken);
+        var queryModel = new QueryModel<CompanyDomain>(x=>!x.IsDeleted);
+        
+        var companies = await _dbContext.ListAsync<CompanyDomain>(queryModel, page, pageSize, cancellationToken);
 
         return companies.Select(c => new CompanyDto
         {
@@ -57,7 +58,7 @@ public class CompanyService : ICompanyService
         var company = new CompanyDomain
         {
             Name = companyDto.Name,
-            Description = companyDto.Description
+            Description = companyDto?.Description ?? string.Empty
         };
 
         // Değişiklikleri takip et
@@ -72,14 +73,14 @@ public class CompanyService : ICompanyService
 
     public async Task UpdateCompanyAsync(CompanyDto companyDto, CancellationToken cancellationToken = default)
     {
-        var spec = new CompanyByIdSpecification(companyDto.Id);
-        var company = await _dbContext.FirstOrDefaultAsync(spec, cancellationToken);
+        var queryModel = new QueryModel<CompanyDomain>(x=>x.Id == companyDto.Id);
+        var company = await _dbContext.FirstOrDefaultAsync(queryModel, cancellationToken);
 
         if (company == null)
             throw new NotFoundException($"Company with ID {companyDto.Id} not found.");
 
         company.Name = companyDto.Name;
-        company.Description = companyDto.Description;
+        company.Description = companyDto?.Description?? string.Empty;
 
         // Değişiklikleri takip et
         await _dbContext.UpdateAsync(company, cancellationToken);
@@ -90,8 +91,8 @@ public class CompanyService : ICompanyService
 
     public async Task DeleteCompanyAsync(long id, CancellationToken cancellationToken = default)
     {
-        var spec = new CompanyByIdSpecification(id);
-        var company = await _dbContext.FirstOrDefaultAsync(spec, cancellationToken);
+        var queryModel = new QueryModel<CompanyDomain>(x=>x.Id == id);
+        var company = await _dbContext.FirstOrDefaultAsync(queryModel, cancellationToken);
 
         if (company == null)
             throw new NotFoundException($"Company with ID {id} not found.");

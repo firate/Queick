@@ -3,12 +3,9 @@ using Queick.Company.Application.Common.Interfaces;
 
 namespace Queick.Company.Application.Common.Specification;
 
-/// <summary>
-/// Base Specification sınıfı
-/// </summary>
-public abstract class BaseSpecification<T> : ISpecification<T>
+public class QueryModel<T> : IQueryModel<T>
 {
-    public BaseSpecification(Expression<Func<T, bool>>? criteria = null, int page = 0, int pageSize = 100)
+    public QueryModel(Expression<Func<T, bool>>? criteria = null, int page = 0, int pageSize = 100)
     {
         Criteria = criteria;
         ApplyPaging(page * pageSize, pageSize);
