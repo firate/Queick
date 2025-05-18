@@ -1,8 +1,8 @@
-using Queick.Company.Application.Common.Exceptions;
-using Queick.Company.Application.Common.Specification;
-using Queick.Company.Application.Repositories;
 using Queick.Company.Application.Services.Interfaces;
 using Queick.Company.Domain;
+using Queick.Shared.Application.Exceptions;
+using Queick.Shared.Application.Repositories;
+using Queick.Shared.Application.Specification;
 using CompanyDto = Queick.Company.Application.Common.Models.CompanyDto;
 
 /// <summary>
@@ -22,7 +22,7 @@ public class CompanyService : ICompanyService
     public async Task<CompanyDto> GetCompanyByIdAsync(long id, CancellationToken cancellationToken = default)
     {
         var queryModel = new QueryModel<CompanyDomain>(x=>x.Id == id && !x.IsDeleted);
-        var company = await _dbContext.FirstOrDefaultAsync(queryModel, cancellationToken);
+        var company = await _dbContext.FirstOrDefaultAsync<CompanyDomain>(queryModel, cancellationToken);
 
         if (company is null)
         {

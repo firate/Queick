@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
-using Queick.Company.Application.Common.Interfaces;
+using Queick.Shared.Application.Interfaces;
+using Queick.Shared.Infrastructure;
 
 namespace Queick.Company.Infrastructure.Data;
 

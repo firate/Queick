@@ -1,3 +1,5 @@
+using Queick.Shared.Domain;
+
 namespace Queick.Company.Domain;
 
 public class Employee : IEntity

@@ -1,3 +1,5 @@
+using Queick.Shared.Domain;
+
 namespace Queick.Company.Domain;
 
 public class CommunicationInfo : IEntity
@@ -15,12 +17,4 @@ public class CommunicationInfo : IEntity
     }
 
     public long Id { get; set; }
-}
-
-public enum CommunicationType
-{
-    Email,
-    Phone,
-    Fax,
-    Mobile
 }

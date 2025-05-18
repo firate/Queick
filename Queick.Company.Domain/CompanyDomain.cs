@@ -1,3 +1,5 @@
+using Queick.Shared.Domain;
+
 namespace Queick.Company.Domain;
 
 public class CompanyDomain : IEntity
@@ -7,6 +9,5 @@ public class CompanyDomain : IEntity
     public string Description { get; set; }
     public bool IsActive { get; set; }
     public bool IsDeleted { get; set; }
-
     public List<Branch> Branches { get; set; } = new();
 }

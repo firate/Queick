@@ -1,25 +1,28 @@
 ﻿<Solution>
   <Folder Name="/Appointment/">
-    <Project Path="Appointment\Appointment.Data\Appointment.Data.csproj" Type="Classic C#" />
-    <Project Path="Appointment\Appointment.Entity\Appointment.Entity.csproj" Type="Classic C#" />
-    <Project Path="Appointment\Appointment.Service\Appointment.Service.csproj" Type="Classic C#" />
+    <Project Path="Queick.Appointment.Application\Queick.Appointment.Application.csproj" Type="Classic C#" />
+    <Project Path="Queick.Appointment.Domain\Queick.Appointment.Domain.csproj" Type="Classic C#" />
+    <Project Path="Queick.Appointment.Infrastructure\Queick.Appointment.Infrastructure.csproj" Type="Classic C#" />
+    <Project Path="Queick.Appointment.Persistence\Queick.Appointment.Persistence.csproj" Type="Classic C#" />
   </Folder>
-  <Folder Name="/Appointment/Clients/">
-    <Project Path="Appointment\Appointment.API\Appointment.API.csproj" Type="Classic C#" />
-  </Folder>
-  <Folder Name="/Clean/" />
-  <Folder Name="/Clean/Appointment/" />
-  <Folder Name="/Clean/Company/">
-    <Project Path="Queick.Company.Application\Queick.Company.Application.csproj" Type="Classic C#" />
-    <Project Path="Queick.Company.Domain\Queick.Company.Domain.csproj" Type="Classic C#" />
-    <Project Path="Queick.Company.Infrastructure\Queick.Company.Infrastructure.csproj" Type="Classic C#" />
-    <Project Path="Queick.Company.Persistence\Queick.Company.Persistence.csproj" Type="Classic C#" />
+  <Folder Name="/Clean/Appointment/Clients/">
+    <Project Path="Queick.Appointment.Mobile.API\Queick.Appointment.Mobile.API.csproj" Type="Classic C#" />
+    <Project Path="Queick.Appointment.Web.BFF\Queick.Appointment.Web.BFF.csproj" Type="Classic C#" />
   </Folder>
   <Folder Name="/Clean/Company/Clients/">
     <Project Path="Queick.Company.Mobile.API\Queick.Company.Mobile.API.csproj" Type="Classic C#" />
     <Project Path="Queick.Company.Web.BFF\Queick.Company.Web.BFF.csproj" Type="Classic C#" />
   </Folder>
-  <Folder Name="/Clean/Shared/">
+  <Folder Name="/Company/">
+    <Project Path="Queick.Company.Application\Queick.Company.Application.csproj" Type="Classic C#" />
+    <Project Path="Queick.Company.Domain\Queick.Company.Domain.csproj" Type="Classic C#" />
+    <Project Path="Queick.Company.Infrastructure\Queick.Company.Infrastructure.csproj" Type="Classic C#" />
+    <Project Path="Queick.Company.Persistence\Queick.Company.Persistence.csproj" Type="Classic C#" />
+  </Folder>
+  <Folder Name="/Shared/">
+    <Project Path="Queick.Shared.Application\Queick.Shared.Application.csproj" Type="Classic C#" />
+    <Project Path="Queick.Shared.Domain\Queick.Shared.Domain.csproj" Type="Classic C#" />
     <Project Path="Queick.Shared.Events\Queick.Shared.Events.csproj" Type="Classic C#" />
+    <Project Path="Queick.Shared.Infrastructure\Queick.Shared.Infrastructure.csproj" Type="Classic C#" />
   </Folder>
 </Solution>

@@ -1,6 +1,3 @@
-using Queick.Company.Application.Common.Specification;
-using Queick.Company.Application.DTOs;
-using Queick.Company.Domain;
 using CompanyDto = Queick.Company.Application.Common.Models.CompanyDto;
 
 namespace Queick.Company.Application.Services.Interfaces;

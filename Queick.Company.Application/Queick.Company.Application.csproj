@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Queick.Company.Domain\Queick.Company.Domain.csproj" />
+      <ProjectReference Include="..\Queick.Shared.Application\Queick.Shared.Application.csproj" />
     </ItemGroup>
 
 </Project>
