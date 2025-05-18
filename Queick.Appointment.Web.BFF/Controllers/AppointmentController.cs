@@ -1,5 +1,4 @@
 using Appointment.API.DTOs;
-using Appointment.Data;
 using Appointment.Service;
 using Microsoft.AspNetCore.Mvc;
 

@@ -1,4 +1,6 @@
-namespace Appointment.Entity;
+using Appointment.Entity;
+
+namespace Queick.Appointment.Domain;
 
 public class Appointment : BaseEntity
 {
