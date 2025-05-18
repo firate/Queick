@@ -1,6 +1,7 @@
 using Appointment.Entity;
 using Appointment.Data;
 using Microsoft.EntityFrameworkCore;
+using Queick.Appointment.Application;
 
 namespace Appointment.Service;
 

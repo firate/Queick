@@ -1,6 +1,8 @@
-namespace Appointment.Entity;
+using Appointment.Entity;
 
-public class CommunicationInfo : BaseEntity
+namespace Queick.Appointment.Domain;
+
+public class CommunicationInfo : IEntity
 {
     public required string Name { get; set; }
     public string? Description { get; set; }
@@ -13,5 +15,6 @@ public class CommunicationInfo : BaseEntity
         get => (int) CommunicationType; 
         set => CommunicationType = (CommunicationType) value;
     }
-    
+
+    public long Id { get; set; }
 }

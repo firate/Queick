@@ -2,7 +2,7 @@ using Appointment.Entity;
 
 namespace Queick.Appointment.Domain;
 
-public class Appointment : BaseEntity
+public class Appointment : IEntity
 {
     public long CustomerId { get; set; }
     public Customer? Customer { get; set; }
@@ -21,4 +21,5 @@ public class Appointment : BaseEntity
     public Employee? Employee { get; set; }
 
     public bool IsDeleted { get; set; }
+    public long Id { get; set; }
 }

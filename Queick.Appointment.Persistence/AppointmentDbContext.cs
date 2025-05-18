@@ -1,7 +1,4 @@
-﻿using Appointment.Entity;
-using Microsoft.EntityFrameworkCore;
-
-namespace Appointment.Data;
+﻿namespace Appointment.Data;
 public class AppointmentDbContext:DbContext
 {
     public AppointmentDbContext(DbContextOptions options) : base(options)

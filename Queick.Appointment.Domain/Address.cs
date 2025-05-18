@@ -1,6 +1,9 @@
-namespace Appointment.Entity;
+using Appointment.Entity;
 
-public class Address : BaseEntity
+namespace Queick.Appointment.Domain;
+
+public class Address : IEntity
 {
     public string? Name { get; set; }
+    public long Id { get; set; }
 }

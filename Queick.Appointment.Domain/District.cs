@@ -1,8 +1,11 @@
-namespace Appointment.Entity;
+using Appointment.Entity;
 
-public class District : BaseEntity
+namespace Queick.Appointment.Domain;
+
+public class District : IEntity
 {
     public required string Name { get; set; }
     public Province? Province { get; set; }
     public int ProvinceId { get; set; }
+    public long Id { get; set; }
 }

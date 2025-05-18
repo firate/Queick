@@ -1,6 +1,7 @@
-using Appointment.Entity;
+using Appointment.Service;
+using Queick.Appointment.Domain;
 
-namespace Appointment.Service;
+namespace Queick.Appointment.Application;
 
 public interface ICustomerService
 {

@@ -1,6 +1,6 @@
 namespace Appointment.Entity;
 
-public abstract class BaseEntity
+public interface IEntity
 {
     public long Id { get; set; }
 }

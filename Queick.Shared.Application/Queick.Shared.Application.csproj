@@ -4,11 +4,11 @@
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <RootNamespace>Queick.Shared.Core</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Queick.Company.Domain\Queick.Company.Domain.csproj" />
-      <ProjectReference Include="..\Queick.Shared.Application\Queick.Shared.Application.csproj" />
+      <ProjectReference Include="..\Queick.Shared.Domain\Queick.Shared.Domain.csproj" />
     </ItemGroup>
 
 </Project>

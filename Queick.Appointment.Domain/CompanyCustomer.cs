@@ -1,3 +1,5 @@
+using Queick.Appointment.Domain;
+
 namespace Appointment.Entity;
 
 public class CompanyCustomer

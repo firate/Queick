@@ -1,6 +1,8 @@
-namespace Appointment.Entity;
+using Appointment.Entity;
 
-public class Customer : BaseEntity
+namespace Queick.Appointment.Domain;
+
+public class Customer : IEntity
 {
     public required string FirstName { get; set; }
     public required string LastName { get; set; }
@@ -10,6 +12,7 @@ public class Customer : BaseEntity
     public required string Password { get; set; }
 
     public List<CommunicationInfo> CommInfos { get; set; } = [];
+    public long Id { get; set; }
 }
 
 public enum LoginUsernameType

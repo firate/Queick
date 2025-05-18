@@ -1,6 +1,8 @@
-namespace Appointment.Entity;
+using Appointment.Entity;
 
-public class Employee : BaseEntity
+namespace Queick.Appointment.Domain;
+
+public class Employee : IEntity
 {
     public required string FirstName { get; set; }
     public required string LastName { get; set; }
@@ -14,4 +16,5 @@ public class Employee : BaseEntity
     public long BranchId { get; set; }
     public DateTimeOffset Created { get; set; }
     public DateTimeOffset Updated { get; set; }
+    public long Id { get; set; }
 }

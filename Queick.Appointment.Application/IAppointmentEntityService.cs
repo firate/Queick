@@ -1,12 +1,10 @@
-using Appointment.Entity;
-
-namespace Appointment.Service;
+namespace Queick.Appointment.Application;
 
 public interface IAppointmentEntityService
 {
-    Task<Entity.Appointment?> GetById(long id);
+    Task<Queick.Appointment.Domain.Appointment?> GetById(long id);
 
-    Task<Entity.Appointment> CreateAppointment(
+    Task<Queick.Appointment.Domain.Appointment> CreateAppointment(
         long customerId,
         long employeeId,
         long locationId,
@@ -14,7 +12,7 @@ public interface IAppointmentEntityService
         DateTimeOffset startDate,
         DateTimeOffset endDate
     );
-    Task<Entity.Appointment> UpdateAppointment(
+    Task<Queick.Appointment.Domain.Appointment> UpdateAppointment(
         long appointmentId,
         long locationId,
         long employeeId,

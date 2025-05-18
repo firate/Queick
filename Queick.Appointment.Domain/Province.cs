@@ -1,6 +1,9 @@
-namespace Appointment.Entity;
+using Appointment.Entity;
 
-public class Province : BaseEntity
+namespace Queick.Appointment.Domain;
+
+public class Province : IEntity
 {
     public required string Name { get; set; }
+    public long Id { get; set; }
 }

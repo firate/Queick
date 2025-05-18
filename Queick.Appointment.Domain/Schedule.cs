@@ -1,6 +1,8 @@
-namespace Appointment.Entity;
+using Appointment.Entity;
 
-public class Schedule : BaseEntity
+namespace Queick.Appointment.Domain;
+
+public class Schedule : IEntity
 {
     public DayOfWeek DayOfWeek { get; set; }
     public TimeOnly StartDate { get; set; }
@@ -13,5 +15,6 @@ public class Schedule : BaseEntity
     
     //StartDate ve EndDate'in UTC'den ne kadar farklı olduğu bilgisini tutar.
     public required int UtcOffSetMinutes { get; set; }
-    
+
+    public long Id { get; set; }
 }
