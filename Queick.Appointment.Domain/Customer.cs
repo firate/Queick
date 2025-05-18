@@ -1,4 +1,4 @@
-using Appointment.Entity;
+using Queick.Shared.Domain;
 
 namespace Queick.Appointment.Domain;
 
@@ -13,13 +13,4 @@ public class Customer : IEntity
 
     public List<CommunicationInfo> CommInfos { get; set; } = [];
     public long Id { get; set; }
-}
-
-public enum LoginUsernameType
-{
-    None,
-    Phone,
-    Email,
-    NationalId,
-    Username
 }

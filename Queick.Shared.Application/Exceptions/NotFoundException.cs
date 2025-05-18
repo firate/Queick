@@ -1,4 +1,4 @@
-namespace Queick.Company.Application.Common.Exceptions;
+namespace Queick.Shared.Application.Exceptions;
 
 /// <summary>
 /// Bulunamayan entity için özel istisna sınıfı

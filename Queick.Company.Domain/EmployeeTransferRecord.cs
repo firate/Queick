@@ -1,5 +1,4 @@
-using Appointment.Entity;
-using Queick.Appointment.Domain;
+using Queick.Shared.Domain;
 
 namespace Queick.Company.Domain;
 

@@ -1,4 +1,4 @@
-namespace Queick.Company.Application.Repositories;
+namespace Queick.Shared.Application.Repositories;
 
 public interface IRepository<T>
 {

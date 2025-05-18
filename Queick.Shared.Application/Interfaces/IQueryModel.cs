@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 
-namespace Queick.Company.Application.Common.Interfaces;
+namespace Queick.Shared.Application.Interfaces;
 
 public interface IQueryModel<T>
 {

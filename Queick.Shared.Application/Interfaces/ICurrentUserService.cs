@@ -1,4 +1,4 @@
-namespace Queick.Company.Application.Common.Interfaces;
+namespace Queick.Shared.Application.Interfaces;
 
 /// <summary>
 /// Mevcut kullanıcı bilgilerini sağlayan arayüz

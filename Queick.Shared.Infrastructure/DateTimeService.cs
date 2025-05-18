@@ -1,4 +1,4 @@
-using Queick.Shared.Core.Interfaces;
+using Queick.Shared.Application.Interfaces;
 
 namespace Queick.Shared.Infrastructure;
 

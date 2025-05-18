@@ -1,4 +1,4 @@
-namespace Queick.Company.Infrastructure.Data;
+namespace Queick.Shared.Infrastructure;
 
 public interface IDomainEvent
 {

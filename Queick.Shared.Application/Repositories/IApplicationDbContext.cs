@@ -1,7 +1,7 @@
-using Queick.Company.Application.Common.Interfaces;
+using Queick.Shared.Application.Interfaces;
 using Queick.Shared.Domain;
 
-namespace Queick.Shared.Core.Repositories;
+namespace Queick.Shared.Application.Repositories;
 
 /// <summary>
 /// Veritabanı işlemleri için temel arayüz.

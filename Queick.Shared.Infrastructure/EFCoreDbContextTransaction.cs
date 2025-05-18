@@ -1,6 +1,6 @@
-using Queick.Company.Application.Common.Interfaces;
+using Queick.Shared.Application.Interfaces;
 
-namespace Queick.Company.Infrastructure.Data;
+namespace Queick.Shared.Infrastructure;
 
 /// <summary>
 /// EF Core IDbContextTransaction için wrapper sınıfı

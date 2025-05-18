@@ -1,4 +1,4 @@
-namespace Queick.Company.Application.Common.Models;
+namespace Queick.Shared.Application;
 
 public class PaginatedList<T>
 {

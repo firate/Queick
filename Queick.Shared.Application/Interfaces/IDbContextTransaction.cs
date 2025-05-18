@@ -1,4 +1,4 @@
-namespace Queick.Company.Application.Common.Interfaces;
+namespace Queick.Shared.Application.Interfaces;
 
 /// <summary>
 /// Transaction arayüzü - EF Core bağımlılığı olmadan

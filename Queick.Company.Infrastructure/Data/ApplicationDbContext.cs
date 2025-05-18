@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
-using Queick.Company.Application.Common.Interfaces;
 using Queick.Company.Domain;
-using Queick.Shared.Core.Interfaces;
+using Queick.Shared.Application.Interfaces;
 using Queick.Shared.Domain;
 using Queick.Shared.Infrastructure;
-using IApplicationDbContext = Queick.Shared.Core.Repositories.IApplicationDbContext;
-using Repositories_IApplicationDbContext = Queick.Shared.Core.Repositories.IApplicationDbContext;
+using Application_Repositories_IApplicationDbContext = Queick.Shared.Application.Repositories.IApplicationDbContext;
+using IApplicationDbContext = Queick.Shared.Application.Repositories.IApplicationDbContext;
+using Repositories_IApplicationDbContext = Queick.Shared.Application.Repositories.IApplicationDbContext;
 
 namespace Queick.Company.Infrastructure.Data;
 
@@ -13,7 +13,7 @@ namespace Queick.Company.Infrastructure.Data;
 /// IApplicationDbContext interface'inin Entity Framework Core ile implementasyonu.
 /// Bu sınıf Infrastructure katmanında yer alır.
 /// </summary>
-public class ApplicationDbContext : DbContext, Repositories_IApplicationDbContext
+public class ApplicationDbContext : DbContext, Application_Repositories_IApplicationDbContext
 {
     private readonly ICurrentUserService _currentUserService;
     private readonly IDateTime _dateTime;

@@ -6,4 +6,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Queick.Shared.Domain\Queick.Shared.Domain.csproj" />
+    </ItemGroup>
+
 </Project>
