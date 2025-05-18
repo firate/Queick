@@ -1,11 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Queick.Company.Domain;
+using Queick.Shared.Application.Common;
 using Queick.Shared.Application.Interfaces;
+using Queick.Shared.Application.Repositories;
 using Queick.Shared.Domain;
 using Queick.Shared.Infrastructure;
-using Application_Repositories_IApplicationDbContext = Queick.Shared.Application.Repositories.IApplicationDbContext;
-using IApplicationDbContext = Queick.Shared.Application.Repositories.IApplicationDbContext;
-using Repositories_IApplicationDbContext = Queick.Shared.Application.Repositories.IApplicationDbContext;
 
 namespace Queick.Company.Infrastructure.Data;
 
@@ -13,7 +12,7 @@ namespace Queick.Company.Infrastructure.Data;
 /// IApplicationDbContext interface'inin Entity Framework Core ile implementasyonu.
 /// Bu sınıf Infrastructure katmanında yer alır.
 /// </summary>
-public class ApplicationDbContext : DbContext, Application_Repositories_IApplicationDbContext
+public class ApplicationDbContext : DbContext, IApplicationDbContext
 {
     private readonly ICurrentUserService _currentUserService;
     private readonly IDateTime _dateTime;
@@ -33,7 +32,7 @@ public class ApplicationDbContext : DbContext, Application_Repositories_IApplica
 
     // Entity Framework DbSet'leri
     public DbSet<CompanyDomain> Companies { get; set; }
-    public DbSet<EmployeeDomain> Employees { get; set; }
+    
     // public DbSet<EmployeeTransferRecord> EmployeeTransferRecords { get; set; }
 
     // IDatabaseFacade property'si için wrapper
@@ -51,9 +50,6 @@ public class ApplicationDbContext : DbContext, Application_Repositories_IApplica
     {
         return (await (base.Set<TEntity>()).FindAsync(new object[] { id }, cancellationToken));
     }
-
-    // Task<List<TEntity>> ListAsync<TEntity>(ISpecification<TEntity>? spec = null, int page = 1, int pageSize = 25,
-    // CancellationToken cancellationToken = default) where TEntity : class, IEntity
 
     public async Task<List<TEntity>> ListAsync<TEntity>(IQueryModel<TEntity>? criterias = null, int page = 1,
         int pageSize = 25,
