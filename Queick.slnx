@@ -22,7 +22,4 @@
   <Folder Name="/Clean/Shared/">
     <Project Path="Queick.Shared.Events\Queick.Shared.Events.csproj" Type="Classic C#" />
   </Folder>
-  <Folder Name="/Shared/">
-    <Project Path="EventsLibrary\EventsLibrary.csproj" Type="Classic C#" />
-  </Folder>
 </Solution>
