@@ -6,11 +6,9 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
-<!--   -->
-
     <ItemGroup>
-        <ProjectReference Include="..\Queick.Company.Application\Queick.Company.Application.csproj" />
-        <ProjectReference Include="..\Queick.Shared.Infrastructure\Queick.Shared.Infrastructure.csproj" />
+      <ProjectReference Include="..\Queick.Shared.Application\Queick.Shared.Application.csproj" />
+      <ProjectReference Include="..\Queick.Shared.Domain\Queick.Shared.Domain.csproj" />
     </ItemGroup>
 
     <ItemGroup>
@@ -25,4 +23,5 @@
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.1" />
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.Design" Version="1.1.0" />
     </ItemGroup>
+    
 </Project>

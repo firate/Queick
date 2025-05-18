@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
 using Queick.Company.Application.Common.Interfaces;
 
-namespace Queick.Company.Application.Common.Specification;
+namespace Queick.Shared.Core.Specification;
 
 public class QueryModel<T> : IQueryModel<T>
 {

@@ -6,4 +6,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Queick.Appointment.Domain\Queick.Appointment.Domain.csproj" />
+    </ItemGroup>
+
 </Project>

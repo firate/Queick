@@ -5,7 +5,6 @@
     <Project Path="Queick.Appointment.Infrastructure\Queick.Appointment.Infrastructure.csproj" Type="Classic C#" />
     <Project Path="Queick.Appointment.Persistence\Queick.Appointment.Persistence.csproj" Type="Classic C#" />
   </Folder>
-  <Folder Name="/Clean/" />
   <Folder Name="/Clean/Appointment/Clients/">
     <Project Path="Queick.Appointment.Mobile.API\Queick.Appointment.Mobile.API.csproj" Type="Classic C#" />
     <Project Path="Queick.Appointment.Web.BFF\Queick.Appointment.Web.BFF.csproj" Type="Classic C#" />
@@ -24,5 +23,6 @@
     <Project Path="Queick.Shared.Application\Queick.Shared.Application.csproj" Type="Classic C#" />
     <Project Path="Queick.Shared.Domain\Queick.Shared.Domain.csproj" Type="Classic C#" />
     <Project Path="Queick.Shared.Events\Queick.Shared.Events.csproj" Type="Classic C#" />
+    <Project Path="Queick.Shared.Infrastructure\Queick.Shared.Infrastructure.csproj" Type="Classic C#" />
   </Folder>
 </Solution>

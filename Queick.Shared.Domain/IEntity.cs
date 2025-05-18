@@ -1,4 +1,4 @@
-namespace Queick.Company.Domain;
+namespace Queick.Shared.Domain;
 
 public interface IEntity
 {

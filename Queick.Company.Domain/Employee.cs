@@ -1,3 +1,6 @@
+using Appointment.Entity;
+using Queick.Appointment.Domain;
+
 namespace Queick.Company.Domain;
 
 public class Employee : IEntity

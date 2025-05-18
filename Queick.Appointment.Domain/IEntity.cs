@@ -1,4 +1,4 @@
-namespace Appointment.Entity;
+namespace Queick.Appointment.Domain;
 
 public interface IEntity
 {

@@ -1,8 +1,8 @@
 using Queick.Company.Application.Common.Exceptions;
-using Queick.Company.Application.Common.Specification;
-using Queick.Company.Application.Repositories;
 using Queick.Company.Application.Services.Interfaces;
 using Queick.Company.Domain;
+using Queick.Shared.Core.Repositories;
+using Queick.Shared.Core.Specification;
 using CompanyDto = Queick.Company.Application.Common.Models.CompanyDto;
 
 /// <summary>

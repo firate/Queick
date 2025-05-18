@@ -1,6 +1,6 @@
-using Queick.Company.Application.Common.Interfaces;
+using Queick.Shared.Core.Interfaces;
 
-namespace Queick.Company.Infrastructure.Data;
+namespace Queick.Shared.Infrastructure;
 
 /// <summary>
 /// IDateTime interface'inin varsayılan implementasyonu.

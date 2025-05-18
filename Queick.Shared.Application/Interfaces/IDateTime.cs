@@ -1,4 +1,4 @@
-namespace Queick.Company.Application.Common.Interfaces;
+namespace Queick.Shared.Core.Interfaces;
 
 /// <summary>
 /// Tarih/zaman bilgilerini sağlayan arayüz
