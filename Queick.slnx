@@ -24,5 +24,6 @@
     <Project Path="Queick.Shared.Domain\Queick.Shared.Domain.csproj" Type="Classic C#" />
     <Project Path="Queick.Shared.Events\Queick.Shared.Events.csproj" Type="Classic C#" />
     <Project Path="Queick.Shared.Infrastructure\Queick.Shared.Infrastructure.csproj" Type="Classic C#" />
+    <Project Path="Queick.Shared.Persistence\Queick.Shared.Persistence.csproj" Type="Classic C#" />
   </Folder>
 </Solution>
