@@ -5,8 +5,9 @@ using Queick.Shared.Application.Interfaces;
 using Queick.Shared.Application.Repositories;
 using Queick.Shared.Domain;
 using Queick.Shared.Infrastructure;
+using Queick.Shared.Persistence;
 
-namespace Queick.Company.Infrastructure.Data;
+namespace Queick.Company.Persistence.Data;
 
 /// <summary>
 /// IApplicationDbContext interface'inin Entity Framework Core ile implementasyonu.

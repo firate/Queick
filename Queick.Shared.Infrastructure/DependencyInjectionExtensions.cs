@@ -1,8 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Queick.Shared.Application.Interfaces;
-using Queick.Shared.Infrastructure;
 
-namespace Queick.Company.Infrastructure.Data;
+namespace Queick.Shared.Infrastructure;
 
 public static class DependencyInjectionExtensions
 {

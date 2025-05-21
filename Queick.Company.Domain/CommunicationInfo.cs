@@ -1,3 +1,4 @@
+using Queick.Company.Domain.Enums;
 using Queick.Shared.Domain;
 
 namespace Queick.Company.Domain;

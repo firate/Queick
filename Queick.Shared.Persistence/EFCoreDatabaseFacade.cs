@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Queick.Shared.Application.Interfaces;
 
-namespace Queick.Shared.Infrastructure;
+namespace Queick.Shared.Persistence;
 
 /// <summary>
 /// EF Core DatabaseFacade için wrapper sınıfı

@@ -19,7 +19,7 @@ public class CompanyService : ICompanyService
 
     #region Temel CRUD İşlemleri
 
-    public async Task<CompanyDto> GetCompanyByIdAsync(long id, CancellationToken cancellationToken = default)
+    public async Task<CompanyDto>? GetCompanyByIdAsync(long id, CancellationToken cancellationToken = default)
     {
         var queryModel = new QueryModel<CompanyDomain>(x=>x.Id == id && !x.IsDeleted);
         var company = await _dbContext.FirstOrDefaultAsync<CompanyDomain>(queryModel, cancellationToken);
@@ -55,53 +55,57 @@ public class CompanyService : ICompanyService
     public async Task<CompanyDto> CreateCompanyAsync(CompanyDto companyDto,
         CancellationToken cancellationToken = default)
     {
+        ArgumentNullException.ThrowIfNull(companyDto);
+
         var company = new CompanyDomain
         {
             Name = companyDto.Name,
-            Description = companyDto?.Description ?? string.Empty
+            Description = companyDto.Description ?? string.Empty
         };
-
-        // Değişiklikleri takip et
+        
         var addedCompany = await _dbContext.AddAsync(company, cancellationToken);
 
-        // Değişiklikleri kaydet
         await _dbContext.SaveChangesAsync(cancellationToken);
 
         companyDto.Id = addedCompany.Id;
         return companyDto;
     }
 
-    public async Task UpdateCompanyAsync(CompanyDto companyDto, CancellationToken cancellationToken = default)
+    public async Task<CompanyDto> UpdateCompanyAsync(CompanyDto companyDto, CancellationToken cancellationToken = default)
     {
         var queryModel = new QueryModel<CompanyDomain>(x=>x.Id == companyDto.Id);
         var company = await _dbContext.FirstOrDefaultAsync(queryModel, cancellationToken);
 
-        if (company == null)
+        if (company is null)
+        {
             throw new NotFoundException($"Company with ID {companyDto.Id} not found.");
-
+        }
+            
         company.Name = companyDto.Name;
         company.Description = companyDto?.Description?? string.Empty;
-
-        // Değişiklikleri takip et
+        
         await _dbContext.UpdateAsync(company, cancellationToken);
-
-        // Değişiklikleri kaydet
-        await _dbContext.SaveChangesAsync(cancellationToken);
+        
+        var isSaved =  await _dbContext.SaveChangesAsync(cancellationToken) > 0;
+        
+        return isSaved ? companyDto : throw new Exception("Company not updated."); 
     }
 
-    public async Task DeleteCompanyAsync(long id, CancellationToken cancellationToken = default)
+    public async Task<bool> DeleteCompanyAsync(long id, CancellationToken cancellationToken = default)
     {
         var queryModel = new QueryModel<CompanyDomain>(x=>x.Id == id);
         var company = await _dbContext.FirstOrDefaultAsync(queryModel, cancellationToken);
 
-        if (company == null)
+        if (company is null)
+        {
             throw new NotFoundException($"Company with ID {id} not found.");
-
-        // Değişiklikleri takip et
+        }
+            
         await _dbContext.RemoveAsync(company, cancellationToken);
-
-        // Değişiklikleri kaydet
-        await _dbContext.SaveChangesAsync(cancellationToken);
+        
+        var isSaved = await _dbContext.SaveChangesAsync(cancellationToken) > 0;
+        
+        return isSaved;
     }
 
     #endregion

@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Queick.Shared.Application.Interfaces;
 using Queick.Shared.Domain;
 
-namespace Queick.Shared.Infrastructure;
+namespace Queick.Shared.Persistence;
 
 public static class QueryCreator<T> where T : class, IEntity
 {

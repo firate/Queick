@@ -6,4 +6,11 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Queick.Company.Application\Queick.Company.Application.csproj" />
+      <ProjectReference Include="..\Queick.Company.Domain\Queick.Company.Domain.csproj" />
+      <ProjectReference Include="..\Queick.Company.Infrastructure\Queick.Company.Infrastructure.csproj" />
+      <ProjectReference Include="..\Queick.Shared.Persistence\Queick.Shared.Persistence.csproj" />
+    </ItemGroup>
+
 </Project>

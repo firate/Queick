@@ -1,4 +1,4 @@
-namespace Queick.Company.Domain;
+namespace Queick.Company.Domain.Enums;
 
 public enum CommunicationType
 {
