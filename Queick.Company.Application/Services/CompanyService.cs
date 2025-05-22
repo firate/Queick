@@ -1,9 +1,9 @@
+using Queick.Company.Application.Common.Models;
 using Queick.Company.Application.Services.Interfaces;
 using Queick.Company.Domain;
 using Queick.Shared.Application.Exceptions;
 using Queick.Shared.Application.Repositories;
 using Queick.Shared.Application.Specification;
-using CompanyDto = Queick.Company.Application.Common.Models.CompanyDto;
 
 /// <summary>
 /// Company servisi implementasyonu
@@ -21,14 +21,14 @@ public class CompanyService : ICompanyService
 
     public async Task<CompanyDto>? GetCompanyByIdAsync(long id, CancellationToken cancellationToken = default)
     {
-        var queryModel = new QueryModel<CompanyDomain>(x=>x.Id == id && !x.IsDeleted);
+        var queryModel = new QueryModel<CompanyDomain>(x => x.Id == id && !x.IsDeleted);
         var company = await _dbContext.FirstOrDefaultAsync<CompanyDomain>(queryModel, cancellationToken);
 
         if (company is null)
         {
             return null;
         }
-            
+
         return new CompanyDto
         {
             Id = company.Id,
@@ -37,79 +37,117 @@ public class CompanyService : ICompanyService
         };
     }
 
-    public async Task<List<CompanyDto>> GetCompaniesAsync(int page, int pageSize,
+    public async Task<List<CompanyDto>> GetCompaniesAsync(CompanySearchRequestDto companySearchRequestDto,
         CancellationToken cancellationToken = default)
     {
-        var queryModel = new QueryModel<CompanyDomain>(x=>!x.IsDeleted);
-        
-        var companies = await _dbContext.ListAsync<CompanyDomain>(queryModel, page, pageSize, cancellationToken);
+        var queryModel = new QueryModel<CompanyDomain>(x => !x.IsDeleted);
 
-        return companies.Select(c => new CompanyDto
-        {
-            Id = c.Id,
-            Name = c.Name,
-            Description = c.Description
-        }).ToList();
+        var companies = await _dbContext.ListAsync<CompanyDomain>(queryModel, companySearchRequestDto.Page,
+            companySearchRequestDto.PageSize, cancellationToken);
+
+        return companies.Select(c => 
+            new CompanyDto
+            {
+                Id = c.Id,
+                Name = c.Name,
+                Description = c.Description
+            }).ToList();
     }
 
-    public async Task<CompanyDto> CreateCompanyAsync(CompanyDto companyDto,
+    public async Task<CompanyDto> CreateCompanyAsync(CompanyCreationDto companyCreationDto,
         CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(companyDto);
+        ArgumentNullException.ThrowIfNull(companyCreationDto);
 
         var company = new CompanyDomain
         {
-            Name = companyDto.Name,
-            Description = companyDto.Description ?? string.Empty
+            Name = companyCreationDto.Name,
+            Description = companyCreationDto.Description ?? string.Empty
         };
-        
-        var addedCompany = await _dbContext.AddAsync(company, cancellationToken);
 
+        var addedCompany = await _dbContext.AddAsync(company, cancellationToken);
         await _dbContext.SaveChangesAsync(cancellationToken);
 
-        companyDto.Id = addedCompany.Id;
-        return companyDto;
+        var companyResultDto = new CompanyDto()
+        {
+            Id = addedCompany.Id,
+            Name = addedCompany.Name,
+            Description = addedCompany.Description
+        };
+
+        return companyResultDto;
     }
 
-    public async Task<CompanyDto> UpdateCompanyAsync(CompanyDto companyDto, CancellationToken cancellationToken = default)
+    public async Task<CompanyDto> UpdateCompanyAsync(CompanyUpdateDto companyUpdateDto,
+        CancellationToken cancellationToken = default)
     {
-        var queryModel = new QueryModel<CompanyDomain>(x=>x.Id == companyDto.Id);
+        if (companyUpdateDto is null)
+        {
+            throw new NotFoundException($"Company not found.");
+        }
+
+        var queryModel = new QueryModel<CompanyDomain>(x => x.Id == companyUpdateDto.Id);
         var company = await _dbContext.FirstOrDefaultAsync(queryModel, cancellationToken);
 
         if (company is null)
         {
-            throw new NotFoundException($"Company with ID {companyDto.Id} not found.");
+            throw new NotFoundException($"Company with ID {companyUpdateDto.Id} not found.");
         }
-            
-        company.Name = companyDto.Name;
-        company.Description = companyDto?.Description?? string.Empty;
-        
+
+        company.Name = companyUpdateDto.Name;
+        company.Description = companyUpdateDto!.Description ?? string.Empty;
+        company.IsDeleted = companyUpdateDto!.IsDeleted;
+
         await _dbContext.UpdateAsync(company, cancellationToken);
-        
-        var isSaved =  await _dbContext.SaveChangesAsync(cancellationToken) > 0;
-        
-        return isSaved ? companyDto : throw new Exception("Company not updated."); 
+        var isSaved = await _dbContext.SaveChangesAsync(cancellationToken) > 0;
+
+        var companyResultDto = new CompanyDto()
+        {
+            Id = company.Id,
+            Name = company.Name,
+            Description = company.Description
+        };
+
+        return isSaved ? companyResultDto : throw new Exception("Company not updated.");
     }
 
     public async Task<bool> DeleteCompanyAsync(long id, CancellationToken cancellationToken = default)
     {
-        var queryModel = new QueryModel<CompanyDomain>(x=>x.Id == id);
+        var queryModel = new QueryModel<CompanyDomain>(x => x.Id == id);
         var company = await _dbContext.FirstOrDefaultAsync(queryModel, cancellationToken);
 
         if (company is null)
         {
             throw new NotFoundException($"Company with ID {id} not found.");
         }
-            
-        await _dbContext.RemoveAsync(company, cancellationToken);
-        
+
+        company.IsDeleted = true;
+        await _dbContext.UpdateAsync(company, cancellationToken);
         var isSaved = await _dbContext.SaveChangesAsync(cancellationToken) > 0;
-        
+
         return isSaved;
     }
 
-    #endregion
+    public async Task<List<CompanyDto>> CreateCompaniesAsync(List<CompanyCreationDto> companyCreationDtos,
+        CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
 
+    public async Task<bool> UpdateCompaniesAsync(List<CompanyDto> companiesDto,
+        CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<bool> DeleteCompaniesAsync(List<long> ids, CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
+
+    #endregion
+    
+    
     #region Toplu İşlemler
 
     // public async Task<List<CompanyDto>> CreateCompaniesAsync(List<CompanyDto> companiesDto,
@@ -136,7 +174,7 @@ public class CompanyService : ICompanyService
     //     return companiesDto;
     // }
 
-   
+
     // public async Task UpdateCompaniesAsync(List<CompanyDto> companiesDto, CancellationToken cancellationToken = default)
     // {
     //     // Tüm company'leri ID'leri ile birlikte getir
@@ -325,5 +363,4 @@ public class CompanyService : ICompanyService
     // }
 
     #endregion
-   
 }

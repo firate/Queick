@@ -13,7 +13,7 @@ namespace Queick.Company.Persistence.Data;
 /// IApplicationDbContext interface'inin Entity Framework Core ile implementasyonu.
 /// Bu sınıf Infrastructure katmanında yer alır.
 /// </summary>
-public class ApplicationDbContext : DbContext, IApplicationDbContext
+public partial class ApplicationDbContext : DbContext, IApplicationDbContext
 {
     private readonly ICurrentUserService _currentUserService;
     private readonly IDateTime _dateTime;
@@ -31,8 +31,6 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
         _dateTime = dateTime;
     }
 
-    // Entity Framework DbSet'leri
-    public DbSet<CompanyDomain> Companies { get; set; }
     
     // public DbSet<EmployeeTransferRecord> EmployeeTransferRecords { get; set; }
 
@@ -198,7 +196,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     //     return SpecificationEvaluator<TEntity>.GetQuery(Set<TEntity>().AsQueryable(), spec);
     // }
     
-    private IQueryable<TEntity> ApplyCriterias<TEntity>(IQueryModel<TEntity> spec)
+    private IQueryable<TEntity>  ApplyCriterias<TEntity>(IQueryModel<TEntity> spec)
         where TEntity : class, IEntity
     {
         return QueryCreator<TEntity>.GetQuery(Set<TEntity>().AsQueryable(), spec);
