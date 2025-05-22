@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Queick.Company.Domain;
 using Queick.Shared.Application.Common;
 using Queick.Shared.Application.Interfaces;
 using Queick.Shared.Application.Repositories;
