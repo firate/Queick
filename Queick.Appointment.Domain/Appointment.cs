@@ -22,4 +22,6 @@ public class Appointment : IEntity
 
     public bool IsDeleted { get; set; }
     public long Id { get; set; }
+    public DateTimeOffset Created { get; set; }
+    public DateTimeOffset? Updated { get; set; }
 }

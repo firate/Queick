@@ -14,7 +14,9 @@ public class Employee : IEntity
     public bool IsDeleted { get; set; }
     public Branch? Branch { get; set; }
     public long BranchId { get; set; }
+    
     public DateTimeOffset Created { get; set; }
-    public DateTimeOffset Updated { get; set; }
+    public DateTimeOffset? Updated { get; set; }
+    
     public long Id { get; set; }
 }

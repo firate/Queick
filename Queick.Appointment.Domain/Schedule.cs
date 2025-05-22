@@ -17,4 +17,6 @@ public class Schedule : IEntity
     public required int UtcOffSetMinutes { get; set; }
 
     public long Id { get; set; }
+    public DateTimeOffset Created { get; set; }
+    public DateTimeOffset? Updated { get; set; }
 }

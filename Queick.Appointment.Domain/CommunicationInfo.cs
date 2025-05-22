@@ -8,7 +8,7 @@ public class CommunicationInfo : IEntity
     public string? Description { get; set; }
     public required string Value { get; set; }
     public DateTimeOffset Created { get; set; }
-    public DateTimeOffset Updated { get; set; }
+    public DateTimeOffset? Updated { get; set; }
     private CommunicationType CommunicationType { get; set; }
     public required int CommunicationTypeId
     {

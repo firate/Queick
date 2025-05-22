@@ -11,4 +11,6 @@ public class Company: IEntity
 
     public List<Branch> Branches { get; set; } = new();
     public long Id { get; set; }
+    public DateTimeOffset Created { get; set; }
+    public DateTimeOffset? Updated { get; set; }
 }

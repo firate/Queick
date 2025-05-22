@@ -10,4 +10,6 @@ public class Location : IEntity
     public string? Description { get; set; }
 
     public long Id { get; set; }
+    public DateTimeOffset Created { get; set; }
+    public DateTimeOffset? Updated { get; set; }
 }

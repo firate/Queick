@@ -11,7 +11,7 @@ public class Branch: IEntity
     public bool IsDeleted { get; set; }
     public bool IsActive { get; set; }
     public DateTimeOffset Created { get; set; }
-    public DateTimeOffset Updated { get; set; }
+    public DateTimeOffset? Updated { get; set; }
     public bool IsPrimary { get; set; }
 
     public long Id { get; set; }
