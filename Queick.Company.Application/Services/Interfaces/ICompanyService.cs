@@ -1,18 +1,15 @@
 using Queick.Company.Application.Common.Models;
-using CompanyDto = Queick.Company.Application.Common.Models.CompanyDto;
+using Queick.Company.Application.DTOs;
+using Queick.Shared.Application.Common;
 
 namespace Queick.Company.Application.Services.Interfaces;
 
-
-/// <summary>
-/// Şirket servisi için arayüz
-/// </summary>
 public interface ICompanyService
 {
     Task<CompanyDto>? GetCompanyByIdAsync(long id, CancellationToken cancellationToken = default);
-    Task<List<CompanyDto>> GetCompaniesAsync(CompanySearchRequestDto companySearchRequestDto, CancellationToken cancellationToken = default);
+    Task<PaginatedList<CompanyDto>> GetCompaniesAsync(CompanySearchRequestDto dto, CancellationToken cancellationToken = default);
     Task<CompanyDto> CreateCompanyAsync(CompanyCreationDto companyCreationDto, CancellationToken cancellationToken = default);
-    Task<CompanyDto> UpdateCompanyAsync(CompanyUpdateDto companyUpdateDto, CancellationToken cancellationToken = default);
+    Task<CompanyDto> UpdateCompanyAsync(CompanyUpdateDto dto, CancellationToken cancellationToken = default);
     Task<bool> DeleteCompanyAsync(long id, CancellationToken cancellationToken = default);
     Task<List<CompanyDto>> CreateCompaniesAsync(List<CompanyCreationDto> companiesDto, CancellationToken cancellationToken = default);
     

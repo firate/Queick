@@ -1,4 +1,4 @@
-
+using Queick.Company.Application;
 using Queick.Shared.Infrastructure;
 
 namespace Queick.Company.Web.BFF;
@@ -10,6 +10,7 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddInfrastructure();
+        builder.Services.AddPersistence();
         // Add services to the container.
        
         //builder.Services.AddAuthorization();
