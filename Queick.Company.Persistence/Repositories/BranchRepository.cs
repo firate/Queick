@@ -19,8 +19,7 @@ public class BranchRepository : BaseRepository<Branch>, IBranchRepository
         throw new NotImplementedException();
     }
 
-    public async Task<bool> IsBranchNameExistsInCompanyAsync(string name, long companyId, long? excludeId = null,
-        CancellationToken cancellationToken = default)
+    public async Task<bool> IsBranchNameExistsInCompanyAsync(string name, long companyId, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }

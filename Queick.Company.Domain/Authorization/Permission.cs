@@ -1,4 +1,4 @@
-namespace Queick.Shared.Domain.Authorization;
+//namespace Queick.Shared.Domain.Authorization;
 
 // public sealed class Permission : ValueObject
 // {

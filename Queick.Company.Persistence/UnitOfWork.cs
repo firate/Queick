@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore.Storage;
 using Queick.Company.Application.Interfaces;
 
-namespace Queick.Company.Persistence.UnitOfWork;
+namespace Queick.Company.Persistence;
 
 public class UnitOfWork : IUnitOfWork
 {

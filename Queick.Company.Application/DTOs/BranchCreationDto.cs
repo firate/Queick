@@ -1,8 +1,6 @@
-using Queick.Company.Application.Common;
-
 namespace Queick.Company.Application.DTOs;
 
-public class CompanySearchRequestDto: BaseSearchRequestDto
+public class BranchCreationDto
 {
     public string Name { get; set; }
     public string? Description { get; set; }

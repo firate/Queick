@@ -1,6 +1,6 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
-using Queick.Shared.Application.Common;
+using Queick.Company.Application.Common;
 
 namespace Queick.Shared.Application.Service;
 

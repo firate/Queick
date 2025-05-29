@@ -1,10 +1,10 @@
+using Queick.Company.Application.Common;
 using Queick.Company.Application.Common.Models;
 using Queick.Company.Application.DTOs;
+using Queick.Company.Application.Exceptions;
 using Queick.Company.Application.Interfaces;
 using Queick.Company.Application.Services.Interfaces;
 using Queick.Company.Domain;
-using Queick.Shared.Application.Common;
-using Queick.Shared.Application.Exceptions;
 
 /// <summary>
 /// Company servisi implementasyonu
@@ -74,6 +74,8 @@ public class CompanyService : ICompanyService
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
+        //var companyResultDto = 
+        
         var companyResultDto = new CompanyDto()
         {
             Id = addedCompany.Id,

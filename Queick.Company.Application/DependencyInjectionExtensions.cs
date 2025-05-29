@@ -5,7 +5,7 @@ namespace Queick.Company.Application;
 
 public static class DependencyInjectionExtensions
 {
-    public static IServiceCollection AddPersistence(this IServiceCollection services)
+    public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
         services.AddScoped<ICompanyService, CompanyService>();
         

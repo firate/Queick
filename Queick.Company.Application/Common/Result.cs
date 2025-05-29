@@ -1,4 +1,4 @@
-namespace Queick.Shared.Application.Common;
+namespace Queick.Company.Application.Common;
 
 public class Result
 {

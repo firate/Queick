@@ -1,4 +1,4 @@
-namespace Queick.Company.Application.Common.Models;
+namespace Queick.Company.Application.DTOs;
 
 public class CompanyCreationDto
 {

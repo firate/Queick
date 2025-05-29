@@ -10,7 +10,6 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Queick.Company.Application\Queick.Company.Application.csproj" />
-        <ProjectReference Include="..\Queick.Shared.Infrastructure\Queick.Shared.Infrastructure.csproj" />
     </ItemGroup>
 
     <ItemGroup>

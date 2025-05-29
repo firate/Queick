@@ -1,5 +1,7 @@
 using Queick.Company.Application;
-using Queick.Shared.Infrastructure;
+using Queick.Company.Infrastructure;
+using Queick.Company.Persistence;
+using Scalar.AspNetCore;
 
 namespace Queick.Company.Web.BFF;
 
@@ -9,8 +11,10 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        builder.Services.AddPersistence(builder.Configuration);
         builder.Services.AddInfrastructure();
-        builder.Services.AddPersistence();
+        builder.Services.AddApplicationServices();
+        
         // Add services to the container.
        
         //builder.Services.AddAuthorization();
@@ -24,6 +28,7 @@ public class Program
         if (app.Environment.IsDevelopment())
         {
             app.MapOpenApi();
+            app.MapScalarApiReference();
         }
 
         app.UseHttpsRedirection();

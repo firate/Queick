@@ -1,6 +1,6 @@
+using Queick.Company.Application.Common;
 using Queick.Company.Application.Common.Models;
 using Queick.Company.Application.DTOs;
-using Queick.Shared.Application.Common;
 
 namespace Queick.Company.Application.Services.Interfaces;
 

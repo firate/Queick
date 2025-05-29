@@ -10,7 +10,13 @@
       <ProjectReference Include="..\Queick.Company.Application\Queick.Company.Application.csproj" />
       <ProjectReference Include="..\Queick.Company.Domain\Queick.Company.Domain.csproj" />
       <ProjectReference Include="..\Queick.Company.Infrastructure\Queick.Company.Infrastructure.csproj" />
-      <ProjectReference Include="..\Queick.Shared.Persistence\Queick.Shared.Persistence.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.0" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.1" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.Design" Version="1.1.0" />
+    </ItemGroup>
 </Project>

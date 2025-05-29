@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore;
 using Queick.Company.Application.Interfaces;
 using Queick.Company.Domain;
 
@@ -10,17 +9,12 @@ public class CompanyRepository: BaseRepository<CompanyDomain>, ICompanyRepositor
     {
     }
 
-    public async Task<List<CompanyDomain>> GetActiveCompaniesAsync(CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException();
-    }
-
     public async Task<CompanyDomain?> GetCompanyWithBranchesAsync(long id, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<bool> IsCompanyNameExistsAsync(string name, long? excludeId = null, CancellationToken cancellationToken = default)
+    public async Task<bool> IsCompanyNameExistsAsync(string name, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }

@@ -1,4 +1,4 @@
-namespace Queick.Shared.Application.Interfaces;
+namespace Queick.Company.Application.Interfaces;
 
 /// <summary>
 /// Audit bilgilerini içeren entity'ler için arayüz
