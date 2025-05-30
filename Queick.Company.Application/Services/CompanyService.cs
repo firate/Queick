@@ -1,21 +1,20 @@
 using Queick.Company.Application.Common;
-using Queick.Company.Application.Common.Models;
 using Queick.Company.Application.DTOs;
 using Queick.Company.Application.Exceptions;
 using Queick.Company.Application.Interfaces;
+using Queick.Company.Application.Mapper;
 using Queick.Company.Application.Services.Interfaces;
 using Queick.Company.Domain;
 
-/// <summary>
-/// Company servisi implementasyonu
-/// </summary>
 public class CompanyService : ICompanyService
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IApplicationMapper _mapper;
 
-    public CompanyService(IUnitOfWork unitOfWork)
+    public CompanyService(IUnitOfWork unitOfWork, IApplicationMapper mapper)
     {
         _unitOfWork = unitOfWork;
+        _mapper = mapper;
     }
 
 
@@ -30,13 +29,10 @@ public class CompanyService : ICompanyService
         {
             return null;
         }
+        
+        var cDto =  _mapper.CompanyToCompanyDto(company);
 
-        return new CompanyDto
-        {
-            Id = company.Id,
-            Name = company.Name,
-            Description = company.Description
-        };
+        return cDto;
     }
 
     public async Task<PaginatedList<CompanyDto>> GetCompaniesAsync(CompanySearchRequestDto dto,
@@ -48,14 +44,13 @@ public class CompanyService : ICompanyService
             null,
             cancellationToken);
 
-        var dtoList = companyList.Select(c => new CompanyDto()
-            {
-                Id = c.Id,
-                Name = c.Name,
-                Description = c.Description
-            }
-        ).ToList();
-
+        if (companyList.Count == 0)
+        {
+            return new PaginatedList<CompanyDto>([], 0, dto.Page, dto.PageSize);
+        }
+        
+        var dtoList = _mapper.CompanyListToCompanyDtoList(companyList);
+        
         return new PaginatedList<CompanyDto>(dtoList, dtoList.Count, dto.Page, dto.PageSize);
     }
 
@@ -72,16 +67,14 @@ public class CompanyService : ICompanyService
 
         var addedCompany = await _unitOfWork.Companies.AddAsync(company, cancellationToken);
 
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        var isSaved = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
 
-        //var companyResultDto = 
-        
-        var companyResultDto = new CompanyDto()
+        if (!isSaved)
         {
-            Id = addedCompany.Id,
-            Name = addedCompany.Name,
-            Description = addedCompany.Description
-        };
+            throw new Exception("Company not updated.");
+        }
+        
+        var companyResultDto = _mapper.CompanyToCompanyDto(addedCompany);
 
         return companyResultDto;
     }
@@ -113,12 +106,7 @@ public class CompanyService : ICompanyService
             throw new Exception("Company not updated.");
         }
 
-        return new CompanyDto()
-        {
-            Id = company.Id,
-            Name = company.Name,
-            Description = company.Description
-        };
+        return _mapper.CompanyToCompanyDto(company);
     }
 
     public async Task<bool> DeleteCompanyAsync(long id, CancellationToken cancellationToken = default)
@@ -140,17 +128,20 @@ public class CompanyService : ICompanyService
     public async Task<List<CompanyDto>> CreateCompaniesAsync(List<CompanyCreationDto> companyCreationDtos,
         CancellationToken cancellationToken = default)
     {
+        //TODO: create event for message queue(like RabbitMQ)
         throw new NotImplementedException();
     }
 
     public async Task<bool> UpdateCompaniesAsync(List<CompanyDto> companiesDto,
         CancellationToken cancellationToken = default)
     {
+        //TODO: create event for message queue(like RabbitMQ)
         throw new NotImplementedException();
     }
 
     public async Task<bool> DeleteCompaniesAsync(List<long> ids, CancellationToken cancellationToken = default)
     {
+        //TODO: create event for message queue(like RabbitMQ)
         throw new NotImplementedException();
     }
 
