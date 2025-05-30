@@ -4,14 +4,14 @@ using Riok.Mapperly.Abstractions;
 
 namespace Queick.Company.Application.Mapper;
 
-public interface IApplicationMapper
+// RequiredMappingStrategy.None ile Map'lenmemiş field'lar için uyarıları kapatırız.
+[Mapper(RequiredMappingStrategy = RequiredMappingStrategy.None)]
+public partial class ApplicationMapper: IApplicationMapper
 {
-    CompanyDto CompanyToCompanyDto(CompanyDomain company);
-}
-
-
-[Mapper]
-public partial class ApplicationMapper
-{
+    [MapProperty(nameof(CompanyDomain.Name), nameof(CompanyDto.Name))]
+    [MapProperty(nameof(CompanyDomain.Description), nameof(CompanyDto.Description))]
+    [MapProperty(nameof(CompanyDomain.Id), nameof(CompanyDto.Id))]
     public partial CompanyDto CompanyToCompanyDto(CompanyDomain company);
+    
+    public partial List<CompanyDto> CompanyListToCompanyDtoList(List<CompanyDomain> companies);
 }
