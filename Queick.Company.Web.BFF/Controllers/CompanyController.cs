@@ -8,8 +8,6 @@ namespace Queick.Company.Web.BFF.Controllers;
 public class CompanyController : BaseApiController
 {
     private readonly ICompanyService _companyService;
-    //private readonly Mapper _mapper;
-
     public CompanyController(ICompanyService companyService)
     {
         _companyService = companyService;
@@ -28,11 +26,32 @@ public class CompanyController : BaseApiController
     [HttpPost]
     public async Task<IActionResult> CreateCompany(CompanyCreationDto dto)
     {
-        
         var newCompany = await _companyService.CreateCompanyAsync(dto, CancellationToken.None);
 
         return Ok(newCompany);
         
+    }
+    
+    [HttpPut]
+    public async Task<IActionResult> UpdateCompany(CompanyUpdateDto dto)
+    {
+        var updatedCompany = await _companyService.UpdateCompanyAsync(dto, CancellationToken.None);
+
+        return Ok(updatedCompany);
+        
+    }
+    
+    [HttpDelete]
+    public async Task<IActionResult> RemoveCompany(long id)
+    {
+        var isDeleted = await _companyService.DeleteCompanyAsync(id, CancellationToken.None);
+
+        if (!isDeleted)
+        {
+            return BadRequest();
+        }
+        
+        return NoContent();
     }
     
     
