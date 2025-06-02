@@ -1,6 +1,7 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Queick.Company.Application.Interfaces;
+using Queick.Company.Domain;
 using Queick.Shared.Domain;
 
 namespace Queick.Company.Persistence.Repositories;
@@ -28,49 +29,36 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
         return await _dbSet.FirstOrDefaultAsync(predicate, cancellationToken);
     }
 
-    public virtual async Task<bool> ExistsAsync(Expression<Func<TEntity, bool>> predicate,
-        CancellationToken cancellationToken = default)
-    {
-        return await _dbSet.AnyAsync(predicate, cancellationToken);
-    }
 
-    public virtual async Task<int> CountAsync(Expression<Func<TEntity, bool>>? predicate = null,
-        CancellationToken cancellationToken = default)
-    {
-        if (predicate == null)
-            return await _dbSet.CountAsync(cancellationToken);
 
-        return await _dbSet.CountAsync(predicate, cancellationToken);
-    }
+    // public virtual async Task<List<TEntity>> GetPagedAsync(int skip, int take,
+    //     Expression<Func<TEntity, bool>>? predicate = null, CancellationToken cancellationToken = default)
+    // {
+    //     var query = _dbSet.AsQueryable();
+    //
+    //     if (predicate != null)
+    //     {
+    //         query = query.Where(predicate);
+    //     }
+    //
+    //     return await query.Skip(skip).Take(take).ToListAsync(cancellationToken);
+    // }
 
-    public virtual async Task<List<TEntity>> GetPagedAsync(int skip, int take,
-        Expression<Func<TEntity, bool>>? predicate = null, CancellationToken cancellationToken = default)
-    {
-        var query = _dbSet.AsQueryable();
-
-        if (predicate != null)
-        {
-            query = query.Where(predicate);
-        }
-
-        return await query.Skip(skip).Take(take).ToListAsync(cancellationToken);
-    }
-
-    public virtual async Task<List<TEntity>> GetPagedOrderedAsync<TKey>(int skip, int take,
-        Expression<Func<TEntity, TKey>> orderBy, bool ascending = true,
-        Expression<Func<TEntity, bool>>? predicate = null, CancellationToken cancellationToken = default)
-    {
-        var query = _dbSet.AsQueryable();
-
-        if (predicate != null)
-            query = query.Where(predicate);
-
-        query = ascending
-            ? query.OrderBy(orderBy)
-            : query.OrderByDescending(orderBy);
-
-        return await query.Skip(skip).Take(take).ToListAsync(cancellationToken);
-    }
+    // public virtual async Task<List<TEntity>> GetPagedOrderedAsync<TKey>(int skip, int take,
+    //     Expression<Func<TEntity, TKey>> orderBy, bool ascending = true,
+    //     Expression<Func<TEntity, bool>>? predicate = null, CancellationToken cancellationToken = default)
+    // {
+    //     var query = _dbSet.AsQueryable();
+    //
+    //     if (predicate != null)
+    //         query = query.Where(predicate);
+    //
+    //     query = ascending
+    //         ? query.OrderBy(orderBy)
+    //         : query.OrderByDescending(orderBy);
+    //
+    //     return await query.Skip(skip).Take(take).ToListAsync(cancellationToken);
+    // }
 
     public virtual async Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
@@ -116,25 +104,14 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
         return true;
     }
 
-    public virtual Task<bool> DeleteAsync(TEntity entity, CancellationToken cancellationToken = default)
-    {
-        _dbSet.Remove(entity);
-        return Task.FromResult(true);
-    }
 
     public virtual async Task<bool> DeleteRangeAsync(List<long> ids, CancellationToken cancellationToken = default)
     {
         var entities = await _dbSet.Where(e => ids.Contains(e.Id)).ToListAsync(cancellationToken);
-        if (!entities.Any())
+        if (entities.Count <= 0)
             return false;
 
         _dbSet.RemoveRange(entities);
         return true;
-    }
-
-    public virtual Task<bool> DeleteRangeAsync(List<TEntity> entities, CancellationToken cancellationToken = default)
-    {
-        _dbSet.RemoveRange(entities);
-        return Task.FromResult(true);
     }
 }

@@ -1,10 +1,9 @@
 using Queick.Company.Application.Common;
-using Queick.Company.Application.Common.Models;
 using Queick.Company.Application.DTOs;
 
 namespace Queick.Company.Application.Services.Interfaces;
 
-public interface IBranchRepository
+public interface IBranchService
 {
     Task<BranchDto>? GetBranchByIdAsync(long id, CancellationToken cancellationToken = default);
     Task<PaginatedList<BranchDto>> GetBranchsAsync(BranchSearchRequestDto dto, CancellationToken cancellationToken = default);

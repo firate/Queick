@@ -8,7 +8,7 @@ public interface ICompanyService
 {
     Task<CompanyDto>? GetCompanyByIdAsync(long id, CancellationToken cancellationToken = default);
     Task<PaginatedList<CompanyDto>> GetCompaniesAsync(CompanySearchRequestDto dto, CancellationToken cancellationToken = default);
-    Task<CompanyDto> CreateCompanyAsync(CompanyCreationDto companyCreationDto, CancellationToken cancellationToken = default);
+    Task<CompanyDto> CreateCompanyAsync(CompanyCreationDto dto, CancellationToken cancellationToken = default);
     Task<CompanyDto> UpdateCompanyAsync(CompanyUpdateDto dto, CancellationToken cancellationToken = default);
     Task<bool> DeleteCompanyAsync(long id, CancellationToken cancellationToken = default);
     Task<List<CompanyDto>> CreateCompaniesAsync(List<CompanyCreationDto> companiesDto, CancellationToken cancellationToken = default);

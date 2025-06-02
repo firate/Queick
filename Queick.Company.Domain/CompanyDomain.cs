@@ -12,10 +12,7 @@ public class CompanyDomain : IEntity, ISoftDeleteEntity, IActivatable
     public bool IsDeleted { get; set; }
     public DateTimeOffset? DeletedAt { get; set; }
     public string DeletedBy { get; set; } = "System";
-
     public DateTimeOffset Created { get; set; }
     public DateTimeOffset? Updated { get; set; }
-    
     public List<Branch> Branches { get; set; } = [];
-    public List<CommunicationInfo> CommunicationInfos { get; set; } = [];
 }

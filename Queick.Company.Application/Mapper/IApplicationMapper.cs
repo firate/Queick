@@ -8,4 +8,6 @@ public interface IApplicationMapper
     CompanyDto CompanyToCompanyDto(CompanyDomain company);
     
     List<CompanyDto> CompanyListToCompanyDtoList(List<CompanyDomain> companies);
+    
+    BranchDto BranchToBranchDto(Branch branch);
 }

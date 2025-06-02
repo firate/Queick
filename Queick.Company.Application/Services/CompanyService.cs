@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using Queick.Company.Application.Common;
 using Queick.Company.Application.DTOs;
 using Queick.Company.Application.Exceptions;
@@ -38,31 +39,38 @@ public class CompanyService : ICompanyService
     public async Task<PaginatedList<CompanyDto>> GetCompaniesAsync(CompanySearchRequestDto dto,
         CancellationToken cancellationToken = default)
     {
-        var companyList = await _unitOfWork.Companies.GetPagedAsync(
-            (dto.Page * dto.PageSize) - 1,
-            dto.PageSize,
-            null,
+       
+
+        var companyCountAndList = await _unitOfWork.Companies.GetPagedAsync(
+            name: dto.Name,
+            description: dto?.Description,
+            skip: (dto.Page - 1) * dto.PageSize,
+            take: dto.PageSize,
+            createdFrom: null,
+            createdTo: null,
             cancellationToken);
 
-        if (companyList.Count == 0)
+        
+        
+        if (companyCountAndList.Count == 0 || companyCountAndList.Companies is null)
         {
             return new PaginatedList<CompanyDto>([], 0, dto.Page, dto.PageSize);
         }
 
-        var dtoList = _mapper.CompanyListToCompanyDtoList(companyList);
+        var dtoList = _mapper.CompanyListToCompanyDtoList(companyCountAndList.Companies);
 
         return new PaginatedList<CompanyDto>(dtoList, dtoList.Count, dto.Page, dto.PageSize);
     }
 
-    public async Task<CompanyDto> CreateCompanyAsync(CompanyCreationDto companyCreationDto,
+    public async Task<CompanyDto> CreateCompanyAsync(CompanyCreationDto dto,
         CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(companyCreationDto);
+        ArgumentNullException.ThrowIfNull(dto);
 
         var company = new CompanyDomain
         {
-            Name = companyCreationDto.Name,
-            Description = companyCreationDto.Description ?? string.Empty
+            Name = dto.Name,
+            Description = dto.Description ?? string.Empty
         };
 
         var addedCompany = await _unitOfWork.Companies.AddAsync(company, cancellationToken);
@@ -71,7 +79,7 @@ public class CompanyService : ICompanyService
 
         if (!isSaved)
         {
-            throw new Exception("Company not updated.");
+            throw new Exception("Company not created.");
         }
 
         var companyResultDto = _mapper.CompanyToCompanyDto(addedCompany);
@@ -126,7 +134,7 @@ public class CompanyService : ICompanyService
     }
 
     #endregion
-    
+
     #region Toplu İşlemler
 
     public async Task<List<CompanyDto>> CreateCompaniesAsync(List<CompanyCreationDto> companyCreationDtos,
@@ -150,8 +158,9 @@ public class CompanyService : ICompanyService
     }
 
     #endregion
-    
+
     #region Kompleks İşlemler
+
     public async Task<object> TransferEmployeeBetweenCompaniesAsync(
         long employeeId, long sourceCompanyId, long targetCompanyId,
         CancellationToken cancellationToken = default)
@@ -159,6 +168,9 @@ public class CompanyService : ICompanyService
         // TODO: instant action, no message queue
         throw new NotImplementedException();
     }
-    
+
     #endregion
 }
+
+
+

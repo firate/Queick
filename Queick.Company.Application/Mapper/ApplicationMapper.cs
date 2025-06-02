@@ -14,4 +14,7 @@ public partial class ApplicationMapper: IApplicationMapper
     public partial CompanyDto CompanyToCompanyDto(CompanyDomain company);
     
     public partial List<CompanyDto> CompanyListToCompanyDtoList(List<CompanyDomain> companies);
+    
+    public partial BranchDto BranchToBranchDto(Branch branch);
+    
 }

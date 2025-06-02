@@ -1,0 +1,87 @@
+using Queick.Company.Application.Common;
+using Queick.Company.Application.DTOs;
+using Queick.Company.Application.Exceptions;
+using Queick.Company.Application.Interfaces;
+using Queick.Company.Application.Mapper;
+using Queick.Company.Application.Services.Interfaces;
+
+namespace Queick.Company.Application.Services;
+
+public class BranchService : IBranchService
+{
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly IApplicationMapper _mapper;
+
+    public BranchService(IUnitOfWork unitOfWork, IApplicationMapper mapper)
+    {
+        _unitOfWork = unitOfWork;
+        _mapper = mapper;
+    }
+
+
+    public async Task<BranchDto>? GetBranchByIdAsync(long id, CancellationToken cancellationToken = default)
+    {
+        var branch = await _unitOfWork.Branches.GetFirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+
+        if (branch is null)
+        {
+            throw new NotFoundException(nameof(Domain.Branch), id);
+        }
+        
+        var dto = _mapper.BranchToBranchDto(branch);
+
+        return dto;
+    }
+
+    public async Task<PaginatedList<BranchDto>> GetBranchsAsync(BranchSearchRequestDto dto, CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+        
+        
+        
+        // var companyList = await _unitOfWork.Companies.GetPagedAsync(
+        //     (dto.Page * dto.PageSize) - 1,
+        //     dto.PageSize,
+        //     null,
+        //     cancellationToken);
+        //
+        // if (companyList.Count == 0)
+        // {
+        //     return new PaginatedList<CompanyDto>([], 0, dto.Page, dto.PageSize);
+        // }
+        //
+        // var dtoList = _mapper.CompanyListToCompanyDtoList(companyList);
+        //
+        // return new PaginatedList<CompanyDto>(dtoList, dtoList.Count, dto.Page, dto.PageSize);
+    }
+
+    public async Task<BranchDto> CreateBranchAsync(BranchCreationDto dto, CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<BranchDto> UpdateBranchAsync(CompanyUpdateDto dto, CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<bool> DeleteBranchAsync(long id, CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<List<BranchDto>> CreateBranchsAsync(List<BranchCreationDto> dto, CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<bool> UpdateBranchsAsync(List<BranchDto> dto, CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<bool> DeleteBranchsAsync(List<long> ids, CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
+}

@@ -4,6 +4,14 @@ namespace Queick.Company.Application.Interfaces;
 
 public interface ICompanyRepository : IBaseRepository<CompanyDomain>
 {
-    Task<CompanyDomain?> GetCompanyWithBranchesAsync(long id, CancellationToken cancellationToken = default);
+    Task<(List<CompanyDomain> Companies, int Count)> GetPagedAsync(
+        string name,
+        string description,
+        int skip,
+        int take,
+        DateTimeOffset? createdFrom,
+        DateTimeOffset? createdTo,
+        CancellationToken cancellationToken = default);
+    Task<CompanyDomain?> GetCompanyByIdWithBranchesAsync(long id, CancellationToken cancellationToken = default);
     Task<bool> IsCompanyNameExistsAsync(string name, CancellationToken cancellationToken = default);
 }

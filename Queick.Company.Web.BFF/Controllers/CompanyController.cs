@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Queick.Company.Application.Common.Models;
 using Queick.Company.Application.DTOs;
 using Queick.Company.Application.Services.Interfaces;
 
@@ -15,27 +14,27 @@ public class CompanyController : BaseApiController
 
 
     [HttpGet]
-    public async Task<IActionResult> GetCompanies(CompanySearchRequestDto searchRequest)
+    public async Task<IActionResult> GetCompanies(CompanySearchRequestDto request)
     {
-        var companies = await _companyService.GetCompaniesAsync(searchRequest, CancellationToken.None);
+        var companies = await _companyService.GetCompaniesAsync(request, CancellationToken.None);
         
         return Ok(companies);
     }
     
     
     [HttpPost]
-    public async Task<IActionResult> CreateCompany(CompanyCreationDto dto)
+    public async Task<IActionResult> CreateCompany(CompanyCreationDto request)
     {
-        var newCompany = await _companyService.CreateCompanyAsync(dto, CancellationToken.None);
+        var newCompany = await _companyService.CreateCompanyAsync(request, CancellationToken.None);
 
         return Ok(newCompany);
         
     }
     
     [HttpPut]
-    public async Task<IActionResult> UpdateCompany(CompanyUpdateDto dto)
+    public async Task<IActionResult> UpdateCompany(CompanyUpdateDto request)
     {
-        var updatedCompany = await _companyService.UpdateCompanyAsync(dto, CancellationToken.None);
+        var updatedCompany = await _companyService.UpdateCompanyAsync(request, CancellationToken.None);
 
         return Ok(updatedCompany);
         
