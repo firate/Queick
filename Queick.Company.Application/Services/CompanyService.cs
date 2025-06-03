@@ -43,10 +43,12 @@ public class CompanyService : ICompanyService
             description: dto?.Description,
             skip: (dto.Page - 1) * dto.PageSize,
             take: dto.PageSize,
-            createdFrom: null,
-            createdTo: null,
+            createdFrom: dto.CreatedFrom,
+            createdTo: dto.CreatedTo,
+            onlyActives: dto.OnlyActives,
+            onlyDeletedRecords: dto.OnlyDeleteds,
             cancellationToken);
-        
+
         if (companyCountAndList.Count == 0)
         {
             return new PaginatedList<CompanyDto>([], 0, dto.Page, dto.PageSize);
@@ -166,6 +168,3 @@ public class CompanyService : ICompanyService
 
     #endregion
 }
-
-
-

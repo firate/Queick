@@ -50,15 +50,13 @@ public class BranchController : BaseApiController
     [HttpDelete]
     public async Task<IActionResult> RemoveBranch(long id)
     {
-        // var isDeleted = await _companyService.DeleteCompanyAsync(id, CancellationToken.None);
-        //
-        // if (!isDeleted)
-        // {
-        //     return BadRequest();
-        // }
-        //
-        // return NoContent();
+        var isDeleted = await _branchService.DeleteBranchAsync(id, CancellationToken.None);
         
-        throw new NotImplementedException();
+        if (!isDeleted)
+        {
+            return BadRequest();
+        }
+        
+        return NoContent();
     }
 }

@@ -14,8 +14,8 @@ public interface IBranchService
     
     
     // TODO: çoklu işlemleri doğrudan rabbitmq'ya gönderelim, başka bir servis üzerinden işlensin
-    Task<bool> UpdateBranchsAsync(List<BranchDto> dto, CancellationToken cancellationToken = default);
-    Task<bool> DeleteBranchsAsync(List<long> ids, CancellationToken cancellationToken = default);
+    Task<object> UpdateBranchsAsync(List<BranchDto> dto, CancellationToken cancellationToken = default);
+    Task<object> DeleteBranchsAsync(List<long> ids, CancellationToken cancellationToken = default);
          
     
 }

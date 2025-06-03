@@ -4,7 +4,11 @@ namespace Queick.Company.Application.DTOs;
 
 public class BranchSearchRequestDto: BaseSearchRequestDto
 {
-    public string Name { get; set; }
+    public string? Name { get; set; }
     public string? Description { get; set; }
-    public long CompanyId { get; set; }
+    public long? CompanyId { get; set; }
+    public bool OnlyActives { get; set; }
+    public bool IncludeDeletedRecords { get; set; }
+    public DateTimeOffset? CreatedFrom { get; set; }
+    public DateTimeOffset? CreatedTo { get; set; }
 }

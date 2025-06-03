@@ -10,18 +10,12 @@ public class Branch: IEntity, ISoftDeleteEntity, IActivatable
     public bool IsDeleted { get; set; }
     public DateTimeOffset? DeletedAt { get; set; }
     public string DeletedBy { get; set; } = "System";
-    
-    
     public DateTimeOffset Created { get; set; }
     public DateTimeOffset? Updated { get; set; }
-
     public bool IsPrimary { get; set; }
-    
     public CompanyDomain? Company { get; set; }
-    public long CompanyDomainId { get; set; }
-    
+    public long CompanyId { get; set; }
     public List<CommunicationInfo> CommunicationInfos { get; set; } = [];
     public List<Address> Addresses { get; set; } = [];
-    
     public bool IsActive { get; set; }
 }
