@@ -36,23 +36,6 @@ public class BranchService : IBranchService
     public async Task<PaginatedList<BranchDto>> GetBranchsAsync(BranchSearchRequestDto dto, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
-        
-        
-        
-        // var companyList = await _unitOfWork.Companies.GetPagedAsync(
-        //     (dto.Page * dto.PageSize) - 1,
-        //     dto.PageSize,
-        //     null,
-        //     cancellationToken);
-        //
-        // if (companyList.Count == 0)
-        // {
-        //     return new PaginatedList<CompanyDto>([], 0, dto.Page, dto.PageSize);
-        // }
-        //
-        // var dtoList = _mapper.CompanyListToCompanyDtoList(companyList);
-        //
-        // return new PaginatedList<CompanyDto>(dtoList, dtoList.Count, dto.Page, dto.PageSize);
     }
 
     public async Task<BranchDto> CreateBranchAsync(BranchCreationDto dto, CancellationToken cancellationToken = default)
@@ -60,7 +43,7 @@ public class BranchService : IBranchService
         throw new NotImplementedException();
     }
 
-    public async Task<BranchDto> UpdateBranchAsync(CompanyUpdateDto dto, CancellationToken cancellationToken = default)
+    public async Task<BranchDto> UpdateBranchAsync(BranchUpdateDto dto, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }

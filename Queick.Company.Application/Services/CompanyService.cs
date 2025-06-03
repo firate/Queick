@@ -1,4 +1,3 @@
-using System.Linq.Expressions;
 using Queick.Company.Application.Common;
 using Queick.Company.Application.DTOs;
 using Queick.Company.Application.Exceptions;
@@ -39,8 +38,6 @@ public class CompanyService : ICompanyService
     public async Task<PaginatedList<CompanyDto>> GetCompaniesAsync(CompanySearchRequestDto dto,
         CancellationToken cancellationToken = default)
     {
-       
-
         var companyCountAndList = await _unitOfWork.Companies.GetPagedAsync(
             name: dto.Name,
             description: dto?.Description,
@@ -49,10 +46,8 @@ public class CompanyService : ICompanyService
             createdFrom: null,
             createdTo: null,
             cancellationToken);
-
         
-        
-        if (companyCountAndList.Count == 0 || companyCountAndList.Companies is null)
+        if (companyCountAndList.Count == 0)
         {
             return new PaginatedList<CompanyDto>([], 0, dto.Page, dto.PageSize);
         }

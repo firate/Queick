@@ -12,6 +12,19 @@ public class CompanyController : BaseApiController
         _companyService = companyService;
     }
 
+    
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetCompanyById(long id)
+    {
+        var company = await _companyService.GetCompanyByIdAsync(id, CancellationToken.None);
+
+        if (company is null)
+        {
+            return NotFound();
+        }
+        
+        return Ok(company);
+    }
 
     [HttpGet]
     public async Task<IActionResult> GetCompanies(CompanySearchRequestDto request)

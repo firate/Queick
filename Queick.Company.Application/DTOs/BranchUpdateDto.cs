@@ -1,6 +1,6 @@
 namespace Queick.Company.Application.DTOs;
 
-public class BranchDto
+public class BranchUpdateDto
 {
     public string Name { get; set; }
     public string? Description { get; set; }
