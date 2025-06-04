@@ -20,7 +20,8 @@ public class BranchRepository : BaseRepository<Branch>, IBranchRepository
         long companyId, 
         string name, 
         string description, 
-        bool onlyActiveRecords, 
+        bool onlyActiveRecords,
+        bool includeDeletedRecords,
         int skip,
         int take,
         CancellationToken cancellationToken = default)
@@ -41,16 +42,18 @@ public class BranchRepository : BaseRepository<Branch>, IBranchRepository
 
         if (!string.IsNullOrWhiteSpace(description))
         {
-            query = query.Where(x => x.Description.Contains(description));
+            query = query.Where(x => !string.IsNullOrWhiteSpace(x.Description) && x.Description.Contains(description));
         }
         
         if (onlyActiveRecords)
         {
-            query = query.Where(x=> x.IsActive == true);
+            query = query.Where(x=> x.IsActive);
         }
-        
-        
-        
+
+        if (!includeDeletedRecords)
+        {
+            query = query.Where(x => !x.IsDeleted);
+        }
         
         var count = query.Count();
         

@@ -21,28 +21,42 @@ public class BranchService : IBranchService
 
     public async Task<BranchDto>? GetBranchByIdAsync(long id, CancellationToken cancellationToken = default)
     {
-        var branch = await _unitOfWork.Branches.GetFirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+        var branch =
+            await _unitOfWork.Branches.GetFirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted, cancellationToken);
 
         if (branch is null)
         {
             throw new NotFoundException(nameof(Domain.Branch), id);
         }
-        
+
         var dto = _mapper.BranchToBranchDto(branch);
 
         return dto;
     }
 
-    public async Task<PaginatedList<BranchDto>> GetBranchsAsync(BranchSearchRequestDto dto, CancellationToken cancellationToken = default)
+    public async Task<PaginatedList<BranchDto>> GetBranchsAsync(BranchSearchRequestDto dto,
+        CancellationToken cancellationToken = default)
     {
-        // var companies = await _unitOfWork.Branches.GetPagedAsync();
-        //
-        // if (companies.Count == 0)
-        // {
-        //     
-        // }
-        throw new NotImplementedException();
+        var branchAndCount = await _unitOfWork.Branches.GetPagedAsync(
+            companyId: dto.CompanyId,
+            name: dto?.Name,
+            description: dto?.Description,
+            onlyActiveRecords: dto.OnlyActives,
+            includeDeletedRecords: dto.IncludeDeletedRecords,
+            skip: ((dto.Page - 1) * dto.PageSize),
+            take: dto.PageSize,
+            cancellationToken: cancellationToken);
         
+        var (branches, count) = branchAndCount;
+
+        if (count == 0)
+        {
+            throw new NotFoundException(nameof(Domain.Branch));
+        }
+        
+        var branchListDto = _mapper.BranchListToBranchDtoList(branches);
+
+        return new PaginatedList<BranchDto>(branchListDto, count, dto.Page, dto.PageSize);
     }
 
     public async Task<BranchDto> CreateBranchAsync(BranchCreationDto dto, CancellationToken cancellationToken = default)
@@ -60,7 +74,8 @@ public class BranchService : IBranchService
         throw new NotImplementedException();
     }
 
-    public async Task<List<BranchDto>> CreateBranchsAsync(List<BranchCreationDto> dto, CancellationToken cancellationToken = default)
+    public async Task<List<BranchDto>> CreateBranchsAsync(List<BranchCreationDto> dto,
+        CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }

@@ -17,4 +17,6 @@ public partial class ApplicationMapper: IApplicationMapper
     
     public partial BranchDto BranchToBranchDto(Branch branch);
     
+    public partial List<BranchDto> BranchListToBranchDtoList(List<Branch> branches);
+    
 }

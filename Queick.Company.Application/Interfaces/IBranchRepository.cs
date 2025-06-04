@@ -1,4 +1,3 @@
-using Queick.Company.Application.DTOs;
 using Queick.Company.Domain;
 
 namespace Queick.Company.Application.Interfaces;
@@ -14,7 +13,8 @@ public interface IBranchRepository : IBaseRepository<Branch>
         long companyId, 
         string name, 
         string description, 
-        bool onlyActiveRecords, 
+        bool onlyActiveRecords,
+        bool includeDeletedRecords,
         int skip,
         int take,
         CancellationToken cancellationToken = default);

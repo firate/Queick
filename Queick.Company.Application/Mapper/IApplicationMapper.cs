@@ -10,4 +10,6 @@ public interface IApplicationMapper
     List<CompanyDto> CompanyListToCompanyDtoList(List<CompanyDomain> companies);
     
     BranchDto BranchToBranchDto(Branch branch);
+    
+    List<BranchDto> BranchListToBranchDtoList(List<Branch> branches);
 }

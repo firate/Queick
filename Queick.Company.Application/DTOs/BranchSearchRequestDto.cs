@@ -6,7 +6,7 @@ public class BranchSearchRequestDto: BaseSearchRequestDto
 {
     public string? Name { get; set; }
     public string? Description { get; set; }
-    public long? CompanyId { get; set; }
+    public long CompanyId { get; set; }
     public bool OnlyActives { get; set; }
     public bool IncludeDeletedRecords { get; set; }
     public DateTimeOffset? CreatedFrom { get; set; }
