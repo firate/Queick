@@ -116,18 +116,8 @@ public class CompanyService : ICompanyService
 
     public async Task<bool> DeleteCompanyAsync(long id, CancellationToken cancellationToken = default)
     {
-        var company = await _unitOfWork.Companies.GetFirstOrDefaultAsync(c => c.Id == id, cancellationToken);
-
-        if (company is null)
-        {
-            throw new NotFoundException($"Company with ID {id} not found.");
-        }
-
-        company.IsDeleted = true;
-        await _unitOfWork.Companies.UpdateAsync(company, cancellationToken);
-        var isSaved = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
-
-        return isSaved;
+        await _unitOfWork.Companies.DeleteAsync(id, cancellationToken);
+        return await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
     }
 
     #endregion
