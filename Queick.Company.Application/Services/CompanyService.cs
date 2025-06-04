@@ -87,26 +87,23 @@ public class CompanyService : ICompanyService
     public async Task<CompanyDto> UpdateCompanyAsync(CompanyUpdateDto dto,
         CancellationToken cancellationToken = default)
     {
-        if (dto is null)
-        {
-            throw new NotFoundException($"Company not found.");
-        }
+        ArgumentNullException.ThrowIfNull(dto);
 
         var company = await _unitOfWork.Companies.GetFirstOrDefaultAsync(c => c.Id == dto.Id, cancellationToken);
 
         if (company is null)
         {
-            throw new NotFoundException($"Company with ID {dto.Id} not found.");
+            throw new NotFoundException($"Company with Id {dto.Id} not found.");
         }
 
         company.Name = dto.Name;
         company.Description = dto!.Description ?? string.Empty;
-        company.IsDeleted = dto!.IsDeleted;
+        company.IsActive = dto.IsActive;
+        
 
         await _unitOfWork.Companies.UpdateAsync(company, cancellationToken);
-        var isSaved = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
-
-        if (!isSaved)
+        
+        if (await _unitOfWork.SaveChangesAsync(cancellationToken) <= 0)
         {
             throw new Exception("Company not updated.");
         }

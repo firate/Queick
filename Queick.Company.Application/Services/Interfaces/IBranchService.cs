@@ -10,12 +10,11 @@ public interface IBranchService
     Task<BranchDto> CreateBranchAsync(BranchCreationDto dto, CancellationToken cancellationToken = default);
     Task<BranchDto> UpdateBranchAsync(BranchUpdateDto dto, CancellationToken cancellationToken = default);
     Task<bool> DeleteBranchAsync(long id, CancellationToken cancellationToken = default);
-    Task<List<BranchDto>> CreateBranchsAsync(List<BranchCreationDto> dto, CancellationToken cancellationToken = default);
     
     
     // TODO: çoklu işlemleri doğrudan rabbitmq'ya gönderelim, başka bir servis üzerinden işlensin
+    Task<object> CreateBranchsAsync(List<BranchCreationDto> dto, CancellationToken cancellationToken = default);
     Task<object> UpdateBranchsAsync(List<BranchDto> dto, CancellationToken cancellationToken = default);
     Task<object> DeleteBranchsAsync(List<long> ids, CancellationToken cancellationToken = default);
-         
     
 }
