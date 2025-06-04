@@ -29,37 +29,6 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
         return await _dbSet.FirstOrDefaultAsync(predicate, cancellationToken);
     }
 
-
-
-    // public virtual async Task<List<TEntity>> GetPagedAsync(int skip, int take,
-    //     Expression<Func<TEntity, bool>>? predicate = null, CancellationToken cancellationToken = default)
-    // {
-    //     var query = _dbSet.AsQueryable();
-    //
-    //     if (predicate != null)
-    //     {
-    //         query = query.Where(predicate);
-    //     }
-    //
-    //     return await query.Skip(skip).Take(take).ToListAsync(cancellationToken);
-    // }
-
-    // public virtual async Task<List<TEntity>> GetPagedOrderedAsync<TKey>(int skip, int take,
-    //     Expression<Func<TEntity, TKey>> orderBy, bool ascending = true,
-    //     Expression<Func<TEntity, bool>>? predicate = null, CancellationToken cancellationToken = default)
-    // {
-    //     var query = _dbSet.AsQueryable();
-    //
-    //     if (predicate != null)
-    //         query = query.Where(predicate);
-    //
-    //     query = ascending
-    //         ? query.OrderBy(orderBy)
-    //         : query.OrderByDescending(orderBy);
-    //
-    //     return await query.Skip(skip).Take(take).ToListAsync(cancellationToken);
-    // }
-
     public virtual async Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
         entity.Created = DateTimeOffset.UtcNow;
@@ -94,14 +63,34 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
         return Task.FromResult(entities);
     }
 
-    public virtual async Task<bool> DeleteAsync(long id, CancellationToken cancellationToken = default)
+    public async Task SoftDeleteAsync(long id, CancellationToken cancellationToken = default)
     {
         var entity = await GetByIdAsync(id, cancellationToken);
         if (entity == null)
-            return false;
+        {
+            // TODO: custom exception kullanalım.
+            throw new Exception();
+        }
 
+        if (entity is ISoftDeleteEntity softDeleteEntity)
+        {
+            softDeleteEntity.IsDeleted = true;
+            softDeleteEntity.DeletedAt = DateTimeOffset.UtcNow;
+        }
+        
+        entity.Updated = DateTimeOffset.UtcNow;
+        _dbSet.Update(entity);
+    }
+
+    public virtual async Task DeleteAsync(long id, CancellationToken cancellationToken = default)
+    {
+        var entity = await GetByIdAsync(id, cancellationToken);
+        if (entity == null)
+        {
+            throw new Exception();
+        }
+ 
         _dbSet.Remove(entity);
-        return true;
     }
 
 
