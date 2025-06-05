@@ -17,7 +17,10 @@ public class BranchController : BaseApiController
     public async Task<IActionResult> GetBranchById(long id)
     {
         var branch = await _branchService.GetBranchByIdAsync(id, CancellationToken.None);
-        
+        if (branch == null)
+        {
+            return NotFound();
+        }
         return Ok(branch);
     }
 
