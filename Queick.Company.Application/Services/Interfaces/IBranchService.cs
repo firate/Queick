@@ -5,7 +5,7 @@ namespace Queick.Company.Application.Services.Interfaces;
 
 public interface IBranchService
 {
-    Task<BranchDto>? GetBranchByIdAsync(long id, CancellationToken cancellationToken = default);
+    Task<BranchDto?> GetBranchByIdAsync(long id, CancellationToken cancellationToken = default);
     Task<PaginatedList<BranchDto>> GetBranchsAsync(BranchSearchRequestDto dto, CancellationToken cancellationToken = default);
     Task<BranchDto> CreateBranchAsync(BranchCreationDto dto, CancellationToken cancellationToken = default);
     Task<BranchDto> UpdateBranchAsync(BranchUpdateDto dto, CancellationToken cancellationToken = default);

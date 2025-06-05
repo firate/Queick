@@ -20,7 +20,7 @@ public class BranchService : IBranchService
     }
 
 
-    public async Task<BranchDto>? GetBranchByIdAsync(long id, CancellationToken cancellationToken = default)
+    public async Task<BranchDto?> GetBranchByIdAsync(long id, CancellationToken cancellationToken = default)
     {
         var branch =
             await _unitOfWork.Branches.GetFirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted, cancellationToken);
