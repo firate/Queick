@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Queick.Company.Application.Interfaces;
 using Queick.Company.Domain;
+using Queick.Company.Persistence.Repositories.Base;
 
 namespace Queick.Company.Persistence.Repositories;
 

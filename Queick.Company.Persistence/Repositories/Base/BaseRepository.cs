@@ -4,13 +4,13 @@ using Queick.Company.Application.Interfaces;
 using Queick.Company.Domain;
 using Queick.Shared.Domain;
 
-namespace Queick.Company.Persistence.Repositories;
+namespace Queick.Company.Persistence.Repositories.Base;
 
 public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
     where TEntity : class, IEntity
 {
     protected readonly ApplicationDbContext _context;
-    protected readonly DbSet<TEntity> _dbSet;
+    private readonly DbSet<TEntity> _dbSet;
 
     protected BaseRepository(ApplicationDbContext context)
     {
@@ -20,7 +20,7 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
 
     public virtual async Task<TEntity?> GetByIdAsync(long id, CancellationToken cancellationToken = default)
     {
-        return await _dbSet.FindAsync(new object[] { id }, cancellationToken);
+        return await _dbSet.FindAsync([id], cancellationToken);
     }
 
     public virtual async Task<TEntity?> GetFirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate,
@@ -92,13 +92,14 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
  
         _dbSet.Remove(entity);
     }
-
-
+    
     public virtual async Task<bool> DeleteRangeAsync(List<long> ids, CancellationToken cancellationToken = default)
     {
         var entities = await _dbSet.Where(e => ids.Contains(e.Id)).ToListAsync(cancellationToken);
         if (entities.Count <= 0)
+        {
             return false;
+        }
 
         _dbSet.RemoveRange(entities);
         return true;
