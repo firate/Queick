@@ -6,15 +6,31 @@ namespace Queick.Company.Application.Services.Interfaces;
 public interface IBranchService
 {
     Task<BranchDto?> GetBranchByIdAsync(long id, CancellationToken cancellationToken = default);
-    Task<PaginatedList<BranchDto>> GetBranchsAsync(BranchSearchRequestDto dto, CancellationToken cancellationToken = default);
+
+    Task<PaginatedList<BranchDto>> GetBranchsAsync(BranchSearchRequestDto dto,
+        CancellationToken cancellationToken = default);
+
     Task<BranchDto> CreateBranchAsync(BranchCreationDto dto, CancellationToken cancellationToken = default);
     Task<BranchDto> UpdateBranchAsync(BranchUpdateDto dto, CancellationToken cancellationToken = default);
     Task<bool> DeleteBranchAsync(long id, CancellationToken cancellationToken = default);
+
+    Task<BranchAddressDto> CreateAddressAsync(BranchAddressCreationDto dto,
+        CancellationToken cancellationToken = default);
+    Task<BranchAddressDto> GetBranchAddressByIdAsync(long branchId, long addressId,
+        CancellationToken cancellationToken = default);
+    Task<BranchAddressDto> GetBranchPrimaryAddressByAddressFunctionTypeAsync(long branchId, int addressFunctionTypeId,
+        CancellationToken cancellationToken = default);
     
-    
+    Task<BranchAddressDto> UpdateAddressAsync(BranchAddressUpdateDto dto,
+        CancellationToken cancellationToken = default);
+    Task<PaginatedList<BranchAddressDto>> GetAddressesPagedAsync(BranchAddressSearchDto dto,
+        CancellationToken cancellationToken = default);
+    Task<BranchAddressDto> UpdateAddressAsPrimaryForBranchAsync(long branchId, long addressId, CancellationToken cancellationToken = default);
+
+    Task<bool> DeleteBranchAddressAsync(long branchId, long addressId, CancellationToken cancellationToken = default);
+
     // TODO: çoklu işlemleri doğrudan rabbitmq'ya gönderelim, başka bir servis üzerinden işlensin
     Task<object> CreateBranchsAsync(List<BranchCreationDto> dto, CancellationToken cancellationToken = default);
     Task<object> UpdateBranchsAsync(List<BranchDto> dto, CancellationToken cancellationToken = default);
     Task<object> DeleteBranchsAsync(List<long> ids, CancellationToken cancellationToken = default);
-    
 }

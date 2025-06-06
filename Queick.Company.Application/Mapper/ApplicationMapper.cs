@@ -15,8 +15,13 @@ public partial class ApplicationMapper: IApplicationMapper
     
     public partial List<CompanyDto> CompanyListToCompanyDtoList(List<CompanyDomain> companies);
     
+    public partial Branch BranchCreationDtoToBranch(BranchCreationDto branch);
     public partial BranchDto BranchToBranchDto(Branch branch);
     
     public partial List<BranchDto> BranchListToBranchDtoList(List<Branch> branches);
-    
+
+    public partial Address BranchAddressCreationDtoToAddress(BranchAddressCreationDto address);
+
+    public partial BranchAddressCreationDto AddressToBranchAddressCreationDto(Address address);
+    public partial BranchAddressDto AddressToBranchAddressDto(Address address);
 }

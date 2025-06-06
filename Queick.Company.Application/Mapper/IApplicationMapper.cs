@@ -9,7 +9,12 @@ public interface IApplicationMapper
     
     List<CompanyDto> CompanyListToCompanyDtoList(List<CompanyDomain> companies);
     
+    Branch BranchCreationDtoToBranch(BranchCreationDto branch);
     BranchDto BranchToBranchDto(Branch branch);
     
     List<BranchDto> BranchListToBranchDtoList(List<Branch> branches);
+    
+    Address BranchAddressCreationDtoToAddress(BranchAddressCreationDto address);
+    BranchAddressCreationDto AddressToBranchAddressCreationDto(Address address);
+    BranchAddressDto AddressToBranchAddressDto(Address address);
 }

@@ -69,15 +69,9 @@ public class BranchService : IBranchService
             throw new ArgumentException("Invalid CompanyId", nameof(dto.CompanyId));
         }
 
-        var branch = new Branch()
-        {
-            Name = dto.Name,
-            Description = dto.Description,
-            CompanyId = dto.CompanyId,
-            Created = DateTimeOffset.UtcNow,
-            Updated = DateTimeOffset.UtcNow,
-            IsActive = dto.IsActive
-        };
+        var branch = _mapper.BranchCreationDtoToBranch(dto);
+        branch.Created = DateTimeOffset.Now;
+        branch.Updated = DateTimeOffset.Now;
 
         var createdBranch = await _unitOfWork.Branches.AddAsync(branch, cancellationToken);
 
@@ -96,9 +90,8 @@ public class BranchService : IBranchService
     {
         ArgumentNullException.ThrowIfNull(dto);
 
-        var branch =
-            await _unitOfWork.Branches.GetFirstOrDefaultAsync(x => x.Name == dto.Name && !x.IsDeleted,
-                cancellationToken);
+        var branch = await _unitOfWork.Branches
+            .GetFirstOrDefaultAsync(x => x.Name == dto.Name && !x.IsDeleted, cancellationToken);
 
         if (branch is null)
         {
@@ -108,8 +101,6 @@ public class BranchService : IBranchService
         branch.Name = dto.Name;
         branch.Description = dto.Description;
         branch.IsActive = dto.IsActive;
-        branch.IsPrimary = branch.IsPrimary;
-
 
         await _unitOfWork.Branches.UpdateAsync(branch, cancellationToken);
         if (await _unitOfWork.SaveChangesAsync(cancellationToken) <= 0)
@@ -128,6 +119,72 @@ public class BranchService : IBranchService
         return await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
     }
 
+    public async Task<BranchAddressDto> CreateAddressAsync(BranchAddressCreationDto dto,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(dto, nameof(dto));
+
+        var branch =
+            await _unitOfWork.Branches.GetFirstOrDefaultAsync(x => x.Id == dto.BranchId && !x.IsDeleted,
+                cancellationToken);
+
+        if (branch is null)
+        {
+            throw new NotFoundException(nameof(Domain.Branch));
+        }
+
+        var address =  _mapper.BranchAddressCreationDtoToAddress(dto);
+        
+        address.Created = DateTimeOffset.UtcNow;
+        address.Updated = DateTimeOffset.UtcNow;
+        address.BranchId = branch.Id;
+
+        var createdAddress = await _unitOfWork.Branches.AddAddressAsync(address, cancellationToken);
+
+        var resultDto = _mapper.AddressToBranchAddressDto(createdAddress);
+
+        return resultDto;
+    }
+
+    public async Task<BranchAddressDto> GetBranchAddressByIdAsync(long branchId, long addressId,
+        CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<BranchAddressDto> GetBranchPrimaryAddressByAddressFunctionTypeAsync(long branchId,
+        int addressFunctionTypeId,
+        CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<BranchAddressDto> UpdateAddressAsync(BranchAddressUpdateDto dto,
+        CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<PaginatedList<BranchAddressDto>> GetAddressesPagedAsync(BranchAddressSearchDto dto,
+        CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<BranchAddressDto> UpdateAddressAsPrimaryForBranchAsync(long branchId, long addressId,
+        CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<bool> DeleteBranchAddressAsync(long branchId, long addressId,
+        CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
+
+    #region Message Queue Implementasyonunu Bekleyen Operasyonlar
+
     // TODO: çoklu işlemleri message queue üzerinden yapalım
     public async Task<object> CreateBranchsAsync(List<BranchCreationDto> dto,
         CancellationToken cancellationToken = default)
@@ -144,4 +201,6 @@ public class BranchService : IBranchService
     {
         throw new NotImplementedException();
     }
+
+    #endregion
 }

@@ -18,4 +18,15 @@ public interface IBranchRepository : IBaseRepository<Branch>
         int skip,
         int take,
         CancellationToken cancellationToken = default);
+
+    Task<Address> AddAddressAsync(Address address, CancellationToken cancellationToken = default);
+
+    Task<Address?> GetAddressByIdAsync(long addressId, CancellationToken cancellationToken = default);
+
+    Task<(List<Address>, int totalCount)> GetAddressesByBranchIdAsync(int branchId,
+        int page, int pageSize, CancellationToken cancellationToken = default);
+
+    Task<Address> UpdateAddressAsync(Address address, CancellationToken cancellationToken = default);
+
+    Task DeleteAddressAsync(int addressId, CancellationToken cancellationToken = default);
 }
