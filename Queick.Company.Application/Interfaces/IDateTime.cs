@@ -5,5 +5,5 @@ namespace Queick.Company.Application.Interfaces;
 /// </summary>
 public interface IDateTime
 {
-    DateTime Now { get; }
+    DateTimeOffset Now { get; }
 }

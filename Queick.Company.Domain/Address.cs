@@ -1,9 +1,8 @@
-using Queick.Shared.Domain;
-
 namespace Queick.Company.Domain;
 
-public class Address : IEntity, ISoftDeleteEntity
+public class Address : IEntity, ISoftDeleteEntity, IAuditableEntity
 {
+    private DateTimeOffset _updated;
     public long Id { get; set; }
     public AddressLocationType AddressLocationType { get; set; }
     public AddressFunctionType AddressFunctionType { get; set; }
@@ -47,9 +46,10 @@ public class Address : IEntity, ISoftDeleteEntity
     public long? LocationId { get; set; }
     public Location? Location { get; set; }
     
-
+    public string? CreatedBy { get; set; }
+    public string? UpdatedBy { get; set; }
     public DateTimeOffset Created { get; set; }
-    public DateTimeOffset? Updated { get; set; }
+    public DateTimeOffset Updated { get; set; }
 
     public bool IsDeleted { get; set; }
     public DateTimeOffset? DeletedAt { get; set; }

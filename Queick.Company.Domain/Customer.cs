@@ -1,12 +1,9 @@
-using Queick.Shared.Domain;
-
 namespace Queick.Company.Domain;
 
-public class Customer : IEntity, ISoftDeleteEntity, IActivatable
+public class Customer : IEntity, ISoftDeleteEntity, IActivatable, IAuditableEntity
 {
     public long Id { get; set; }
-    public DateTimeOffset Created { get; set; }
-    public DateTimeOffset? Updated { get; set; }
+
     public string Username { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
@@ -22,4 +19,9 @@ public class Customer : IEntity, ISoftDeleteEntity, IActivatable
     public List<CommunicationInfo> CommunicationInfos { get; set; } = [];
     public List<Address> Addresses { get; set; } = [];
     public bool IsActive { get; set; }
+
+    public string? CreatedBy { get; set; }
+    public string? UpdatedBy { get; set; }
+    public DateTimeOffset Created { get; set; }
+    public DateTimeOffset Updated { get; set; }
 }

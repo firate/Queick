@@ -1,8 +1,6 @@
-using Queick.Shared.Domain;
-
 namespace Queick.Company.Domain;
 
-public class Employee : IEntity, ISoftDeleteEntity, IActivatable
+public class Employee : IEntity, ISoftDeleteEntity, IActivatable, IAuditableEntity
 {
     public long Id { get; set; }
     public string Name { get; set; }
@@ -14,9 +12,11 @@ public class Employee : IEntity, ISoftDeleteEntity, IActivatable
     public bool IsDeleted { get; set; }
     public DateTimeOffset? DeletedAt { get; set; }
     public string DeletedBy { get; set; } = "System";
-    
+
+    public string? CreatedBy { get; set; }
+    public string? UpdatedBy { get; set; }
     public DateTimeOffset Created { get; set; }
-    public DateTimeOffset? Updated { get; set; }
+    public DateTimeOffset Updated { get; set; }
     
     // public Address? Address { get; set; }
     // public long AddressId { get; set; }

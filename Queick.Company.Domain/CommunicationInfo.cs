@@ -1,9 +1,8 @@
 using Queick.Company.Domain.Enums;
-using Queick.Shared.Domain;
 
 namespace Queick.Company.Domain;
 
-public class CommunicationInfo : IEntity, ISoftDeleteEntity, IActivatable
+public class CommunicationInfo : IEntity, ISoftDeleteEntity, IActivatable, IAuditableEntity
 {
     public long Id { get; set; }
     public string Name { get; set; }
@@ -30,8 +29,11 @@ public class CommunicationInfo : IEntity, ISoftDeleteEntity, IActivatable
         get => (int) CommunicationType; 
         set => CommunicationType = (CommunicationType) value;
     }
+
+    public string? CreatedBy { get; set; }
+    public string? UpdatedBy { get; set; }
     public DateTimeOffset Created { get; set; }
-    public DateTimeOffset? Updated { get; set; }
+    public DateTimeOffset Updated { get; set; }
     
     public bool IsDeleted { get; set; }
     public DateTimeOffset? DeletedAt { get; set; }

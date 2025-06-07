@@ -1,5 +1,3 @@
-using Queick.Shared.Domain;
-
 namespace Queick.Company.Domain;
 
 public class Location : IEntity, ISoftDeleteEntity, IActivatable

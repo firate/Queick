@@ -14,6 +14,7 @@ public class Program
         builder.Services.AddPersistence(builder.Configuration);
         builder.Services.AddInfrastructure();
         builder.Services.AddApplicationServices();
+        builder.Services.AddHttpContextAccessor();
         
         // Add services to the container.
        

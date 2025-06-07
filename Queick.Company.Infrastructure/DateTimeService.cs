@@ -11,5 +11,5 @@ public class DateTimeService : IDateTime
     /// <summary>
     /// Mevcut UTC zamanını döndürür.
     /// </summary>
-    public DateTime Now => DateTime.UtcNow;
+    public DateTimeOffset Now => DateTimeOffset.UtcNow;
 }
