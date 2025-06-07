@@ -2,6 +2,5 @@ namespace Queick.Company.Application.Common;
 
 public interface ICurrentUserService
 {
-    string? UserId { get; }
-    IReadOnlyList<string> Permissions { get; }
+    string? GetCurrentUserId();
 }

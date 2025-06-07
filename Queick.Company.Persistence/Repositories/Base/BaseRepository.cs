@@ -2,12 +2,11 @@ using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Queick.Company.Application.Interfaces;
 using Queick.Company.Domain;
-using Queick.Shared.Domain;
 
 namespace Queick.Company.Persistence.Repositories.Base;
 
 public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
-    where TEntity : class, IEntity
+    where TEntity : class, IEntity, IAuditableEntity
 {
     protected readonly ApplicationDbContext _context;
     private readonly DbSet<TEntity> _dbSet;
