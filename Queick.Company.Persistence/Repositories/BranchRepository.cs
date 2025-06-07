@@ -11,20 +11,14 @@ public class BranchRepository : BaseRepository<Branch>, IBranchRepository
     {
     }
 
-    public async Task<List<Branch>> GetBranchesByCompanyIdAsync(long companyId,
-        CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException();
-    }
-
     public async Task<(List<Branch> Branches, int Count)> GetPagedAsync(
         long companyId,
-        string name,
-        string description,
-        bool onlyActiveRecords,
-        bool includeDeletedRecords,
         int skip,
         int take,
+        string? name,
+        string? description,
+        bool onlyActiveRecords = true,
+        bool includeDeletedRecords = false,
         CancellationToken cancellationToken = default)
     {
         List<Branch> branches = [];
@@ -74,14 +68,21 @@ public class BranchRepository : BaseRepository<Branch>, IBranchRepository
             return false;
         }
 
+        if (companyId <= 0)
+        {
+            return false;
+        }
+
         var query = _context.Branches.AsQueryable();
         query = query.Where(b => b.CompanyId == companyId);
 
-        return await query.AnyAsync(b => b.Name.ToLower() == name.ToLower(), cancellationToken);
+        return await query.AnyAsync(b => string.Equals(b.Name, name, StringComparison.InvariantCultureIgnoreCase),
+            cancellationToken);
     }
 
 
-    public async Task UpdateAddressPrimaryStatusAsync(long branchId, AddressFunctionType functionType, bool isPrimary)
+    public async Task SetAddressAsPrimaryAsync(long branchId, long addressId, AddressFunctionType functionType,
+        bool isPrimary)
     {
         var existingPrimaryAddresses = await _context.Addresses
             .Where(a => a.BranchId == branchId &&
@@ -94,6 +95,20 @@ public class BranchRepository : BaseRepository<Branch>, IBranchRepository
             address.IsPrimary = false;
         }
 
+        var currentAddressToBePrimary =
+            await _context.Addresses.FirstOrDefaultAsync(a => a.BranchId == branchId && a.Id == addressId);
+
+        if (currentAddressToBePrimary == null)
+        {
+            throw new Exception("Address not found");
+        }
+
+
+        currentAddressToBePrimary.IsPrimary = true;
+
+
+        _context.Addresses.Update(currentAddressToBePrimary);
+
         await _context.SaveChangesAsync();
     }
 
@@ -104,11 +119,23 @@ public class BranchRepository : BaseRepository<Branch>, IBranchRepository
         return result.Entity;
     }
 
-    public async Task<Address?> GetAddressByIdAsync(long addressId, CancellationToken cancellationToken = default)
+    public async Task<Address?> GetAddressByBranchAndAddressIdAsync(long branchId, long addressId,
+        CancellationToken cancellationToken = default)
     {
         return await _context.Addresses
             .Include(a => a.Branch)
-            .FirstOrDefaultAsync(a => a.Id == addressId && !a.IsDeleted, cancellationToken);
+            .FirstOrDefaultAsync(a => a.BranchId == branchId && a.Id == addressId && !a.IsDeleted, cancellationToken);
+    }
+
+
+    public async Task<Address?> GetPrimaryAddressByFunctionTypeAsync(long branchId, int addressFunctionType,
+        CancellationToken cancellationToken = default)
+    {
+        return await _context.Addresses
+            .Include(a => a.Branch)
+            .FirstOrDefaultAsync(
+                a => a.BranchId == branchId && (int)a.AddressFunctionType == addressFunctionType && !a.IsDeleted,
+                cancellationToken);
     }
 
     public async Task<(List<Address>, int totalCount)> GetAddressesByBranchIdAsync(int branchId,
@@ -132,9 +159,10 @@ public class BranchRepository : BaseRepository<Branch>, IBranchRepository
         return await Task.FromResult(address);
     }
 
-    public async Task DeleteAddressAsync(int addressId, CancellationToken cancellationToken = default)
+
+    public async Task DeleteAddressAsync(long branchId, long addressId, CancellationToken cancellationToken = default)
     {
-        var address = await GetAddressByIdAsync(addressId, cancellationToken);
+        var address = await GetAddressByBranchAndAddressIdAsync(branchId, addressId, cancellationToken);
         if (address != null)
         {
             address.IsDeleted = true; // Soft delete

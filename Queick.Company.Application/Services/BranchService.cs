@@ -141,15 +141,20 @@ public class BranchService : IBranchService
 
         var createdAddress = await _unitOfWork.Branches.AddAddressAsync(address, cancellationToken);
 
-        var resultDto = _mapper.AddressToBranchAddressDto(createdAddress);
-
-        return resultDto;
+        return _mapper.AddressToBranchAddressDto(createdAddress);
     }
 
     public async Task<BranchAddressDto> GetBranchAddressByIdAsync(long branchId, long addressId,
         CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var address = await _unitOfWork.Branches.GetAddressByBranchAndAddressIdAsync(branchId, addressId, cancellationToken);
+
+        if (address is null)
+        {
+            throw new NotFoundException(nameof(Domain.Branch));
+        }
+        
+        return _mapper.AddressToBranchAddressDto(address);
     }
 
     public async Task<BranchAddressDto> GetBranchPrimaryAddressByAddressFunctionTypeAsync(long branchId,
