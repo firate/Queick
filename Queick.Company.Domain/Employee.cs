@@ -18,9 +18,6 @@ public class Employee : IEntity, ISoftDeleteEntity, IActivatable, IAuditableEnti
     public DateTimeOffset Created { get; set; }
     public DateTimeOffset Updated { get; set; }
     
-    // public Address? Address { get; set; }
-    // public long AddressId { get; set; }
-    
     public List<Address> Addresses { get; set; } = [];
     
     public Branch? Branch { get; set; }
