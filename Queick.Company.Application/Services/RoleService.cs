@@ -7,23 +7,22 @@ namespace Queick.Company.Application.Services;
 
 public class RoleService : IRoleService
 {
-    private readonly IRoleRepository _roleRepository;
-    private readonly IPermissionRepository _permissionRepository;
-    
-    public RoleService(IRoleRepository roleRepository, IPermissionRepository permissionRepository)
+    private readonly IUnitOfWork _unitOfWork;
+
+    public RoleService(IUnitOfWork unitOfWork)
     {
-        _roleRepository = roleRepository;
-        _permissionRepository = permissionRepository;
+        _unitOfWork = unitOfWork;
     }
-    
-    public async Task<List<RoleDto>> GetAllRolesAsync()
+
+
+    public async Task<List<RoleDto>> GetAllRolesAsync(CancellationToken cancellationToken = default)
     {
-        var roles = await _roleRepository.GetAllAsync();
+        var roles = await _unitOfWork.Roles.GetAllAsync();
         var roleDtos = new List<RoleDto>();
-        
+
         foreach (var role in roles)
         {
-            var roleWithPermissions = await _roleRepository.GetRoleWithPermissionsAsync(role.Id);
+            var roleWithPermissions = await _unitOfWork.Roles.GetRoleWithPermissionsAsync(role.Id);
             roleDtos.Add(new RoleDto
             {
                 Id = role.Id,
@@ -35,15 +34,15 @@ public class RoleService : IRoleService
                     .ToList()
             });
         }
-        
+
         return roleDtos;
     }
-    
-    public async Task<RoleDto> GetRoleByIdAsync(long id)
+
+    public async Task<RoleDto> GetRoleByIdAsync(long id, CancellationToken cancellationToken = default)
     {
-        var role = await _roleRepository.GetRoleWithPermissionsAsync(id);
+        var role = await _unitOfWork.Roles.GetRoleWithPermissionsAsync(id);
         if (role == null) return null;
-        
+
         return new RoleDto
         {
             Id = role.Id,
@@ -55,8 +54,8 @@ public class RoleService : IRoleService
                 .ToList()
         };
     }
-    
-    public async Task<RoleDto> CreateRoleAsync(CreateRoleDto dto)
+
+    public async Task<RoleDto> CreateRoleAsync(CreateRoleDto dto, CancellationToken cancellationToken = default)
     {
         var role = new Role
         {
@@ -64,13 +63,13 @@ public class RoleService : IRoleService
             Description = dto.Description,
             IsActive = true
         };
-        
-        await _roleRepository.CreateAsync(role);
-        
+
+        await _unitOfWork.Roles.AddAsync(role);
+
         // Add permissions
         if (dto.PermissionCodes != null && dto.PermissionCodes.Any())
         {
-            var permissions = await _permissionRepository.GetByCodesAsync(dto.PermissionCodes);
+            var permissions = await _unitOfWork.Permissions.GetByCodesAsync(dto.PermissionCodes);
             foreach (var permission in permissions)
             {
                 role.RolePermissions.Add(new RolePermission
@@ -79,27 +78,35 @@ public class RoleService : IRoleService
                     PermissionId = permission.Id
                 });
             }
-            await _roleRepository.UpdateAsync(role);
+
+            await _unitOfWork.Roles.UpdateAsync(role);
         }
-        
-        return await GetRoleByIdAsync(role.Id);
+
+        var isSaved = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
+
+        if (!isSaved)
+        {
+            throw new Exception("Role not created!");
+        }
+
+        return await GetRoleByIdAsync(role.Id, cancellationToken);
     }
-    
-    public async Task<RoleDto> UpdateRoleAsync(UpdateRoleDto dto)
+
+    public async Task<RoleDto> UpdateRoleAsync(UpdateRoleDto dto, CancellationToken cancellationToken = default)
     {
-        var role = await _roleRepository.GetRoleWithPermissionsAsync(dto.Id);
+        var role = await _unitOfWork.Roles.GetRoleWithPermissionsAsync(dto.Id);
         if (role == null) throw new InvalidOperationException("Role not found");
-        
+
         role.Name = dto.Name;
         role.Description = dto.Description;
         role.IsActive = dto.IsActive;
-        
+
         // Update permissions
         role.RolePermissions.Clear();
-        
+
         if (dto.PermissionCodes != null && dto.PermissionCodes.Any())
         {
-            var permissions = await _permissionRepository.GetByCodesAsync(dto.PermissionCodes);
+            var permissions = await _unitOfWork.Permissions.GetByCodesAsync(dto.PermissionCodes);
             foreach (var permission in permissions)
             {
                 role.RolePermissions.Add(new RolePermission
@@ -109,21 +116,23 @@ public class RoleService : IRoleService
                 });
             }
         }
-        
-        await _roleRepository.UpdateAsync(role);
-        
+
+        await _unitOfWork.Roles.UpdateAsync(role);
+
         return await GetRoleByIdAsync(role.Id);
     }
-    
-    public async Task<bool> DeleteRoleAsync(long id)
+
+    public async Task<bool> DeleteRoleAsync(long id,  CancellationToken cancellationToken = default)
     {
-        return await _roleRepository.DeleteAsync(id);
-    }
-    
-    public async Task<List<PermissionDto>> GetAllPermissionsAsync()
-    {
-        var permissions = await _permissionRepository.GetAllAsync();
+        await _unitOfWork.Roles.DeleteAsync(id,  cancellationToken);
         
+        return await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
+    }
+
+    public async Task<List<PermissionDto>> GetAllPermissionsAsync(CancellationToken cancellationToken = default)
+    {
+        var permissions = await _unitOfWork.Permissions.GetAllAsync();
+
         return permissions.Select(p => new PermissionDto
         {
             Id = p.Id,

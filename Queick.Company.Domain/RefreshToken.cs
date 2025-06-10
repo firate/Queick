@@ -1,6 +1,6 @@
 namespace Queick.Company.Domain;
 
-public class RefreshToken
+public class RefreshToken: IEntity
 {
     public long Id { get; set; }
     public string Token { get; set; }

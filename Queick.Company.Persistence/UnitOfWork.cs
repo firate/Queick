@@ -11,16 +11,35 @@ public class UnitOfWork : IUnitOfWork
     private readonly ApplicationDbContext _context;
     private readonly ICompanyRepository _companyRepository;
     private readonly IBranchRepository _branchRepository;
+    private readonly IRoleRepository _roleRepository;
+    private readonly IUserRepository _userRepository;
+    private readonly IPermissionRepository _permissionRepository;
+    private readonly IRefreshTokenRepository _refreshTokenRepository;
 
-    public UnitOfWork(ApplicationDbContext context, ICompanyRepository companyRepository, IBranchRepository branchRepository)
+    public UnitOfWork(
+        ApplicationDbContext context, 
+        ICompanyRepository companyRepository, 
+        IBranchRepository branchRepository, 
+        IRoleRepository roleRepository, 
+        IUserRepository userRepository, 
+        IPermissionRepository permissionRepository, 
+        IRefreshTokenRepository refreshTokenRepository)
     {
         _context = context;
         _companyRepository = companyRepository;
         _branchRepository = branchRepository;
+        _roleRepository = roleRepository;
+        _userRepository = userRepository;
+        _permissionRepository = permissionRepository;
+        _refreshTokenRepository = refreshTokenRepository;
     }
     
     public ICompanyRepository Companies => _companyRepository;
     public IBranchRepository Branches => _branchRepository;
+    public IRoleRepository Roles => _roleRepository;
+    public IPermissionRepository Permissions => _permissionRepository;
+    public IUserRepository Users => _userRepository;
+    public IRefreshTokenRepository RefreshTokens => _refreshTokenRepository;
 
     public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {

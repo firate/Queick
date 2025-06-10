@@ -1,22 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 using Queick.Company.Application.Interfaces;
 using Queick.Company.Domain;
+using Queick.Company.Persistence.Repositories.Base;
 
 namespace Queick.Company.Persistence.Repositories;
 
-public class RoleRepository : IRoleRepository
+public class RoleRepository : BaseRepository<Role>, IRoleRepository
 {
-    private readonly ApplicationDbContext _context;
-    
-    public RoleRepository(ApplicationDbContext context)
+    public RoleRepository(ApplicationDbContext dbContext) : base(dbContext)
     {
-        _context = context;
-    }
-    
-    public async Task<Role> GetByIdAsync(long id)
-    {
-        return await _context.Roles
-            .FirstOrDefaultAsync(r => r.Id == id);
+        
     }
     
     public async Task<Role> GetByNameAsync(string name)
@@ -41,27 +34,5 @@ public class RoleRepository : IRoleRepository
             .ToListAsync();
     }
     
-    public async Task<Role> CreateAsync(Role role)
-    {
-        _context.Roles.Add(role);
-        await _context.SaveChangesAsync();
-        return role;
-    }
     
-    public async Task<Role> UpdateAsync(Role role)
-    {
-        _context.Roles.Update(role);
-        await _context.SaveChangesAsync();
-        return role;
-    }
-    
-    public async Task<bool> DeleteAsync(long id)
-    {
-        var role = await GetByIdAsync(id);
-        if (role == null) return false;
-        
-        role.IsActive = false; // Soft delete
-        await _context.SaveChangesAsync();
-        return true;
-    }
 }

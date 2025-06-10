@@ -1,16 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 using Queick.Company.Application.Interfaces;
 using Queick.Company.Domain;
+using Queick.Company.Persistence.Repositories.Base;
 
 namespace Queick.Company.Persistence.Repositories;
 
-public class RefreshTokenRepository : IRefreshTokenRepository
+public class RefreshTokenRepository : BaseRepository<RefreshToken>, IRefreshTokenRepository
 {
-    private readonly ApplicationDbContext _context;
-    
-    public RefreshTokenRepository(ApplicationDbContext context)
+    public RefreshTokenRepository(ApplicationDbContext context): base(context)
     {
-        _context = context;
+        
     }
     
     public async Task<RefreshToken> CreateAsync(RefreshToken refreshToken)

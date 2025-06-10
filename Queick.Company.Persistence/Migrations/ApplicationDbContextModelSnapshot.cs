@@ -158,7 +158,7 @@ namespace Queick.Company.Persistence.Migrations
 
                     b.HasIndex("LocationId");
 
-                    b.ToTable("Addresses");
+                    b.ToTable("Addresses", (string)null);
                 });
 
             modelBuilder.Entity("Queick.Company.Domain.Branch", b =>
@@ -208,7 +208,7 @@ namespace Queick.Company.Persistence.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.ToTable("Branches");
+                    b.ToTable("Branches", (string)null);
                 });
 
             modelBuilder.Entity("Queick.Company.Domain.CommunicationInfo", b =>
@@ -287,7 +287,7 @@ namespace Queick.Company.Persistence.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("CommunicationInfo");
+                    b.ToTable("CommunicationInfo", (string)null);
                 });
 
             modelBuilder.Entity("Queick.Company.Domain.CompanyDomain", b =>
@@ -333,7 +333,7 @@ namespace Queick.Company.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Companies");
+                    b.ToTable("Companies", (string)null);
                 });
 
             modelBuilder.Entity("Queick.Company.Domain.Customer", b =>
@@ -399,7 +399,7 @@ namespace Queick.Company.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Customer");
+                    b.ToTable("Customer", (string)null);
                 });
 
             modelBuilder.Entity("Queick.Company.Domain.Employee", b =>
@@ -458,7 +458,7 @@ namespace Queick.Company.Persistence.Migrations
 
                     b.HasIndex("BranchId");
 
-                    b.ToTable("Employee");
+                    b.ToTable("Employee", (string)null);
                 });
 
             modelBuilder.Entity("Queick.Company.Domain.Location", b =>
@@ -494,7 +494,7 @@ namespace Queick.Company.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Location");
+                    b.ToTable("Location", (string)null);
                 });
 
             modelBuilder.Entity("Queick.Company.Domain.Permission", b =>
@@ -523,7 +523,7 @@ namespace Queick.Company.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Permissions");
+                    b.ToTable("Permissions", (string)null);
                 });
 
             modelBuilder.Entity("Queick.Company.Domain.RefreshToken", b =>
@@ -554,7 +554,7 @@ namespace Queick.Company.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("RefreshTokens");
+                    b.ToTable("RefreshTokens", (string)null);
                 });
 
             modelBuilder.Entity("Queick.Company.Domain.Role", b =>
@@ -590,7 +590,7 @@ namespace Queick.Company.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Roles", (string)null);
                 });
 
             modelBuilder.Entity("Queick.Company.Domain.RolePermission", b =>
@@ -645,7 +645,7 @@ namespace Queick.Company.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("Queick.Company.Domain.UserRole", b =>
