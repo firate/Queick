@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Queick.Company.Application.Interfaces;
 using Queick.Company.Persistence.Repositories;
+using Queick.Company.Persistence.Seeder;
 
 namespace Queick.Company.Persistence;
 
@@ -24,6 +25,7 @@ public static class DependencyInjectionExtensions
                 }
             ));
 
+        
         services.AddScoped<ICompanyRepository, CompanyRepository>();
         services.AddScoped<IBranchRepository, BranchRepository>();
 
@@ -34,7 +36,9 @@ public static class DependencyInjectionExtensions
         
         // after repositories
         services.AddScoped<IUnitOfWork, UnitOfWork>();
-
+        
+        services.AddScoped<DatabaseSeeder>();
+        
         return services;
     }
 }

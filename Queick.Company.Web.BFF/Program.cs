@@ -1,10 +1,11 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Queick.Company.Application;
-using Queick.Company.Application.Interfaces;
 using Queick.Company.Infrastructure;
 using Queick.Company.Persistence;
+using Queick.Company.Persistence.Seeder;
 using Queick.Company.Web.BFF.Middleware;
 using Scalar.AspNetCore;
 
@@ -21,12 +22,10 @@ public class Program
         builder.Services.AddApplicationServices(builder.Configuration);
         builder.Services.AddHttpContextAccessor();
         
-        // Add services to the container.
-       
         // Add Authentication
         var jwtSettings = builder.Configuration.GetSection("Jwt");
         var secretKey = jwtSettings["SecretKey"];
-        var key = Encoding.ASCII.GetBytes(secretKey);
+        var key = Encoding.UTF8.GetBytes(secretKey);
         
         builder.Services.AddAuthentication(options =>
             {
@@ -76,17 +75,22 @@ public class Program
         
         var app = builder.Build();
         
-        using (var scope = app.Services.CreateScope())
-        {
-            var permissionRepository = scope.ServiceProvider.GetRequiredService<IPermissionRepository>();
-            await permissionRepository.SeedPermissionsAsync();
-        }
+        
 
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
             app.MapOpenApi();
             app.MapScalarApiReference();
+            
+            using (var scope = app.Services.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                var seeder = scope.ServiceProvider.GetRequiredService<DatabaseSeeder>();
+    
+                await context.Database.MigrateAsync();
+                await seeder.SeedAsync();
+            }
         }
 
         app.UseHttpsRedirection();

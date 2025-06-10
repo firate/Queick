@@ -6,7 +6,7 @@ using Queick.Company.Domain;
 namespace Queick.Company.Persistence.Repositories.Base;
 
 public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
-    where TEntity : class, IEntity, IAuditableEntity
+    where TEntity : class, IEntity
 {
     protected readonly ApplicationDbContext _context;
     private readonly DbSet<TEntity> _dbSet;
@@ -30,7 +30,6 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
 
     public virtual async Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
-        entity.Created = DateTimeOffset.UtcNow;
         var result = await _dbSet.AddAsync(entity, cancellationToken);
         return result.Entity;
     }
@@ -38,16 +37,13 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
     public virtual async Task<List<TEntity>> AddRangeAsync(List<TEntity> entities,
         CancellationToken cancellationToken = default)
     {
-        var now = DateTimeOffset.UtcNow;
-        entities.ForEach(e => e.Created = now);
-
+        
         await _dbSet.AddRangeAsync(entities, cancellationToken);
         return entities;
     }
 
     public virtual Task<TEntity> UpdateAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
-        entity.Updated = DateTimeOffset.UtcNow;
         _dbSet.Update(entity);
         return Task.FromResult(entity);
     }
@@ -55,9 +51,6 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
     public virtual Task<List<TEntity>> UpdateRangeAsync(List<TEntity> entities,
         CancellationToken cancellationToken = default)
     {
-        var now = DateTimeOffset.UtcNow;
-        entities.ForEach(e => e.Updated = now);
-
         _dbSet.UpdateRange(entities);
         return Task.FromResult(entities);
     }
@@ -77,7 +70,6 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
             softDeleteEntity.DeletedAt = DateTimeOffset.UtcNow;
         }
         
-        entity.Updated = DateTimeOffset.UtcNow;
         _dbSet.Update(entity);
     }
 

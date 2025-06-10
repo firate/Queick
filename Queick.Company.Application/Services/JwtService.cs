@@ -26,7 +26,7 @@ public class JwtService : IJwtService
         if (user == null) throw new ArgumentException("User not found");
         
         var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.ASCII.GetBytes(_configuration["Jwt:SecretKey"]);
+        var key = Encoding.UTF8.GetBytes(_configuration["Jwt:SecretKey"]);
         
         var claims = new List<Claim>
         {
@@ -35,13 +35,10 @@ public class JwtService : IJwtService
             new Claim(ClaimTypes.Email, user.Email),
             new Claim("tokenVersion", tokenVersion)
         };
-        
+        claims.AddRange(user.UserRoles.Select(userRole => new Claim(ClaimTypes.Role, userRole.Role.Name)));
+
         // Add roles
-        foreach (var userRole in user.UserRoles)
-        {
-            claims.Add(new Claim(ClaimTypes.Role, userRole.Role.Name));
-        }
-        
+
         // Add permissions
         var permissions = user.UserRoles
             .SelectMany(ur => ur.Role.RolePermissions)
@@ -79,7 +76,7 @@ public class JwtService : IJwtService
         try
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_configuration["Jwt:SecretKey"]);
+            var key = Encoding.UTF8.GetBytes(_configuration["Jwt:SecretKey"]);
             
             tokenHandler.ValidateToken(token, new TokenValidationParameters
             {
