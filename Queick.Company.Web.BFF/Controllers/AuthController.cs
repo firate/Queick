@@ -5,6 +5,7 @@ using Queick.Company.Application.Authorization;
 using Queick.Company.Application.DTOs.Auth;
 using Queick.Company.Application.Services.Interfaces;
 using Queick.Company.Web.BFF.Attributes;
+using Queick.Company.Web.BFF.Controllers.Base;
 
 namespace Queick.Company.Web.BFF.Controllers;
 
@@ -48,7 +49,6 @@ public class AuthController : BaseApiController
     }
     
     [HttpPost("register")]
-    [Authorize]
     [RequirePermission(Permissions.User.Write)]
     public async Task<IActionResult> Register([FromBody] RegisterRequestDto request)
     {
@@ -64,7 +64,6 @@ public class AuthController : BaseApiController
     }
     
     [HttpPost("logout")]
-    [Authorize]
     public async Task<IActionResult> Logout([FromBody] RefreshTokenRequestDto request)
     {
         var userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
@@ -73,7 +72,6 @@ public class AuthController : BaseApiController
     }
     
     [HttpPost("change-password")]
-    [Authorize]
     public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto request)
     {
         var userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);

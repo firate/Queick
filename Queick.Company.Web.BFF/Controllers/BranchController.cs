@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Queick.Company.Application.DTOs;
 using Queick.Company.Application.Services.Interfaces;
+using Queick.Company.Web.BFF.Controllers.Base;
 
 namespace Queick.Company.Web.BFF.Controllers;
 

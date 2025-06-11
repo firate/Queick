@@ -3,6 +3,7 @@ using Queick.Company.Application.Authorization;
 using Queick.Company.Application.DTOs.Auth;
 using Queick.Company.Application.Services.Interfaces;
 using Queick.Company.Web.BFF.Attributes;
+using Queick.Company.Web.BFF.Controllers.Base;
 
 namespace Queick.Company.Web.BFF.Controllers;
 
