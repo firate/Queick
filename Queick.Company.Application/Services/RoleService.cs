@@ -41,7 +41,7 @@ public class RoleService : IRoleService
     public async Task<RoleDto> GetRoleByIdAsync(long id, CancellationToken cancellationToken = default)
     {
         var role = await _unitOfWork.Roles.GetRoleWithPermissionsAsync(id);
-        if (role == null) return null;
+        if (role == null) throw new InvalidOperationException("Role not found");
 
         return new RoleDto
         {

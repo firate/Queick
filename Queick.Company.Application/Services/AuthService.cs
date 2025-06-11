@@ -11,10 +11,6 @@ namespace Queick.Company.Application.Services;
 public class AuthService : IAuthService
 {
     private readonly IUnitOfWork _unitOfWork;
-
-    // private readonly IUserRepository _userRepository;
-    // private readonly IRoleRepository _roleRepository;
-    // private readonly IRefreshTokenRepository _refreshTokenRepository;
     private readonly IJwtService _jwtService;
     private readonly ITokenCacheService _tokenCacheService;
 
@@ -75,12 +71,11 @@ public class AuthService : IAuthService
 
         // Generate tokens
         var accessToken = await _jwtService.GenerateAccessToken(user.Id, tokenVersion);
-        var _refreshToken = await _jwtService.GenerateRefreshToken();
-
+        var generatedRefreshTokenString = await _jwtService.GenerateRefreshToken();
 
         var refreshToken = new RefreshToken
         {
-            Token = _refreshToken,
+            Token = generatedRefreshTokenString,
             UserId = user.Id,
             ExpiresAt = DateTime.UtcNow.AddDays(Convert.ToDouble(_configuration["Jwt:RefreshTokenExpirationDays"])),
             CreatedAt = DateTime.UtcNow
@@ -98,7 +93,7 @@ public class AuthService : IAuthService
         return new LoginResponseDto
         {
             AccessToken = accessToken,
-            RefreshToken = _refreshToken,
+            RefreshToken = generatedRefreshTokenString,
             ExpiresAt =
                 DateTime.UtcNow.AddMinutes(Convert.ToDouble(_configuration["Jwt:AccessTokenExpirationMinutes"])),
             User = new UserDto
@@ -246,8 +241,7 @@ public class AuthService : IAuthService
         {
             return false;
         }
-
-
+        
         var verificationResult = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, currentPassword);
         if (verificationResult == PasswordVerificationResult.Failed)
         {

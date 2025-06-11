@@ -12,17 +12,17 @@ namespace Queick.Company.Application.Services;
 public class JwtService : IJwtService
 {
     private readonly IConfiguration _configuration;
-    private readonly IUserRepository _userRepository;
+    private readonly IUnitOfWork _unitOfWork;
     
-    public JwtService(IConfiguration configuration, IUserRepository userRepository)
+    public JwtService(IConfiguration configuration, IUnitOfWork unitOfWork)
     {
         _configuration = configuration;
-        _userRepository = userRepository;
+        _unitOfWork = unitOfWork;
     }
     
     public async Task<string> GenerateAccessToken(long userId, string tokenVersion)
     {
-        var user = await _userRepository.GetUserWithPermissionsAsync(userId);
+        var user = await _unitOfWork.Users.GetUserWithPermissionsAsync(userId);
         if (user == null) throw new ArgumentException("User not found");
         
         var tokenHandler = new JwtSecurityTokenHandler();
@@ -35,9 +35,11 @@ public class JwtService : IJwtService
             new Claim(ClaimTypes.Email, user.Email),
             new Claim("tokenVersion", tokenVersion)
         };
+        
+        // Add roles
         claims.AddRange(user.UserRoles.Select(userRole => new Claim(ClaimTypes.Role, userRole.Role.Name)));
 
-        // Add roles
+        
 
         // Add permissions
         var permissions = user.UserRoles
