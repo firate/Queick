@@ -54,11 +54,9 @@ public class BranchRepository : BaseRepository<Branch>, IBranchRepository
 
         if (count <= 0) return (branches, 0);
 
-
-        branches = await query.Skip(skip).Take(take).ToListAsync();
+        branches = await query.Skip(skip).Take(take).ToListAsync(cancellationToken: cancellationToken);
         return (branches, count);
     }
-
 
     public async Task<bool> IsBranchNameExistsInCompanyAsync(string name, long companyId,
         CancellationToken cancellationToken = default)
@@ -80,14 +78,11 @@ public class BranchRepository : BaseRepository<Branch>, IBranchRepository
             cancellationToken);
     }
 
-
     public async Task SetAddressAsPrimaryAsync(long branchId, long addressId, AddressFunctionType functionType,
         bool isPrimary)
     {
         var existingPrimaryAddresses = await _context.Addresses
-            .Where(a => a.BranchId == branchId &&
-                        a.AddressFunctionType == functionType &&
-                        a.IsPrimary)
+            .Where(a => a.BranchId == branchId && a.AddressFunctionType == functionType && a.IsPrimary)
             .ToListAsync();
 
         foreach (var address in existingPrimaryAddresses)
@@ -103,12 +98,9 @@ public class BranchRepository : BaseRepository<Branch>, IBranchRepository
             throw new Exception("Address not found");
         }
 
-
         currentAddressToBePrimary.IsPrimary = true;
 
-
         _context.Addresses.Update(currentAddressToBePrimary);
-
         await _context.SaveChangesAsync();
     }
 
@@ -131,8 +123,7 @@ public class BranchRepository : BaseRepository<Branch>, IBranchRepository
     public async Task<Address?> GetPrimaryAddressByFunctionTypeAsync(long branchId, int addressFunctionType,
         CancellationToken cancellationToken = default)
     {
-        return await _context.Addresses
-            .Include(a => a.Branch)
+        return await _context.Addresses.Include(a => a.Branch)
             .FirstOrDefaultAsync(
                 a => a.BranchId == branchId && (int)a.AddressFunctionType == addressFunctionType && !a.IsDeleted,
                 cancellationToken);
@@ -158,7 +149,6 @@ public class BranchRepository : BaseRepository<Branch>, IBranchRepository
         _context.Addresses.Update(address);
         return await Task.FromResult(address);
     }
-
 
     public async Task DeleteAddressAsync(long branchId, long addressId, CancellationToken cancellationToken = default)
     {
