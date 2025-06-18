@@ -2,8 +2,8 @@ namespace Queick.Company.Application.DTOs;
 
 public class BranchAddressDto
 {
-    public long Id { get; set; }
-    public long BranchId { get; set; }
+    public Guid Id { get; set; }
+    public Guid BranchId { get; set; }
 
     public bool IsPrimary { get; set; }
 

@@ -6,17 +6,17 @@ namespace Queick.Company.Application.Services.Interfaces;
 
 public interface ICompanyService
 {
-    Task<CompanyDto>? GetCompanyByIdAsync(long id, CancellationToken cancellationToken = default);
+    Task<CompanyDto>? GetCompanyByIdAsync(Guid id, CancellationToken cancellationToken = default);
     Task<PaginatedList<CompanyDto>> GetCompaniesAsync(CompanySearchRequestDto dto, CancellationToken cancellationToken = default);
     Task<CompanyDto> CreateCompanyAsync(CompanyCreationDto dto, CancellationToken cancellationToken = default);
     Task<CompanyDto> UpdateCompanyAsync(CompanyUpdateDto dto, CancellationToken cancellationToken = default);
-    Task<bool> DeleteCompanyAsync(long id, CancellationToken cancellationToken = default);
+    Task<bool> DeleteCompanyAsync(Guid id, CancellationToken cancellationToken = default);
     Task<List<CompanyDto>> CreateCompaniesAsync(List<CompanyCreationDto> companiesDto, CancellationToken cancellationToken = default);
     
     
     // TODO: çoklu işlemleri doğrudan rabbitmq'ya gönderelim, başka bir servis üzerinden işlensin
     Task<bool> UpdateCompaniesAsync(List<CompanyDto> companiesDto, CancellationToken cancellationToken = default);
-    Task<bool> DeleteCompaniesAsync(List<long> ids, CancellationToken cancellationToken = default);
+    Task<bool> DeleteCompaniesAsync(List<Guid> ids, CancellationToken cancellationToken = default);
          
     // Task<TransferResultDto> TransferEmployeeBetweenCompaniesAsync( long employeeId, long sourceCompanyId, long targetCompanyId, CancellationToken cancellationToken = default);
              

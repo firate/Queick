@@ -5,10 +5,10 @@ namespace Queick.Company.Application.DTOs;
 /// </summary>
 public class EmployeeDto
 {
-    public long Id { get; set; }
+    public Guid Id { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string Email { get; set; }
-    public long CompanyId { get; set; }
+    public Guid CompanyId { get; set; }
     public string CompanyName { get; set; }
 }

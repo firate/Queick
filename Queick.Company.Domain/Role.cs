@@ -1,8 +1,10 @@
+using Queick.Company.Domain.Common;
+
 namespace Queick.Company.Domain;
 
-public class Role : IAuditableEntity, IEntity, IActivatable
+public class Role : Entity, IAuditableEntity, IActivatable
 {
-    public long Id { get; set; }
+    // public long Id { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
     public string? CreatedBy { get; set; }

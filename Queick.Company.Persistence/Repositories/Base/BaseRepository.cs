@@ -2,11 +2,12 @@ using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Queick.Company.Application.Interfaces;
 using Queick.Company.Domain;
+using Queick.Company.Domain.Common;
 
 namespace Queick.Company.Persistence.Repositories.Base;
 
 public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
-    where TEntity : class, IEntity
+    where TEntity: Entity
 {
     protected readonly ApplicationDbContext _context;
     private readonly DbSet<TEntity> _dbSet;
@@ -17,7 +18,7 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
         _dbSet = context.Set<TEntity>();
     }
 
-    public virtual async Task<TEntity?> GetByIdAsync(long id, CancellationToken cancellationToken = default)
+    public virtual async Task<TEntity?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return await _dbSet.FindAsync([id], cancellationToken);
     }
@@ -55,7 +56,7 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
         return Task.FromResult(entities);
     }
 
-    public async Task SoftDeleteAsync(long id, CancellationToken cancellationToken = default)
+    public async Task SoftDeleteAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var entity = await GetByIdAsync(id, cancellationToken);
         if (entity == null)
@@ -73,7 +74,7 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
         _dbSet.Update(entity);
     }
 
-    public virtual async Task DeleteAsync(long id, CancellationToken cancellationToken = default)
+    public virtual async Task DeleteAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var entity = await GetByIdAsync(id, cancellationToken);
         if (entity == null)
@@ -84,7 +85,7 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
         _dbSet.Remove(entity);
     }
     
-    public virtual async Task<bool> DeleteRangeAsync(List<long> ids, CancellationToken cancellationToken = default)
+    public virtual async Task<bool> DeleteRangeAsync(List<Guid> ids, CancellationToken cancellationToken = default)
     {
         var entities = await _dbSet.Where(e => ids.Contains(e.Id)).ToListAsync(cancellationToken);
         if (entities.Count <= 0)

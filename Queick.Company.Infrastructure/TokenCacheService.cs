@@ -13,13 +13,13 @@ public class TokenCacheService : ITokenCacheService
         _cache = cache;
     }
     
-    public async Task<string> GetUserTokenVersionAsync(long userId)
+    public async Task<string> GetUserTokenVersionAsync(Guid userId)
     {
         var key = $"{TOKEN_VERSION_PREFIX}{userId}";
         return await _cache.GetStringAsync(key);
     }
     
-    public async Task SetUserTokenVersionAsync(long userId, string tokenVersion, TimeSpan? expiration = null)
+    public async Task SetUserTokenVersionAsync(Guid userId, string tokenVersion, TimeSpan? expiration = null)
     {
         var key = $"{TOKEN_VERSION_PREFIX}{userId}";
         var options = new DistributedCacheEntryOptions();
@@ -37,13 +37,13 @@ public class TokenCacheService : ITokenCacheService
         await _cache.SetStringAsync(key, tokenVersion, options);
     }
     
-    public async Task InvalidateUserTokenAsync(long userId)
+    public async Task InvalidateUserTokenAsync(Guid userId)
     {
         var key = $"{TOKEN_VERSION_PREFIX}{userId}";
         await _cache.RemoveAsync(key);
     }
     
-    public async Task<bool> IsTokenValidAsync(long userId, string tokenVersion)
+    public async Task<bool> IsTokenValidAsync(Guid userId, string tokenVersion)
     {
         var cachedVersion = await GetUserTokenVersionAsync(userId);
         return !string.IsNullOrEmpty(cachedVersion) && cachedVersion == tokenVersion;

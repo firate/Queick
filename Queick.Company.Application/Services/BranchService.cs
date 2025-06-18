@@ -20,7 +20,7 @@ public class BranchService : IBranchService
     }
 
 
-    public async Task<BranchDto?> GetBranchByIdAsync(long id, CancellationToken cancellationToken = default)
+    public async Task<BranchDto?> GetBranchByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var branch =
             await _unitOfWork.Branches.GetFirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted, cancellationToken);
@@ -64,10 +64,11 @@ public class BranchService : IBranchService
     {
         ArgumentNullException.ThrowIfNull(dto, nameof(dto));
 
-        if (dto.CompanyId <= 0)
-        {
-            throw new ArgumentException("Invalid CompanyId", nameof(dto.CompanyId));
-        }
+        // TODO: fix
+        // if (dto.CompanyId <= 0)
+        // {
+        //     throw new ArgumentException("Invalid CompanyId", nameof(dto.CompanyId));
+        // }
 
         var branch = _mapper.BranchCreationDtoToBranch(dto);
         branch.Created = DateTimeOffset.Now;
@@ -113,7 +114,7 @@ public class BranchService : IBranchService
         return resultDto;
     }
 
-    public async Task<bool> DeleteBranchAsync(long id, CancellationToken cancellationToken = default)
+    public async Task<bool> DeleteBranchAsync(Guid id, CancellationToken cancellationToken = default)
     {
         await _unitOfWork.Branches.DeleteAsync(id, cancellationToken);
         return await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
@@ -144,7 +145,7 @@ public class BranchService : IBranchService
         return _mapper.AddressToBranchAddressDto(createdAddress);
     }
 
-    public async Task<BranchAddressDto> GetBranchAddressByIdAsync(long branchId, long addressId,
+    public async Task<BranchAddressDto> GetBranchAddressByIdAsync(Guid branchId, Guid addressId,
         CancellationToken cancellationToken = default)
     {
         var address = await _unitOfWork.Branches.GetAddressByBranchAndAddressIdAsync(branchId, addressId, cancellationToken);
@@ -157,7 +158,7 @@ public class BranchService : IBranchService
         return _mapper.AddressToBranchAddressDto(address);
     }
 
-    public async Task<BranchAddressDto> GetBranchPrimaryAddressByAddressFunctionTypeAsync(long branchId,
+    public async Task<BranchAddressDto> GetBranchPrimaryAddressByAddressFunctionTypeAsync(Guid branchId,
         int addressFunctionTypeId,
         CancellationToken cancellationToken = default)
     {
@@ -176,13 +177,13 @@ public class BranchService : IBranchService
         throw new NotImplementedException();
     }
 
-    public async Task<BranchAddressDto> UpdateAddressAsPrimaryForBranchAsync(long branchId, long addressId,
+    public async Task<BranchAddressDto> UpdateAddressAsPrimaryForBranchAsync(Guid branchId, Guid addressId,
         CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<bool> DeleteBranchAddressAsync(long branchId, long addressId,
+    public async Task<bool> DeleteBranchAddressAsync(Guid branchId, Guid addressId,
         CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
@@ -202,7 +203,7 @@ public class BranchService : IBranchService
         throw new NotImplementedException();
     }
 
-    public async Task<object> DeleteBranchsAsync(List<long> ids, CancellationToken cancellationToken = default)
+    public async Task<object> DeleteBranchsAsync(List<Guid> ids, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }

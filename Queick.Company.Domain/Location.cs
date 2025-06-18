@@ -1,8 +1,10 @@
+using Queick.Company.Domain.Common;
+
 namespace Queick.Company.Domain;
 
-public class Location : IEntity, ISoftDeleteEntity, IActivatable
+public class Location : Entity, ISoftDeleteEntity, IActivatable
 {
-    public long Id { get; set; }
+    //public long Id { get; set; }
     public string Name { get; set; }
     public bool IsDeleted { get; set; }
     public DateTimeOffset? DeletedAt { get; set; }

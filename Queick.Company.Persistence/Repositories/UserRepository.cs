@@ -12,7 +12,7 @@ public class UserRepository : BaseRepository<User>, IUserRepository
     {
     }
     
-    public async Task<User> GetUserWithPermissionsAsync(long userId)
+    public async Task<User> GetUserWithPermissionsAsync(Guid userId)
     {
         return await _context.Users
             .Include(u => u.UserRoles)

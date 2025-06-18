@@ -38,7 +38,7 @@ public class RoleService : IRoleService
         return roleDtos;
     }
 
-    public async Task<RoleDto> GetRoleByIdAsync(long id, CancellationToken cancellationToken = default)
+    public async Task<RoleDto> GetRoleByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var role = await _unitOfWork.Roles.GetRoleWithPermissionsAsync(id);
         if (role == null) throw new InvalidOperationException("Role not found");
@@ -122,7 +122,7 @@ public class RoleService : IRoleService
         return await GetRoleByIdAsync(role.Id);
     }
 
-    public async Task<bool> DeleteRoleAsync(long id,  CancellationToken cancellationToken = default)
+    public async Task<bool> DeleteRoleAsync(Guid id,  CancellationToken cancellationToken = default)
     {
         await _unitOfWork.Roles.DeleteAsync(id,  cancellationToken);
         

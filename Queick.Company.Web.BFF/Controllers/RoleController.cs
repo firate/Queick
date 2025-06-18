@@ -26,7 +26,7 @@ public class RoleController : BaseApiController
     
     [HttpGet("{id}")]
     [RequirePermission(Permissions.Role.Read)]
-    public async Task<IActionResult> GetRoleById(long id)
+    public async Task<IActionResult> GetRoleById(Guid id)
     {
         var role = await _roleService.GetRoleByIdAsync(id);
         if (role == null)
@@ -54,7 +54,7 @@ public class RoleController : BaseApiController
     
     [HttpPut("{id}")]
     [RequirePermission(Permissions.Role.Write)]
-    public async Task<IActionResult> UpdateRole(long id, [FromBody] UpdateRoleDto dto)
+    public async Task<IActionResult> UpdateRole(Guid id, [FromBody] UpdateRoleDto dto)
     {
         if (id != dto.Id)
         {
@@ -74,7 +74,7 @@ public class RoleController : BaseApiController
     
     [HttpDelete("{id}")]
     [RequirePermission(Permissions.Role.Delete)]
-    public async Task<IActionResult> DeleteRole(long id)
+    public async Task<IActionResult> DeleteRole(Guid id)
     {
         var result = await _roleService.DeleteRoleAsync(id);
         if (!result)

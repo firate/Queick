@@ -20,7 +20,7 @@ public class JwtService : IJwtService
         _unitOfWork = unitOfWork;
     }
     
-    public async Task<string> GenerateAccessToken(long userId, string tokenVersion)
+    public async Task<string> GenerateAccessToken(Guid userId, string tokenVersion)
     {
         var user = await _unitOfWork.Users.GetUserWithPermissionsAsync(userId);
         if (user == null) throw new ArgumentException("User not found");

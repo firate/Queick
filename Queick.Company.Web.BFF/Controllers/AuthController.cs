@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Queick.Company.Application.Authorization;
 using Queick.Company.Application.DTOs.Auth;
+using Queick.Company.Application.Extensions;
 using Queick.Company.Application.Services.Interfaces;
 using Queick.Company.Web.BFF.Attributes;
 using Queick.Company.Web.BFF.Controllers.Base;
@@ -66,16 +67,18 @@ public class AuthController : BaseApiController
     [HttpPost("logout")]
     public async Task<IActionResult> Logout([FromBody] RefreshTokenRequestDto request)
     {
-        var userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-        await _authService.LogoutAsync(userId, request.RefreshToken);
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        
+        await _authService.LogoutAsync(userId.ToGuid(), request.RefreshToken);
         return Ok(new { message = "Logged out successfully" });
     }
     
     [HttpPost("change-password")]
     public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto request)
     {
-        var userId = long.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-        var result = await _authService.ChangePasswordAsync(userId, request.CurrentPassword, request.NewPassword);
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            
+        var result = await _authService.ChangePasswordAsync(userId.ToGuid(), request.CurrentPassword, request.NewPassword);
         
         if (!result)
         {

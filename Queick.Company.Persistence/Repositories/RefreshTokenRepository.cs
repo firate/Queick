@@ -38,7 +38,7 @@ public class RefreshTokenRepository : BaseRepository<RefreshToken>, IRefreshToke
         }
     }
     
-    public async Task RevokeAllUserTokensAsync(long userId)
+    public async Task RevokeAllUserTokensAsync(Guid userId)
     {
         var tokens = await _context.RefreshTokens
             .Where(rt => rt.UserId == userId && !rt.IsRevoked)

@@ -15,7 +15,7 @@ public class BranchController : BaseApiController
     }
     
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetBranchById(long id)
+    public async Task<IActionResult> GetBranchById(Guid id)
     {
         var branch = await _branchService.GetBranchByIdAsync(id, CancellationToken.None);
         if (branch == null)
@@ -52,7 +52,7 @@ public class BranchController : BaseApiController
     }
     
     [HttpDelete]
-    public async Task<IActionResult> RemoveBranch(long id)
+    public async Task<IActionResult> RemoveBranch(Guid id)
     {
         var isDeleted = await _branchService.DeleteBranchAsync(id, CancellationToken.None);
         

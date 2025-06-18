@@ -1,6 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
+using Queick.Company.Application.Extensions;
 using Queick.Company.Application.Services.Interfaces;
 
 namespace Queick.Company.Web.BFF.Middleware;
@@ -55,7 +56,7 @@ public class JwtMiddleware
             {
                 // Validate token version in Redis
                 var tokenCacheService = context.RequestServices.GetRequiredService<ITokenCacheService>();
-                var isValid = await tokenCacheService.IsTokenValidAsync(long.Parse(userId), tokenVersion);
+                var isValid = await tokenCacheService.IsTokenValidAsync(userId.ToGuid(), tokenVersion);
                 
                 if (!isValid)
                 {

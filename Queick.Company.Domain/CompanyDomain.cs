@@ -1,10 +1,10 @@
-using System.Security.AccessControl;
+
+using Queick.Company.Domain.Common;
 
 namespace Queick.Company.Domain;
 
-public class CompanyDomain : IEntity, ISoftDeleteEntity, IActivatable, IAuditableEntity
+public class CompanyDomain : Entity, ISoftDeleteEntity, IActivatable, IAuditableEntity
 {
-    public long Id { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
     public bool IsActive { get; set; }

@@ -1,8 +1,10 @@
+using Queick.Company.Domain.Common;
+
 namespace Queick.Company.Domain;
 
-public class Permission : IEntity
+public class Permission : Entity
 {
-    public long Id { get; set; }
+    //public long Id { get; set; }
     public string Code { get; set; } // e.g., "Company.Read", "Company.Write"
     public string Name { get; set; }
     public string Description { get; set; }

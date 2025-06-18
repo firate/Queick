@@ -1,8 +1,10 @@
+using Queick.Company.Domain.Common;
+
 namespace Queick.Company.Domain;
 
-public class Customer : IEntity, ISoftDeleteEntity, IActivatable, IAuditableEntity
+public class Customer : Entity, ISoftDeleteEntity, IActivatable, IAuditableEntity
 {
-    public long Id { get; set; }
+    //public long Id { get; set; }
 
     public string Username { get; set; }
     public string FirstName { get; set; }

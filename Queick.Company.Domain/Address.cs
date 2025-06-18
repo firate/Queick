@@ -1,9 +1,11 @@
+using Queick.Company.Domain.Common;
+
 namespace Queick.Company.Domain;
 
-public class Address : IEntity, ISoftDeleteEntity, IAuditableEntity
+public class Address : Entity, ISoftDeleteEntity, IAuditableEntity
 {
     private DateTimeOffset _updated;
-    public long Id { get; set; }
+    //public long Id { get; set; }
     public AddressLocationType AddressLocationType { get; set; }
     public AddressFunctionType AddressFunctionType { get; set; }
 
@@ -34,16 +36,16 @@ public class Address : IEntity, ISoftDeleteEntity, IAuditableEntity
     // Oluşturulduktan sonra Sms veya Email onayı olabilir.
     public bool IsVerified { get; set; }    
 
-    public long? BranchId { get; set; }
+    public Guid? BranchId { get; set; }
     public Branch? Branch { get; set; }
 
-    public long? CustomerId { get; set; }
+    public Guid? CustomerId { get; set; }
     public Customer? Customer { get; set; }
 
-    public long? EmployeeId { get; set; }
+    public Guid? EmployeeId { get; set; }
     public Employee? Employee { get; set; }
 
-    public long? LocationId { get; set; }
+    public Guid? LocationId { get; set; }
     public Location? Location { get; set; }
     
     public string? CreatedBy { get; set; }

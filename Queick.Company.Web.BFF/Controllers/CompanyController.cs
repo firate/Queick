@@ -15,7 +15,7 @@ public class CompanyController : BaseApiController
 
     
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetCompanyById(long id)
+    public async Task<IActionResult> GetCompanyById(Guid id)
     {
         var company = await _companyService.GetCompanyByIdAsync(id, CancellationToken.None);
 
@@ -55,7 +55,7 @@ public class CompanyController : BaseApiController
     }
     
     [HttpDelete]
-    public async Task<IActionResult> RemoveCompany(long id)
+    public async Task<IActionResult> RemoveCompany(Guid id)
     {
         var isDeleted = await _companyService.DeleteCompanyAsync(id, CancellationToken.None);
 

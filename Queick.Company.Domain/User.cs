@@ -1,8 +1,10 @@
+using Queick.Company.Domain.Common;
+
 namespace Queick.Company.Domain;
 
-public class User : IEntity, IAuditableEntity, IActivatable
+public class User : Entity, IAuditableEntity, IActivatable
 {
-    public long Id { get; set; }
+    //public long Id { get; set; }
     public string Username { get; set; }
     public string Email { get; set; }
     public string PasswordHash { get; set; }

@@ -225,7 +225,7 @@ public class AuthService : IAuthService
         };
     }
 
-    public async Task LogoutAsync(long userId, string refreshToken)
+    public async Task LogoutAsync(Guid userId, string refreshToken)
     {
         // Revoke refresh token
         await _unitOfWork.RefreshTokens.RevokeTokenAsync(refreshToken);
@@ -234,7 +234,7 @@ public class AuthService : IAuthService
         await _tokenCacheService.InvalidateUserTokenAsync(userId);
     }
 
-    public async Task<bool> ChangePasswordAsync(long userId, string currentPassword, string newPassword)
+    public async Task<bool> ChangePasswordAsync(Guid userId, string currentPassword, string newPassword)
     {
         var user = await _unitOfWork.Users.GetByIdAsync(userId);
         if (user is null)

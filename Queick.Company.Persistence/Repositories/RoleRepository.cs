@@ -18,7 +18,7 @@ public class RoleRepository : BaseRepository<Role>, IRoleRepository
             .FirstOrDefaultAsync(r => r.Name == name);
     }
     
-    public async Task<Role> GetRoleWithPermissionsAsync(long roleId)
+    public async Task<Role> GetRoleWithPermissionsAsync(Guid roleId)
     {
         return await _context.Roles
             .Include(r => r.RolePermissions)

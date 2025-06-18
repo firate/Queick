@@ -12,7 +12,7 @@ public class BranchRepository : BaseRepository<Branch>, IBranchRepository
     }
 
     public async Task<(List<Branch> Branches, int Count)> GetPagedAsync(
-        long companyId,
+        Guid companyId,
         int skip,
         int take,
         string? name,
@@ -25,10 +25,11 @@ public class BranchRepository : BaseRepository<Branch>, IBranchRepository
 
         var query = _context.Branches.Include(b => b.Company).AsQueryable();
 
-        if (companyId > 0)
-        {
-            query = query.Where(x => x.CompanyId == companyId);
-        }
+        // TODO: fix
+        // if (companyId > 0)
+        // {
+        //     query = query.Where(x => x.CompanyId == companyId);
+        // }
 
         if (!string.IsNullOrWhiteSpace(name))
         {
@@ -58,7 +59,7 @@ public class BranchRepository : BaseRepository<Branch>, IBranchRepository
         return (branches, count);
     }
 
-    public async Task<bool> IsBranchNameExistsInCompanyAsync(string name, long companyId,
+    public async Task<bool> IsBranchNameExistsInCompanyAsync(string name, Guid companyId,
         CancellationToken cancellationToken = default)
     {
         if (string.IsNullOrWhiteSpace(name))
@@ -66,10 +67,11 @@ public class BranchRepository : BaseRepository<Branch>, IBranchRepository
             return false;
         }
 
-        if (companyId <= 0)
-        {
-            return false;
-        }
+        // TODO: fix
+        // if (companyId <= 0)
+        // {
+        //     return false;
+        // }
 
         var query = _context.Branches.AsQueryable();
         query = query.Where(b => b.CompanyId == companyId);
@@ -78,7 +80,7 @@ public class BranchRepository : BaseRepository<Branch>, IBranchRepository
             cancellationToken);
     }
 
-    public async Task SetAddressAsPrimaryAsync(long branchId, long addressId, AddressFunctionType functionType,
+    public async Task SetAddressAsPrimaryAsync(Guid branchId, Guid addressId, AddressFunctionType functionType,
         bool isPrimary)
     {
         var existingPrimaryAddresses = await _context.Addresses
@@ -111,7 +113,7 @@ public class BranchRepository : BaseRepository<Branch>, IBranchRepository
         return result.Entity;
     }
 
-    public async Task<Address?> GetAddressByBranchAndAddressIdAsync(long branchId, long addressId,
+    public async Task<Address?> GetAddressByBranchAndAddressIdAsync(Guid branchId, Guid addressId,
         CancellationToken cancellationToken = default)
     {
         return await _context.Addresses
@@ -120,7 +122,7 @@ public class BranchRepository : BaseRepository<Branch>, IBranchRepository
     }
 
 
-    public async Task<Address?> GetPrimaryAddressByFunctionTypeAsync(long branchId, int addressFunctionType,
+    public async Task<Address?> GetPrimaryAddressByFunctionTypeAsync(Guid branchId, int addressFunctionType,
         CancellationToken cancellationToken = default)
     {
         return await _context.Addresses.Include(a => a.Branch)
@@ -129,7 +131,7 @@ public class BranchRepository : BaseRepository<Branch>, IBranchRepository
                 cancellationToken);
     }
 
-    public async Task<(List<Address>, int totalCount)> GetAddressesByBranchIdAsync(int branchId,
+    public async Task<(List<Address>, int totalCount)> GetAddressesByBranchIdAsync(Guid branchId,
         int page, int pageSize, CancellationToken cancellationToken = default)
     {
         var query = _context.Addresses
@@ -150,7 +152,7 @@ public class BranchRepository : BaseRepository<Branch>, IBranchRepository
         return await Task.FromResult(address);
     }
 
-    public async Task DeleteAddressAsync(long branchId, long addressId, CancellationToken cancellationToken = default)
+    public async Task DeleteAddressAsync(Guid branchId, Guid addressId, CancellationToken cancellationToken = default)
     {
         var address = await GetAddressByBranchAndAddressIdAsync(branchId, addressId, cancellationToken);
         if (address != null)

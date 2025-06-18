@@ -20,7 +20,7 @@ public class CompanyService : ICompanyService
 
     #region Temel CRUD İşlemleri
 
-    public async Task<CompanyDto>? GetCompanyByIdAsync(long id, CancellationToken cancellationToken = default)
+    public async Task<CompanyDto>? GetCompanyByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         var company =
             await _unitOfWork.Companies.GetFirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted, cancellationToken);
@@ -111,7 +111,7 @@ public class CompanyService : ICompanyService
         return _mapper.CompanyToCompanyDto(company);
     }
 
-    public async Task<bool> DeleteCompanyAsync(long id, CancellationToken cancellationToken = default)
+    public async Task<bool> DeleteCompanyAsync(Guid id, CancellationToken cancellationToken = default)
     {
         await _unitOfWork.Companies.DeleteAsync(id, cancellationToken);
         return await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
@@ -135,7 +135,7 @@ public class CompanyService : ICompanyService
         throw new NotImplementedException();
     }
 
-    public async Task<bool> DeleteCompaniesAsync(List<long> ids, CancellationToken cancellationToken = default)
+    public async Task<bool> DeleteCompaniesAsync(List<Guid> ids, CancellationToken cancellationToken = default)
     {
         //TODO: create event for message queue(like RabbitMQ)
         throw new NotImplementedException();
@@ -146,7 +146,7 @@ public class CompanyService : ICompanyService
     #region Kompleks İşlemler
 
     public async Task<object> TransferEmployeeBetweenCompaniesAsync(
-        long employeeId, long sourceCompanyId, long targetCompanyId,
+        Guid employeeId, Guid sourceCompanyId, Guid targetCompanyId,
         CancellationToken cancellationToken = default)
     {
         // TODO: instant action, no message queue

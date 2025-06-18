@@ -1,8 +1,10 @@
+using Queick.Company.Domain.Common;
+
 namespace Queick.Company.Domain;
 
-public class Branch: IEntity, ISoftDeleteEntity, IActivatable, IAuditableEntity
+public class Branch: Entity, ISoftDeleteEntity, IActivatable, IAuditableEntity
 {
-    public long Id { get; set; }
+    //public long Id { get; set; }
     public string Name { get; set; }
     public string? Description { get; set; }
     public bool IsDeleted { get; set; }
@@ -13,7 +15,7 @@ public class Branch: IEntity, ISoftDeleteEntity, IActivatable, IAuditableEntity
     public DateTimeOffset Created { get; set; }
     public DateTimeOffset Updated { get; set; }
     public CompanyDomain? Company { get; set; }
-    public long CompanyId { get; set; }
+    public Guid CompanyId { get; set; }
     public List<CommunicationInfo> CommunicationInfos { get; set; } = [];
     public List<Address> Addresses { get; set; } = [];
     public bool IsActive { get; set; }

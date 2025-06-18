@@ -58,7 +58,7 @@ public class CompanyRepository : BaseRepository<CompanyDomain>, ICompanyReposito
         return (companies, count);
     }
 
-    public async Task<CompanyDomain?> GetCompanyByIdWithBranchesAsync(long id,
+    public async Task<CompanyDomain?> GetCompanyByIdWithBranchesAsync(Guid id,
         CancellationToken cancellationToken = default)
     {
         return await _context.Companies

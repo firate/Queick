@@ -14,6 +14,6 @@ public interface ICompanyRepository : IBaseRepository<CompanyDomain>
         bool onlyActives = true,
         bool onlyDeletedRecords = false,
         CancellationToken cancellationToken = default);
-    Task<CompanyDomain?> GetCompanyByIdWithBranchesAsync(long id, CancellationToken cancellationToken = default);
+    Task<CompanyDomain?> GetCompanyByIdWithBranchesAsync(Guid id, CancellationToken cancellationToken = default);
     Task<bool> IsCompanyNameExistsAsync(string name, CancellationToken cancellationToken = default);
 }
