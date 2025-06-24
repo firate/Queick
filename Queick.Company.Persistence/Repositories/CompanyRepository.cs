@@ -24,10 +24,10 @@ public class CompanyRepository : BaseRepository<CompanyDomain>, ICompanyReposito
     {
         var query = _context.Companies.AsQueryable();
 
-        if (!string.IsNullOrWhiteSpace(name))
-        {
-            query = query.Where(c => c.Name.Contains(name));
-        }
+        // if (!string.IsNullOrWhiteSpace(name))
+        // {
+        //     query = query.Where(c => c.Name.Contains(name));
+        // }
 
         if (!string.IsNullOrWhiteSpace(description))
         {
@@ -66,15 +66,15 @@ public class CompanyRepository : BaseRepository<CompanyDomain>, ICompanyReposito
             .FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
     }
 
-    public async Task<bool> IsCompanyNameExistsAsync(string name, CancellationToken cancellationToken = default)
-    {
-        var query = _context.Companies.AsQueryable();
-
-        if (!string.IsNullOrWhiteSpace(name))
-        {
-            query = query.Where(c => c.Name.Contains(name));
-        }
-
-        return await _context.Companies.AnyAsync(c => c.Name.ToLower() == name.ToLower(), cancellationToken);
-    }
+    // public async Task<bool> IsCompanyNameExistsAsync(string name, CancellationToken cancellationToken = default)
+    // {
+    //     var query = _context.Companies.AsQueryable();
+    //
+    //     // if (!string.IsNullOrWhiteSpace(name))
+    //     // {
+    //     //     query = query.Where(c => c.Name.Contains(name));
+    //     // }
+    //
+    //     return await _context.Companies.AnyAsync(c => c.Name.ToLower() == name.ToLower(), cancellationToken);
+    // }
 }
