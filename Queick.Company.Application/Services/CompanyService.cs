@@ -5,16 +5,20 @@ using Queick.Company.Application.Interfaces;
 using Queick.Company.Application.Mapper;
 using Queick.Company.Application.Services.Interfaces;
 using Queick.Company.Domain;
+using Queick.Company.Domain.Exceptions;
+using Queick.Company.Domain.ValueObjects;
 
 public class CompanyService : ICompanyService
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IApplicationMapper _mapper;
+    private readonly ICurrentUserService _currentUserService;
 
-    public CompanyService(IUnitOfWork unitOfWork, IApplicationMapper mapper)
+    public CompanyService(IUnitOfWork unitOfWork, IApplicationMapper mapper, ICurrentUserService currentUserService)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
+        _currentUserService = currentUserService;
     }
 
 
@@ -64,14 +68,13 @@ public class CompanyService : ICompanyService
     {
         ArgumentNullException.ThrowIfNull(dto);
 
-        var company = new CompanyDomain
-        {
-          //  Name = dto.Name,
-            Description = dto.Description ?? string.Empty
-        };
+        CompanyName name = CompanyName.Create(dto.Name);
+
+        var currentUser = _currentUserService.GetCurrentUserId();
+
+        var company = new CompanyDomain(name, dto?.Description, currentUser, currentUser);
 
         var addedCompany = await _unitOfWork.Companies.AddAsync(company, cancellationToken);
-
         var isSaved = await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
 
         if (!isSaved)
@@ -97,13 +100,13 @@ public class CompanyService : ICompanyService
         }
 
         //company.Name = dto.Name;
-        
-        company.Description = dto!.Description ?? string.Empty;
-        company.IsActive = dto.IsActive;
-        
+
+        // company.Description = dto!.Description ?? string.Empty;
+        // company.IsActive = dto.IsActive;
+
 
         await _unitOfWork.Companies.UpdateAsync(company, cancellationToken);
-        
+
         if (await _unitOfWork.SaveChangesAsync(cancellationToken) <= 0)
         {
             throw new Exception("Company not updated.");
@@ -114,7 +117,18 @@ public class CompanyService : ICompanyService
 
     public async Task<bool> DeleteCompanyAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        await _unitOfWork.Companies.DeleteAsync(id, cancellationToken);
+        var company = await _unitOfWork.Companies.GetFirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+        if (company is null)
+        {
+            throw new CompanyNotFoundException();
+        }
+        
+        var currentUser = _currentUserService.GetCurrentUserId();
+        
+        company.MarkAsDeleted(currentUser);
+        
+        await _unitOfWork.Companies.SoftDeleteAsync(id, cancellationToken);
+        
         return await _unitOfWork.SaveChangesAsync(cancellationToken) > 0;
     }
 

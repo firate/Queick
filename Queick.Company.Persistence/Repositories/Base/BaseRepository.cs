@@ -64,14 +64,27 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
             // TODO: custom exception kullanalım.
             throw new Exception();
         }
+        
+        _dbSet.Update(entity);
+    }
 
-        if (entity is ISoftDeleteEntity softDeleteEntity)
+    public async Task SoftDeleteAsync(TEntity entity, CancellationToken cancellationToken = default)
+    {
+        if (entity == null)
         {
-            softDeleteEntity.IsDeleted = true;
-            softDeleteEntity.DeletedAt = DateTimeOffset.UtcNow;
+            // TODO: custom exception kullanalım.
+            throw new Exception();
+        }
+
+        if (entity is not ISoftDeleteEntity)
+        {
+            // TODO: custom exception
+            throw new Exception();
         }
         
         _dbSet.Update(entity);
+        
+        return;
     }
 
     public virtual async Task DeleteAsync(Guid id, CancellationToken cancellationToken = default)

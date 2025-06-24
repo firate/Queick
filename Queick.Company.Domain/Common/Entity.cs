@@ -1,6 +1,6 @@
 namespace Queick.Company.Domain.Common;
 
-public abstract class Entity: Object
+public abstract class Entity
 {
     public Guid Id { get; }
 

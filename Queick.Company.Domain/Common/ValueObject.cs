@@ -2,7 +2,7 @@ namespace Queick.Company.Domain.Common;
 
 public abstract class ValueObject
 {
-    public abstract IEnumerable<object> GetEqualityComponents();
+    protected abstract IEnumerable<object> GetEqualityComponents();
 
     public override bool Equals(object? other)
     {

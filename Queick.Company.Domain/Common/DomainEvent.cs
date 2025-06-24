@@ -1,8 +1,7 @@
 namespace Queick.Company.Domain.Common;
 
-public abstract record DomainEvent(Guid Id, DateTimeOffset OccurredAt) : IDomainEvent
+public abstract class DomainEvent: IDomainEvent
 {
-    protected DomainEvent() : this(Guid.NewGuid(), DateTimeOffset.UtcNow)
-    {
-    }
+    public Guid Id { get; protected set; } = Guid.NewGuid();
+    public DateTimeOffset OccurredAt { get; protected set; } = DateTimeOffset.UtcNow;
 }
