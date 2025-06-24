@@ -13,7 +13,9 @@ public class Customer : Entity, ISoftDeleteEntity, IActivatable, IAuditableEntit
     public string Phone { get; set; }
     public string PhoneCountryCode { get; set; }
     public string Password { get; set; }
-    
+
+    public CompanyDomain? Company { get; set; }
+    public Guid CompanyId { get; set; }
     public bool IsDeleted { get; set; }
     public DateTimeOffset? DeletedAt { get; set; }
     public string DeletedBy { get; set; } = "System";

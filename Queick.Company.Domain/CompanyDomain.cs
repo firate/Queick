@@ -1,11 +1,12 @@
 
 using Queick.Company.Domain.Common;
+using Queick.Company.Domain.ValueObjects;
 
 namespace Queick.Company.Domain;
 
 public class CompanyDomain : Entity, ISoftDeleteEntity, IActivatable, IAuditableEntity
 {
-    public string Name { get; set; }
+    public CompanyName CompanyName { get; set; }
     public string Description { get; set; }
     public bool IsActive { get; set; }
     public bool IsDeleted { get; set; }

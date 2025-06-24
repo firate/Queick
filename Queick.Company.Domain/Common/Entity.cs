@@ -1,6 +1,6 @@
 namespace Queick.Company.Domain.Common;
 
-public abstract class Entity
+public abstract class Entity: Object
 {
     public Guid Id { get; }
 
@@ -15,12 +15,23 @@ public abstract class Entity
     }
 
     public override int GetHashCode()
-    
     {
         return Id.GetHashCode();
+    }
+    
+    public static bool operator ==(Entity? left, Entity? right)
+    {
+        return left?.Id == right?.Id;
+    }
+
+    public static bool operator !=(Entity? left, Entity? right)
+    {
+        return left?.Id != right?.Id;
     }
 
     protected Entity(Guid id) => Id = id;
 
-    protected Entity() { }
+    protected Entity()
+    {
+    }
 }

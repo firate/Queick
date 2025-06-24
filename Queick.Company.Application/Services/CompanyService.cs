@@ -66,7 +66,7 @@ public class CompanyService : ICompanyService
 
         var company = new CompanyDomain
         {
-            Name = dto.Name,
+          //  Name = dto.Name,
             Description = dto.Description ?? string.Empty
         };
 
@@ -96,7 +96,8 @@ public class CompanyService : ICompanyService
             throw new NotFoundException($"Company with Id {dto.Id} not found.");
         }
 
-        company.Name = dto.Name;
+        //company.Name = dto.Name;
+        
         company.Description = dto!.Description ?? string.Empty;
         company.IsActive = dto.IsActive;
         

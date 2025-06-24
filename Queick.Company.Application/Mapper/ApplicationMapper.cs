@@ -8,7 +8,7 @@ namespace Queick.Company.Application.Mapper;
 [Mapper(RequiredMappingStrategy = RequiredMappingStrategy.None)]
 public partial class ApplicationMapper: IApplicationMapper
 {
-    [MapProperty(nameof(CompanyDomain.Name), nameof(CompanyDto.Name))]
+    //[MapProperty(nameof(CompanyDomain.Name), nameof(CompanyDto.Name))]
     [MapProperty(nameof(CompanyDomain.Description), nameof(CompanyDto.Description))]
     [MapProperty(nameof(CompanyDomain.Id), nameof(CompanyDto.Id))]
     public partial CompanyDto CompanyToCompanyDto(CompanyDomain company);
