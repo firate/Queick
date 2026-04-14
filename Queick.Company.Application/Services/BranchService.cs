@@ -11,9 +11,9 @@ namespace Queick.Company.Application.Services;
 public class BranchService : IBranchService
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IApplicationMapper _mapper;
+    private readonly ApplicationMapper _mapper;
 
-    public BranchService(IUnitOfWork unitOfWork, IApplicationMapper mapper)
+    public BranchService(IUnitOfWork unitOfWork, ApplicationMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;

@@ -6,7 +6,7 @@ namespace Queick.Company.Application.Mapper;
 
 // RequiredMappingStrategy.None ile Map'lenmemiş field'lar için uyarıları kapatırız.
 [Mapper(RequiredMappingStrategy = RequiredMappingStrategy.None)]
-public partial class ApplicationMapper: IApplicationMapper
+public partial class ApplicationMapper
 {
     [MapProperty(nameof(CompanyDomain.Name), nameof(CompanyDto.Name))]
     [MapProperty(nameof(CompanyDomain.Description), nameof(CompanyDto.Description))]

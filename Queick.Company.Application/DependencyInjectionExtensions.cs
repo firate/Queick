@@ -18,7 +18,7 @@ public static class DependencyInjectionExtensions
         services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
         services.AddScoped<ICurrentUserService, CurrentUserService>();
 
-        services.AddTransient<IApplicationMapper, ApplicationMapper>();
+        services.AddSingleton<ApplicationMapper>();
 
         services.AddScoped<IJwtService, JwtService>();
 

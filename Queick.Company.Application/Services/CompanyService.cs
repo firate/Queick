@@ -9,9 +9,9 @@ using Queick.Company.Domain;
 public class CompanyService : ICompanyService
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IApplicationMapper _mapper;
+    private readonly ApplicationMapper _mapper;
 
-    public CompanyService(IUnitOfWork unitOfWork, IApplicationMapper mapper)
+    public CompanyService(IUnitOfWork unitOfWork, ApplicationMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
